@@ -1,0 +1,75 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.loginPage {
+  height: 100vh;
+  display: flex;
+  &__left {
+    width: 40%;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    flex-direction: column;
+    overflow: auto; /* Cho phép cuộn nội dung */
+
+    h2 {
+      font-size: 25px;
+      text-align: center;
+      margin-bottom: 20px;
+      background: linear-gradient(
+        142deg,
+        rgb(115, 100, 100) 0%,
+        rgba(106, 192, 182, 0.96) 40%,
+        rgba(0, 0, 0, 1) 62%,
+        rgba(156, 129, 129, 0.95) 83%
+      );
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    p {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    form {
+      width: 50%;
+    }
+    input {
+      width: 100%;
+      border-radius: 20px;
+      padding: 8px;
+    }
+    .ant-space {
+      &-item {
+        width: 100% !important;
+      }
+      width: 100% !important;
+      .ant-btn {
+        width: 100% !important;
+        height: 40px;
+        border-radius: 20px;
+      }
+      .btnStyle {
+        background: linear-gradient(
+          142deg,
+          rgba(0, 0, 0, 1) 0%,
+          rgba(66, 83, 81, 0.9557072829131653) 40%,
+          rgba(0, 0, 0, 1) 62%,
+          rgba(73, 56, 56, 0.9501050420168067) 83%
+        );
+        color: white;
+      }
+    }
+  }
+}
