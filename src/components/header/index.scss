@@ -1,67 +1,78 @@
 .header {
+  height: 84px;
+  width: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-  background-color: #fff;
-  border-bottom: 1px solid #ddd;
 
-  .header-left {
+  .header-location-nav {
     display: flex;
     align-items: center;
 
-    .header-location-icon {
-      font-size: 1.2rem;
-      margin-right: 1rem;
+    .header-location {
+      height: 19px;
+      width: 15px;
+      margin-left: 38px;
+      margin-right: 38px;
     }
 
-    .header-nav {
+    .nav-links {
       display: flex;
+      gap: 23px;
+      list-style-type: none;
 
-      a {
-        margin-right: 2rem;
+      .nav-link {
         text-decoration: none;
-        color: #333;
-        font-weight: bold;
+        color: black;
+        text-transform: uppercase;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+    }
+  }
 
-        &:hover {
-          text-decoration: underline;
+  .logo {
+    display: flex;
+    align-items: center;
+    font-size: 27px;
+    font-weight: 400;
+  }
+
+  .search-and-icons {
+    display: flex;
+    align-items: center;
+    gap: 44px;
+
+    .search {
+      width: 45%;
+      border-bottom: 1px solid #666;
+      height: 32px;
+      display: flex;
+      align-items: center;
+
+      .search-input {
+        border: none;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        padding-left: 15px;
+        height: 100%;
+        width: calc(100% - 17px - 10px);
+
+        &:focus {
+          outline: none;
         }
       }
-    }
-  }
 
-  .header-center {
-    flex: 1;
-    text-align: center;
-
-    .header-logo {
-      font-size: 1.5rem;
-      font-family: 'Georgia, serif';
-      font-weight: normal;
-      color: #333;
-    }
-  }
-
-  .header-right {
-    display: flex;
-    align-items: center;
-
-    .header-search {
-      padding: 0.5rem;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      margin-right: 1rem;
-    }
-
-    .header-icon {
-      font-size: 1.2rem;
-      margin-left: 1rem;
-      cursor: pointer;
-
-      &:hover {
-        color: #666;
+      .search-icon {
+        height: 17px;
+        width: 17px;
+        margin-right: 10px;
+        cursor: pointer;
       }
+    }
+
+    .favorite-icon,
+    .cart-icon,
+    .profile-icon {
+      height: 18px;
     }
   }
 }

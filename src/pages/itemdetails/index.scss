@@ -1,0 +1,150 @@
+.itemdetails-wrapper {
+    width: 100%;
+    background-color: #ffffff;
+  }
+  
+  .itemdetails-container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px 0;
+  }
+  
+  .itemdetails-main-content {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+  
+    .itemdetails-detail {
+      display: flex;
+      width: 100%;
+      margin-bottom: 50px;
+  
+      .itemdetails-image {
+        width: 50%;
+        img {
+          width: 100%;
+          height: 600px;
+          object-fit: cover;
+        }
+      }
+  
+      .itemdetails-info {
+        width: 50%;
+        padding-left: 40px;
+  
+        .back-to-selection {
+          font-size: 14px;
+          color: #666;
+          cursor: pointer;
+          margin-bottom: 20px;
+        }
+  
+        .itemdetails-title {
+          font-size: 28px;
+          font-weight: bold;
+          margin-bottom: 10px;
+        }
+  
+        .itemdetails-price {
+          font-size: 22px;
+          color: #333;
+          margin-bottom: 10px;
+        }
+  
+        .itemdetails-description {
+          font-size: 16px;
+          color: #666;
+          margin-bottom: 20px;
+        }
+  
+        .add-to-bag {
+          background-color: #333;
+          color: #fff;
+          padding: 10px 20px;
+          border: none;
+          cursor: pointer;
+          margin-bottom: 20px;
+        }
+  
+        .product-details {
+          p {
+            font-size: 16px;
+            color: #666;
+            margin: 10px 0;
+            cursor: pointer;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+          }
+  
+          .details-toggle {
+            font-weight: angular;
+          }
+  
+          .details-content {
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            margin: 10px 0;
+          }
+  
+          .location-link {
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+            color: #666;
+            margin: 10px 0;
+            cursor: pointer;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+          }
+  
+          .location-link svg {
+            margin-left: 8px;
+          }
+        }
+      }
+    }
+  
+    .recommended-section {
+      width: 100%;
+      text-align: center;
+  
+      .recommended-title {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+  
+      .recommended-subtitle {
+        font-size: 16px;
+        color: #666;
+        margin-bottom: 20px;
+      }
+  
+      .recommended-items {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+  
+        .recommended-item {
+          width: 200px; /* Fixed width */
+          text-align: center;
+  
+          img {
+            width: 100%;
+            height: 150px; /* Fixed height */
+            object-fit: cover; /* Ensure the image fits the container without changing the aspect ratio */
+            margin-bottom: 10px;
+            border-radius: 4px; /* Add rounded corners if desired */
+          }
+  
+          p {
+            font-size: 14px;
+            color: #333;
+          }
+        }
+      }
+    }
+  }
+  

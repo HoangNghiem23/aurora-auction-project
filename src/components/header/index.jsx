@@ -1,29 +1,65 @@
-import React from 'react';
-import './index.scss';
+import './index.scss'
 
 const Header = () => {
   return (
-    <header className="header">
-      <div className="header-left">
-        <span className="header-location-icon">📍</span>
-        <nav className="header-nav">
-          <a href="/jewelry">JEWELRY</a>
-          <a href="/new-releases">NEW RELEASES</a>
-          <a href="/gifts">GIFTS</a>
-        </nav>
-      </div>
-      <div className="header-center">
-        <h1 className="header-logo">APOLLONIAN</h1>
-      </div>
-      <div className="header-right">
-        <input type="text" placeholder="Search" className="header-search" />
-        <span className="header-icon">🔍</span>
-        <span className="header-icon">❤️</span>
-        <span className="header-icon">🛒</span>
-        <span className="header-icon">👤</span>
-      </div>
-    </header>
-  );
-};
+    
+    <header className='header'>
+        <div className='header-location-nav'>
+          <a href='https://maps.app.goo.gl/GS8h12gHueLTvLwv8'>
+          <img
+            src='/assets/location.png'
+            alt='Location'
+            className='header-location'
+          />
+          </a>
+          <ul className='nav-links'>
+            <li>
+              <a href='#' className='nav-link'>
+                Auction
+              </a>
+            </li>
+            <li>
+              <a href='#' className='nav-link'>
+                Jewelry
+              </a>
+            </li>
+            <li>
+              <a href='#' className='nav-link'>
+                Contact
+              </a>
+            </li>
+          </ul>
+        </div>
+        <h1 className='logo'>AURORA</h1>
+        <div className='search-and-icons'>
+          <div className='search'>
+            <input type='text' placeholder='Search' className='search-input' />
+            <img
+              src='/assets/search.png'
+              alt='Search'
+              className='search-icon'
+            />
+          </div>
+          <a href='#'>
+            <img
+              src='/assets/heart.png'
+              alt='Favorite'
+              className='favorite-icon'
+            />
+          </a>
+          <a href='#'>
+            <img src='/assets/cart.png' alt='Cart' className='cart-icon' />
+          </a>
+          <a href='#'>
+            <img
+              src='/assets/user.png'
+              alt='Profile'
+              className='profile-icon'
+            />
+          </a>
+        </div>
+      </header>
+  )
+}
 
-export default Header;
+export default Header

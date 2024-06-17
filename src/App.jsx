@@ -28,7 +28,8 @@ import { child } from "firebase/database";
 import Layout from "./components/layout";
 import AboutUs from "./pages/aboutus";
 import Article from "./pages/articte";
-
+import ItemDetails from "./pages/itemdetails";
+import HomePage from "./pages/home";
 function App() {
   const PrivateRoute = ({ children, role }) => {
     const navigate = useNavigate();
@@ -43,7 +44,7 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Homepages />,
+      element: <HomePage />,
     },
     {
       path: "/login",
@@ -60,6 +61,10 @@ function App() {
     {
       path: "/reset-password",
       element: <ResetPassword />,
+    },
+    {
+      path: "/itemdetails",
+      element: <ItemDetails />,
     },
     {
       path: "/admin",
