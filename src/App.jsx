@@ -25,6 +25,10 @@ import { selectUser } from "./redux/features/counterSlice";
 import { toast } from "react-toastify";
 import { child } from "firebase/database";
 
+import Layout from "./components/layout";
+import AboutUs from "./pages/aboutus";
+import Article from "./pages/articte";
+
 function App() {
   const PrivateRoute = ({ children, role }) => {
     const navigate = useNavigate();
@@ -130,6 +134,21 @@ function App() {
         },
       ],
     },
+   
+    {
+      path: "/testt",
+      element: <Layout/>,
+      children:[
+        {
+          path: "aboutus",
+          element: <AboutUs/>,
+        },
+        {
+          path: "articte",
+          element: <Article/>,
+        },
+      ]
+    }
   ]);
 
   return <RouterProvider router={router} />;

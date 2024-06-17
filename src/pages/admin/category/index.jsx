@@ -82,6 +82,11 @@ function Category() {
       key: "id",
     },
     {
+      title: "name",
+      dataIndex: "name",
+      key: "id",
+    },
+    {
       title: "Category",
       dataIndex: "category_name",
       key: "category_name",
