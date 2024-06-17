@@ -30,6 +30,8 @@ import AboutUs from "./pages/aboutus";
 import Article from "./pages/articte";
 import ItemDetails from "./pages/itemdetails";
 import HomePage from "./pages/home";
+import Necklaces from "./pages/5itemjewelry/necklaces";
+
 function App() {
   const PrivateRoute = ({ children, role }) => {
     const navigate = useNavigate();
@@ -139,21 +141,25 @@ function App() {
         },
       ],
     },
-   
+    {
+      path: "/necklaces",
+      element: <Necklaces />,
+    },
+
     {
       path: "/testt",
-      element: <Layout/>,
-      children:[
+      element: <Layout />,
+      children: [
         {
           path: "aboutus",
-          element: <AboutUs/>,
+          element: <AboutUs />,
         },
         {
           path: "articte",
-          element: <Article/>,
+          element: <Article />,
         },
-      ]
-    }
+      ],
+    },
   ]);
 
   return <RouterProvider router={router} />;
