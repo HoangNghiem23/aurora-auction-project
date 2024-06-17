@@ -1,0 +1,148 @@
+.order-review {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  margin: 0 70px;
+
+  .order-details,
+  .order-total {
+    width: 48%;
+  }
+
+  .order-details {
+    width: 60%;
+    h2,
+    h3 {
+      font-family: "Serif", serif;
+      font-size: 24px;
+      font-weight: normal;
+      padding: 30px 0;
+      border-bottom: 2px solid #eee;
+    }
+    h2 {
+      font-size: 35px;
+    }
+    h3 {
+      font-weight: 100;
+      color: rgb(140, 132, 132);
+    }
+
+    .order-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 30px 0;
+      font-size: 20px;
+
+      img {
+        width: 150px;
+        height: 200px;
+      }
+
+      .item-details {
+        flex: 1;
+        padding: 0 30px;
+
+        p {
+          margin: 0;
+          padding: 5px 0;
+        }
+
+        a {
+          color: #b36b5e;
+          text-decoration: none;
+        }
+        .name {
+          font-weight: 700;
+        }
+        .quantity {
+          margin-bottom: 90px;
+        }
+      }
+
+      .item-price {
+        font-weight: bold;
+        button {
+          margin-left: 100px;
+        }
+      }
+
+      .delete-item {
+        background: none;
+        border: none;
+        cursor: pointer;
+      }
+    }
+
+    .additional-items {
+      margin-top: 30px;
+      display: flex;
+      position: relative;
+      justify-content: space-between;
+      color: rgb(140, 132, 132);
+
+      .additional-item {
+        position: relative;
+        width: 18%;
+
+        img {
+          width: 150px;
+          height: 200px;
+        }
+
+        p {
+          margin: 5px 0;
+        }
+        .btn {
+          position: absolute;
+          right: 0;
+          bottom: 0;
+          color: rgb(140, 132, 132);
+        }
+      }
+    }
+  }
+
+  .order-total {
+    width: 35%;
+    border: 1px solid #eee;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 350px;
+    height: 250px;
+    margin-top: 100px;
+
+    h2 {
+      font-family: "Serif", serif;
+      font-size: 24px;
+      font-weight: normal;
+      border-bottom: 2px solid #eee;
+      text-align: center;
+      padding-bottom: 10px;
+    }
+
+    h5 {
+      margin: 10px 0;
+      padding: 10px;
+      font-weight: 200;
+    }
+
+    .order-summary {
+      p {
+        display: flex;
+        justify-content: space-between;
+        margin: 10px 0;
+        border-top: 2px solid #eee;
+        padding: 10px;
+      }
+
+      button {
+        width: 100%;
+        background: #000;
+        color: #fff;
+        padding: 10px;
+        border: none;
+        cursor: pointer;
+      }
+    }
+  }
+}

@@ -16,12 +16,12 @@ function LoginPopup() {
 
   const onFinish = async (values) => {
     try {
-      console.log(values);
       const response = await api.post("/login", values);
       if (response && response.data) {
         const user = response.data;
         dispatch(login(user));
-        localStorage.setItem("token", user.token); // lưu token vào localStorage
+        localStorage.setItem("token", user.token); // Save token to localStorage
+        localStorage.setItem("role", user.roleEnum); // Save role to localStorage
         toast.success("Login success");
         navigate("/");
       } else {
@@ -44,13 +44,13 @@ function LoginPopup() {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
 
-        // Send token to your API
         try {
           const response = await api.post("/api/loginGG", { token });
           if (response && response.data) {
             const user = response.data;
             dispatch(login(user));
-            localStorage.setItem("token", user.token); // lưu token vào localStorage
+            localStorage.setItem("token", user.token); // Save token to localStorage
+            localStorage.setItem("role", user.role); // Save role to localStorage
             toast.success("Login success");
             navigate("/");
           } else {

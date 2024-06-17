@@ -1,31 +1,35 @@
-import { useNavigate, useParams } from "react-router-dom";
-import { Button, Form, Input, Space } from "antd";
-import api from "../../config/axios";
+import { useNavigate, useLocation } from "react-router-dom";
+import { Button, Form, Input } from "antd";
 import { toast } from "react-toastify";
 import { useForm } from "antd/es/form/Form";
-import "./index.scss";
+import axios from "axios";
+// import "./index.scss";
 
 const ResetPassword = () => {
   const navigate = useNavigate();
-  const { token } = useParams();
-  const [form] = useForm();
+  const location = useLocation();
+  const token = new URLSearchParams(location.search).get("token");
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
 
   const onFinish = async (values) => {
     try {
-      const response = await api.post("/reset-password", {
-        ...values,
-        token,
-      });
-      if (response.status === 200) {
-        toast.success("Password has been reset successfully");
-        navigate("/login");
-      } else {
-        toast.error("Failed to reset password");
-      }
+      const response = await axios.post(
+        "http://152.42.226.77:8080/api/reset-password",
+        {
+          password: values.newPassword,
+        },
+        config
+      );
+      toast.success("Password has been reset successfully");
+      navigate("/login");
     } catch (error) {
       toast.error("Error resetting password");
       console.log(error.response ? error.response.data.error : error.message);
-      form.resetFields();
     }
   };
 
@@ -39,40 +43,77 @@ const ResetPassword = () => {
       </div>
       <div className="loginPage__right">
         <Form
+          name="basic"
+          labelCol={{
+            span: 4,
+          }}
+          wrapperCol={{
+            span: 16,
+          }}
+          style={{
+            maxWidth: 600,
+          }}
+          initialValues={{
+            remember: true,
+          }}
           onFinish={onFinish}
-          form={form}
-          name="validateOnly"
-          layout="vertical"
           autoComplete="off"
         >
-          <h2>Reset your password</h2>
           <Form.Item
-            name="password"
             label="New Password"
+            labelCol={{ span: "24" }}
+            name="newPassword"
             rules={[
               {
                 required: true,
-                message: "Please input your new password!",
+                message: "Please input your new password !",
               },
             ]}
           >
-            <Input.Password style={{ borderRadius: "20px" }} />
+            <Input />
           </Form.Item>
-          <Form.Item>
-            <Space>
-              <Button
-                htmlType="submit"
-                className="btnStyle"
-                form={form}
-                onClick={() => form.submit()}
-              >
-                Submit
-              </Button>
-            </Space>
+
+          <Form.Item
+            label="Confirm Password"
+            labelCol={{ span: "24" }}
+            name="confirmPassword"
+            rules={[
+              {
+                required: true,
+                message: "Please input your confirm password!",
+              },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue("newPassword") === value) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(
+                    new Error("The new password that you entered do not match!")
+                  );
+                },
+              }),
+            ]}
+          >
+            <Input />
           </Form.Item>
-          <Form.Item>
-            <Button type="link" onClick={() => navigate("/login")}>
-              Back to log in
+
+          <Form.Item
+            wrapperCol={{
+              offset: 0,
+              span: 16,
+            }}
+          >
+            <Button
+              className="btn btn-primary btn-lg"
+              style={{
+                paddingLeft: "2.5rem",
+                paddingRight: "2.5rem",
+                paddingBottom: "2.5rem",
+              }}
+              type="primary"
+              htmlType="submit"
+            >
+              Reset Password
             </Button>
           </Form.Item>
         </Form>

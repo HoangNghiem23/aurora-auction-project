@@ -1,10 +1,18 @@
-import React from "react";
-import { Form, Input, Checkbox, Button, Row, Col } from "antd";
-import "./index.scss";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
+import "./index.scss";
 
 const HomePage = () => {
+  const navigate = useNavigate();
+  const [role, setRole] = useState(null);
+
+  useEffect(() => {
+    const userRole = localStorage.getItem("role");
+    setRole(userRole);
+  }, []);
+
   return (
     <div className="container">
       <Header />
@@ -175,6 +183,33 @@ const HomePage = () => {
             </div>
           </div>
         </section>
+        {role === "ADMIN" && (
+          <div className="admin-button-container">
+            <button
+              onClick={() => navigate("/admin/dashboard")}
+              className="admin-button"
+            >
+              Admin Dashboard
+            </button>
+          </div>
+        )}
+        {role === "STAFF" && (
+          <div className="admin-button-container">
+            <button onClick={() => navigate("/staff")} className="admin-button">
+              Staff
+            </button>
+          </div>
+        )}
+        {role === "MANAGER" && (
+          <div className="admin-button-container">
+            <button
+              onClick={() => navigate("/manager")}
+              className="admin-button"
+            >
+              Manager
+            </button>
+          </div>
+        )}
       </main>
       <Footer />
     </div>

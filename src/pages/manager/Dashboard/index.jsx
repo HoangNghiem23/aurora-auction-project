@@ -7,6 +7,7 @@ import {
   CheckCircleOutlined,
   TeamOutlined,
   AppstoreAddOutlined,
+  ProductOutlined,
 } from "@ant-design/icons";
 import { Avatar, Breadcrumb, Layout, Menu, Space, theme } from "antd";
 import { Footer } from "antd/es/layout/layout";
@@ -23,18 +24,17 @@ function getItem(label, key, icon, children) {
   };
 }
 
-const Dashboard = () => {
+const Manager = () => {
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
   const [items, setItems] = useState([]);
-  const [key, setKey] = useState();
   const location = useLocation();
   const currentURI =
     location.pathname.split("/")[location.pathname.split("/").length - 1];
-  const role = "admin";
+  const role = "manager";
 
   const dataOpen = JSON.parse(localStorage.getItem("keys")) ?? [];
 
@@ -82,10 +82,8 @@ const Dashboard = () => {
 
     if (role === "admin") {
       setItems([
-        // getItem("product", "product", <AppstoreAddOutlined />),
-        getItem("Jewelry", "jewelry", <AppstoreAddOutlined />),
+        getItem("product", "product", <AppstoreAddOutlined />),
         getItem("Category", "category", <AppstoreAddOutlined />),
-        getItem("Account", "account", <TeamOutlined />),
         getItem("Hồ sơ", "profile", <ProfileOutlined />),
         getItem("Quản lý Clubs", "clubs", <HeartOutlined />, [
           getItem("Club 1", "club1"),
@@ -97,6 +95,30 @@ const Dashboard = () => {
           getItem("Club 1", "account-club-1"),
           getItem("Club 2", "account-club-2"),
           getItem("Club 3", "account-club-3"),
+          getItem("All Staffs", "all-staffs"),
+        ]),
+        getItem("Thống kê", "statistics", <BarChartOutlined />, [
+          getItem("Club 1", "stats-club-1"),
+          getItem("Club 2", "stats-club-2"),
+          getItem("Club 3", "stats-club-3"),
+          getItem("All Clubs", "all-clubs"),
+        ]),
+      ]);
+    }
+    if (role === "manager") {
+      setItems([
+        getItem("Jewelry", "jewelry", <ProductOutlined />),
+        getItem("Hồ sơ", "profile", <ProfileOutlined />),
+        getItem("Quản lý Clubs", "club", <HeartOutlined />, [
+          getItem("Club 1", "club1"),
+          getItem("Club 2", "club2"),
+          getItem("Club 3", "club3"),
+          getItem("All Promotion", "all-promotion"),
+        ]),
+        getItem("Quản lý Staffs", "staffs", <UserOutlined />, [
+          getItem("Club 1", "staff-club-1"),
+          getItem("Club 2", "staff-club-2"),
+          getItem("Club 3", "staff-club-3"),
           getItem("All Staffs", "all-staffs"),
         ]),
         getItem("Thống kê", "statistics", <BarChartOutlined />, [
@@ -121,7 +143,7 @@ const Dashboard = () => {
   }, [openKeys]);
 
   useEffect(() => {
-    handleSubMenuOpen([...openKeys, key]);
+    handleSubMenuOpen([...openKeys, currentURI]);
   }, [currentURI]);
 
   return (
@@ -135,7 +157,7 @@ const Dashboard = () => {
           theme="dark"
           defaultSelectedKeys={["profile"]}
           mode="inline"
-          selectedKeys={currentURI}
+          selectedKeys={[currentURI]}
           openKeys={openKeys}
           onOpenChange={handleSubMenuOpen}
         >
@@ -147,7 +169,7 @@ const Dashboard = () => {
                     key={subItem.key}
                     onClick={(e) => handleSelectKey(e.keyPath[1])}
                   >
-                    <Link to={`/admin/dashboard/${subItem.key}`}>
+                    <Link to={`/manager/dashboard/${subItem.key}`}>
                       {subItem.label}
                     </Link>
                   </Menu.Item>
@@ -155,7 +177,7 @@ const Dashboard = () => {
               </Menu.SubMenu>
             ) : (
               <Menu.Item key={item.key} icon={item.icon}>
-                <Link to={`/admin/dashboard/${item.key}`}>{item.label}</Link>
+                <Link to={`/manager/dashboard/${item.key}`}>{item.label}</Link>
               </Menu.Item>
             )
           )}
@@ -196,4 +218,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Manager;

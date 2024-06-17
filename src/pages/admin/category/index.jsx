@@ -1,8 +1,27 @@
-import { Button, Form, Input, Modal, Table } from "antd";
+import { Button, Form, Input, Modal, Table, Popconfirm } from "antd";
 import { useEffect, useState } from "react";
 import api from "../../../config/axios";
 
 function Category() {
+  const [Data, setData] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isUpdate, setIsUpdate] = useState(false);
+  const [currentCategory, setCurrentCategory] = useState(null);
+  const [form] = Form.useForm();
+
+  const fetchData = async () => {
+    try {
+      const response = await api.get("/category");
+      setData(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const handleDelete = async (values) => {
     try {
       await api.delete(`/category/${values.id}`);
@@ -12,9 +31,48 @@ function Category() {
     }
   };
 
-  const handleEdit = (values) => {
-    setEditingCategory(values);
-    setIsEditModalOpen(true);
+  const handleUpdateCategory = (category) => {
+    setIsUpdate(true);
+    setCurrentCategory(category);
+    form.setFieldsValue({ name: category.name });
+    setIsModalOpen(true);
+  };
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+    setIsUpdate(false);
+    setCurrentCategory(null);
+    form.resetFields();
+  };
+
+  const onFinish = async (values) => {
+    try {
+      console.log("Form Values:", values); // Debug: Log form values
+      if (isUpdate && currentCategory) {
+        const response = await api.put(
+          `/category/${currentCategory.id}`,
+          values
+        );
+        console.log("Update Response:", response.data); // Debug: Log update response
+        const updatedCategories = Data.map((category) =>
+          category.id === currentCategory.id
+            ? { ...category, ...values }
+            : category
+        );
+        setData(updatedCategories);
+      } else {
+        const response = await api.post("/category", values);
+        console.log("Create Response:", response.data); // Debug: Log create response
+        setData([...Data, response.data]);
+      }
+      handleCancel();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const columns = [
@@ -31,149 +89,57 @@ function Category() {
     {
       title: "Category",
       dataIndex: "category_name",
-      key: "categoryName",
+      key: "category_name",
     },
     {
       title: "Action",
       render: (values) => (
-        <span>
-          <Button onClick={() => handleEdit(values)} type="primary">
-            Edit
-          </Button>
+        <>
           <Button
-            onClick={() => handleDelete(values)}
-            danger
             type="primary"
-            style={{ marginLeft: "8px" }}
+            style={{ marginRight: 8 }}
+            onClick={() => handleUpdateCategory(values)}
           >
-            Delete
+            Update
           </Button>
-        </span>
+          <Popconfirm
+            title="Delete the category"
+            description="Are you sure to delete this category?"
+            onConfirm={() => handleDelete(values)}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button danger>Delete</Button>
+          </Popconfirm>
+        </>
       ),
     },
   ];
 
-  const [Data, setData] = useState([]);
-  const [editingCategory, setEditingCategory] = useState(null);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-
-  const fetchData = async () => {
-    try {
-      const response = await api.get("/category");
-      console.log(response.data);
-      setData(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, [Data]);
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-  const handleOk = () => {
-    setIsModalOpen(false);
-    setIsEditModalOpen(false);
-  };
-  const handleCancel = () => {
-    setIsModalOpen(false);
-    setIsEditModalOpen(false);
-  };
-  const onFinish = async (values) => {
-    console.log(values);
-    try {
-      const response = await api.post("/category", values);
-      setData([...Data, response.data]);
-      setIsModalOpen(false);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const onEditFinish = async (values) => {
-    try {
-      const response = await api.put(`/category/${editingCategory.id}`, values);
-      setData(
-        Data.map((data) =>
-          data.id === editingCategory.id ? response.data : data
-        )
-      );
-      setIsEditModalOpen(false);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
-
   return (
     <div>
-      <Button type="primary" onClick={showModal}>
+      <Button type="primary" onClick={handleOpenModal}>
         Add new category
       </Button>
       <Modal
         footer={false}
-        title="Add New Category"
+        title={isUpdate ? "Update Category" : "Add new Category"}
         open={isModalOpen}
-        onOk={handleOk}
         onCancel={handleCancel}
       >
         <Form
-          name="basic"
+          form={form}
+          name="categoryForm"
           labelCol={{ span: 8 }}
           wrapperCol={{ span: 16 }}
-          style={{ maxWidth: 600 }}
-          initialValues={{ remember: true }}
           onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-          autoComplete="off"
+          initialValues={{ remember: true }}
         >
           <Form.Item
             label="Category Name"
             name="category_name"
             rules={[
-              { required: true, message: "Please input your category name!" },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
-        </Form>
-      </Modal>
-
-      <Modal
-        footer={false}
-        title="Edit Category"
-        open={isEditModalOpen}
-        onOk={handleOk}
-        onCancel={handleCancel}
-      >
-        <Form
-          name="edit"
-          labelCol={{ span: 8 }}
-          wrapperCol={{ span: 16 }}
-          style={{ maxWidth: 600 }}
-          initialValues={{ categoryName: editingCategory?.categoryName }}
-          onFinish={onEditFinish}
-          onFinishFailed={onFinishFailed}
-          autoComplete="off"
-        >
-          <Form.Item
-            label="Category Name"
-            name="category_name"
-            rules={[
-              { required: true, message: "Please input your category name!" },
+              { required: true, message: "Please input the category name!" },
             ]}
           >
             <Input />
@@ -185,8 +151,7 @@ function Category() {
           </Form.Item>
         </Form>
       </Modal>
-
-      <Table dataSource={Data} columns={columns} />
+      <Table dataSource={Data} columns={columns} rowKey="id" />
     </div>
   );
 }
