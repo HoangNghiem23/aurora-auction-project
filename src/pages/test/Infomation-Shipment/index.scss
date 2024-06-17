@@ -1,0 +1,256 @@
+.fill-info {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  margin: 0 70px;
+
+  .info-section {
+    width: 60%;
+
+    .back-link {
+      display: block;
+      margin-bottom: 20px;
+      text-decoration: none;
+      color: #000;
+      font-weight: bold;
+    }
+
+    h2 {
+      font-family: "Serif", serif;
+      font-size: 35px;
+      font-weight: normal;
+      padding-bottom: 20px;
+      margin-bottom: 30px;
+      border-bottom: 2px solid #eee;
+    }
+
+    .info-form,
+    .billing-form {
+      display: flex;
+      flex-direction: column;
+
+      input {
+        padding: 15px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+      }
+
+      .address-details,
+      .card-details {
+        display: flex;
+        justify-content: space-between;
+
+        input {
+          width: 31%;
+        }
+      }
+    }
+
+    h3 {
+      font-family: "Serif", serif;
+      font-size: 24px;
+      font-weight: normal;
+      padding: 30px 0;
+      border-bottom: 2px solid #eee;
+      margin-top: 30px;
+    }
+
+    .delivery-options {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+
+      .delivery-option {
+        padding: 10px 20px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+
+        &.selected {
+          background-color: #000;
+          color: #fff;
+        }
+      }
+    }
+
+    .shipping-details,
+    .pickup-location {
+      margin-top: 50px;
+      border-radius: 4px;
+
+      h4 {
+        font-size: 20px;
+        margin-bottom: 10px;
+        border-bottom: 2px solid #eee;
+        padding-bottom: 10px;
+      }
+
+      p {
+        margin: 5px 0;
+        margin-top: 10px;
+      }
+      .pickup_avai {
+        color: #b36b5e;
+      }
+    }
+
+    .shipping-details {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+
+      .autofill {
+        position: absolute;
+        top: 0;
+        right: 0;
+        font-size: 14px;
+        cursor: pointer;
+        color: #000;
+        text-decoration: underline;
+      }
+
+      input {
+        padding: 15px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+      }
+
+      .address-details {
+        display: flex;
+        justify-content: space-between;
+
+        input {
+          width: 31%;
+        }
+      }
+    }
+
+    .next-button {
+      width: 100%;
+      background: #000;
+      color: #fff;
+      padding: 10px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 20px;
+    }
+  }
+}
+.order-summary {
+  width: 35%;
+  border: 1px solid #eee;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 350px;
+  height: max-content;
+  margin-top: 100px;
+
+  h2 {
+    font-family: "Serif", serif;
+    font-size: 24px;
+    font-weight: normal;
+    border-bottom: 2px solid #eee;
+    text-align: center;
+    padding-bottom: 10px;
+  }
+
+  .summary-details {
+    p {
+      display: flex;
+      justify-content: space-between;
+      margin: 10px 0;
+      padding-top: 10px;
+
+      &.total {
+        font-weight: bold;
+        font-size: 18px;
+        border-top: 2px solid #eee;
+      }
+    }
+
+    button {
+      width: 100%;
+      background: #000;
+      color: #fff;
+      padding: 10px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+    }
+  }
+}
+
+.purchase-complete {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+
+  h2 {
+    font-family: "Serif", serif;
+    font-size: 35px;
+    font-weight: normal;
+    margin-bottom: 20px;
+  }
+
+  p {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+
+  img {
+    margin-top: 20px;
+    width: 300px;
+    height: auto;
+  }
+
+  .order-summary {
+    border: 1px solid #eee;
+    padding: 30px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 65%;
+    margin-top: 20px;
+
+    .order-item {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+    }
+
+    .customer-info {
+      display: flex;
+      // flex-wrap: wrap;
+      // flex-direction: column;
+
+      .left {
+        width: 50%;
+      }
+      .right {
+        width: 50%;
+      }
+
+      .info {
+        margin-bottom: 10px;
+      }
+    }
+
+    button {
+      width: 100%;
+      background: #000;
+      color: #fff;
+      padding: 10px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 20px;
+    }
+  }
+}

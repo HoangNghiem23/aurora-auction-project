@@ -1,16 +1,78 @@
-import { Button, Checkbox, Form, Input, Modal, Table } from "antd";
+import { Button, Form, Input, Modal, Table, Popconfirm } from "antd";
 import { useEffect, useState } from "react";
 import api from "../../../config/axios";
-// import axios from "axios";
+
 function Category() {
-  const handleDelete = (values) => {
-    console.log(values);
+  const [Data, setData] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isUpdate, setIsUpdate] = useState(false);
+  const [currentCategory, setCurrentCategory] = useState(null);
+  const [form] = Form.useForm();
 
-    api.delete(
-      `http://152.42.226.77:8080/swagger-ui/index.html#/category-api/deleteCategory${values.id}`
-    );
+  const fetchData = async () => {
+    try {
+      const response = await api.get("/category");
+      setData(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-    setData(Data.filter((data) => data.id != values.id));
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const handleDelete = async (values) => {
+    try {
+      await api.delete(`/category/${values.id}`);
+      setData(Data.filter((data) => data.id !== values.id));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleUpdateCategory = (category) => {
+    setIsUpdate(true);
+    setCurrentCategory(category);
+    form.setFieldsValue({ name: category.name });
+    setIsModalOpen(true);
+  };
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+    setIsUpdate(false);
+    setCurrentCategory(null);
+    form.resetFields();
+  };
+
+  const onFinish = async (values) => {
+    try {
+      console.log("Form Values:", values); // Debug: Log form values
+      if (isUpdate && currentCategory) {
+        const response = await api.put(
+          `/category/${currentCategory.id}`,
+          values
+        );
+        console.log("Update Response:", response.data); // Debug: Log update response
+        const updatedCategories = Data.map((category) =>
+          category.id === currentCategory.id
+            ? { ...category, ...values }
+            : category
+        );
+        setData(updatedCategories);
+      } else {
+        const response = await api.post("/category", values);
+        console.log("Create Response:", response.data); // Debug: Log create response
+        setData([...Data, response.data]);
+      }
+      handleCancel();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const columns = [
@@ -21,115 +83,70 @@ function Category() {
     },
     {
       title: "Category",
-      dataIndex: "categoryName",
-      key: "categoryName",
+      dataIndex: "category_name",
+      key: "category_name",
     },
     {
       title: "Action",
       render: (values) => (
-        <Button onClick={() => handleDelete(values)} danger type="primary">
-          Delete
-        </Button>
+        <>
+          <Button
+            type="primary"
+            style={{ marginRight: 8 }}
+            onClick={() => handleUpdateCategory(values)}
+          >
+            Update
+          </Button>
+          <Popconfirm
+            title="Delete the category"
+            description="Are you sure to delete this category?"
+            onConfirm={() => handleDelete(values)}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button danger>Delete</Button>
+          </Popconfirm>
+        </>
       ),
     },
   ];
-  const [Data, setData] = useState([]);
-
-  const fetchData = async () => {
-    try {
-      const response = await api.get("/category");
-      console.log(response.data);
-      setData(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  useEffect(() => {
-    fetchData();
-  }, []);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
-  const onFinish = async (values) => {
-    console.log("Success:", values);
-
-    const response = await api.post(
-      "https://665d6f09e88051d604068e77.mockapi.io/category",
-      values
-    );
-    console.log(response);
-    // add xong - render lai man hinh
-
-    setData([...Data, response.data]);
-    setIsModalOpen(false);
-  };
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
 
   return (
     <div>
-      <Button type="primary" onClick={showModal}>
+      <Button type="primary" onClick={handleOpenModal}>
         Add new category
       </Button>
       <Modal
         footer={false}
-        title="Basic Modal"
+        title={isUpdate ? "Update Category" : "Add new Category"}
         open={isModalOpen}
-        onOk={handleOk}
         onCancel={handleCancel}
       >
         <Form
-          name="basic"
-          labelCol={{
-            span: 8,
-          }}
-          wrapperCol={{
-            span: 16,
-          }}
-          style={{
-            maxWidth: 600,
-          }}
-          initialValues={{
-            remember: true,
-          }}
+          form={form}
+          name="categoryForm"
+          labelCol={{ span: 8 }}
+          wrapperCol={{ span: 16 }}
           onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-          autoComplete="off"
+          initialValues={{ remember: true }}
         >
           <Form.Item
-            label="categoryName"
-            name="categoryName"
+            label="Category Name"
+            name="category_name"
             rules={[
-              {
-                required: true,
-                message: "Please input your categoryName!",
-              },
+              { required: true, message: "Please input the category name!" },
             ]}
           >
             <Input />
           </Form.Item>
-
-          <Form.Item
-            wrapperCol={{
-              offset: 8,
-              span: 16,
-            }}
-          >
+          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
             <Button type="primary" htmlType="submit">
               Submit
             </Button>
           </Form.Item>
         </Form>
       </Modal>
-      <Table dataSource={Data} columns={columns} />;
+      <Table dataSource={Data} columns={columns} rowKey="id" />
     </div>
   );
 }
