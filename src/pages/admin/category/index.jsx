@@ -1,16 +1,20 @@
-import { Button, Checkbox, Form, Input, Modal, Table } from "antd";
+import { Button, Form, Input, Modal, Table } from "antd";
 import { useEffect, useState } from "react";
 import api from "../../../config/axios";
-// import axios from "axios";
+
 function Category() {
-  const handleDelete = (values) => {
-    console.log(values);
+  const handleDelete = async (values) => {
+    try {
+      await api.delete(`/category/${values.id}`);
+      setData(Data.filter((data) => data.id !== values.id));
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-    api.delete(
-      `http://152.42.226.77:8080/swagger-ui/index.html#/category-api/deleteCategory${values.id}`
-    );
-
-    setData(Data.filter((data) => data.id != values.id));
+  const handleEdit = (values) => {
+    setEditingCategory(values);
+    setIsEditModalOpen(true);
   };
 
   const columns = [
@@ -20,20 +24,38 @@ function Category() {
       key: "id",
     },
     {
+      title: "name",
+      dataIndex: "name",
+      key: "id",
+    },
+    {
       title: "Category",
-      dataIndex: "categoryName",
+      dataIndex: "category_name",
       key: "categoryName",
     },
     {
       title: "Action",
       render: (values) => (
-        <Button onClick={() => handleDelete(values)} danger type="primary">
-          Delete
-        </Button>
+        <span>
+          <Button onClick={() => handleEdit(values)} type="primary">
+            Edit
+          </Button>
+          <Button
+            onClick={() => handleDelete(values)}
+            danger
+            type="primary"
+            style={{ marginLeft: "8px" }}
+          >
+            Delete
+          </Button>
+        </span>
       ),
     },
   ];
+
   const [Data, setData] = useState([]);
+  const [editingCategory, setEditingCategory] = useState(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const fetchData = async () => {
     try {
@@ -44,32 +66,48 @@ function Category() {
       console.log(error);
     }
   };
+
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [Data]);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
     setIsModalOpen(true);
   };
   const handleOk = () => {
     setIsModalOpen(false);
+    setIsEditModalOpen(false);
   };
   const handleCancel = () => {
     setIsModalOpen(false);
+    setIsEditModalOpen(false);
   };
   const onFinish = async (values) => {
-    console.log("Success:", values);
-
-    const response = await api.post(
-      "https://665d6f09e88051d604068e77.mockapi.io/category",
-      values
-    );
-    console.log(response);
-    // add xong - render lai man hinh
-
-    setData([...Data, response.data]);
-    setIsModalOpen(false);
+    console.log(values);
+    try {
+      const response = await api.post("/category", values);
+      setData([...Data, response.data]);
+      setIsModalOpen(false);
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  const onEditFinish = async (values) => {
+    try {
+      const response = await api.put(`/category/${editingCategory.id}`, values);
+      setData(
+        Data.map((data) =>
+          data.id === editingCategory.id ? response.data : data
+        )
+      );
+      setIsEditModalOpen(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
@@ -81,55 +119,74 @@ function Category() {
       </Button>
       <Modal
         footer={false}
-        title="Basic Modal"
+        title="Add New Category"
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
       >
         <Form
           name="basic"
-          labelCol={{
-            span: 8,
-          }}
-          wrapperCol={{
-            span: 16,
-          }}
-          style={{
-            maxWidth: 600,
-          }}
-          initialValues={{
-            remember: true,
-          }}
+          labelCol={{ span: 8 }}
+          wrapperCol={{ span: 16 }}
+          style={{ maxWidth: 600 }}
+          initialValues={{ remember: true }}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
           autoComplete="off"
         >
           <Form.Item
-            label="categoryName"
-            name="categoryName"
+            label="Category Name"
+            name="category_name"
             rules={[
-              {
-                required: true,
-                message: "Please input your categoryName!",
-              },
+              { required: true, message: "Please input your category name!" },
             ]}
           >
             <Input />
           </Form.Item>
 
-          <Form.Item
-            wrapperCol={{
-              offset: 8,
-              span: 16,
-            }}
-          >
+          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
             <Button type="primary" htmlType="submit">
               Submit
             </Button>
           </Form.Item>
         </Form>
       </Modal>
-      <Table dataSource={Data} columns={columns} />;
+
+      <Modal
+        footer={false}
+        title="Edit Category"
+        open={isEditModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        <Form
+          name="edit"
+          labelCol={{ span: 8 }}
+          wrapperCol={{ span: 16 }}
+          style={{ maxWidth: 600 }}
+          initialValues={{ categoryName: editingCategory?.categoryName }}
+          onFinish={onEditFinish}
+          onFinishFailed={onFinishFailed}
+          autoComplete="off"
+        >
+          <Form.Item
+            label="Category Name"
+            name="category_name"
+            rules={[
+              { required: true, message: "Please input your category name!" },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+        </Form>
+      </Modal>
+
+      <Table dataSource={Data} columns={columns} />
     </div>
   );
 }

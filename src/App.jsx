@@ -8,6 +8,10 @@ import EmailTemplate from "./pages/emailtemplate";
 import Dashboard from "./pages/admin/dashboard";
 import Category from "./pages/admin/category";
 
+import Layout from "./components/layout";
+import AboutUs from "./pages/aboutus";
+import Article from "./pages/articte";
+
 function App() {
   const router = createBrowserRouter([
     {
@@ -44,6 +48,21 @@ function App() {
       path: "/email-template",
       element: <EmailTemplate />,
     },
+   
+    {
+      path: "/testt",
+      element: <Layout/>,
+      children:[
+        {
+          path: "aboutus",
+          element: <AboutUs/>,
+        },
+        {
+          path: "articte",
+          element: <Article/>,
+        },
+      ]
+    }
   ]);
 
   return <RouterProvider router={router} />;
