@@ -72,6 +72,10 @@ const ItemDetails = () => {
                 <p>HEART DROP - $200.00</p>
               </div>
               <div className="recommended-item">
+                <img src="https://i.pinimg.com/originals/2c/cf/44/2ccf44ad05c0fe69fe1ccbb7ef9bbf61.jpg" alt="Heart Drop" />
+                <p>HEART DROP - $200.00</p>
+              </div>
+              <div className="recommended-item">
                 <img src="https://cdn.pixabay.com/photo/2016/02/02/15/54/jewellery-1175533_640.jpg" alt="Diamond Choker" />
                 <p>DIAMOND CHOKER - $300.00</p>
               </div>
@@ -82,10 +86,6 @@ const ItemDetails = () => {
               <div className="recommended-item">
                 <img src="https://img.freepik.com/free-photo/gold-necklace-earrings-are-displayed-red-velvet-surface_1340-42830.jpg" alt="Ruby Pendant" />
                 <p>RUBY PENDANT - $250.00</p>
-              </div>
-              <div className="recommended-item">
-                <img src="https://etimg.etb2bimg.com/thumb/msid-105058534,width-1200,resizemode-4/.jpg" alt="Opal Heart" />
-                <p>OPAL HEART - $1000.00</p>
               </div>
             </div>
           </div>
