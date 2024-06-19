@@ -28,6 +28,11 @@ const Header = () => {
                 Contact
               </a>
             </li>
+            <li>
+              <a href='#' className='nav-link'>
+                Blog
+              </a>
+            </li>
           </ul>
         </div>
         <h1 className='logo'>AURORA</h1>
