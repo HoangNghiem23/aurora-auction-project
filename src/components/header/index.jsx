@@ -25,12 +25,12 @@ const Header = () => {
             </li>
             <li>
               <a href='#' className='nav-link'>
-                Contact
+                Sell
               </a>
             </li>
             <li>
               <a href='#' className='nav-link'>
-                Blog
+                Contact
               </a>
             </li>
           </ul>

@@ -1,75 +1,72 @@
 .slick-slider {
+  height: 100%;
+  position: relative;
+
+  .slick-list {
     height: 100%;
-    position: relative;
-  
-    .slick-list {
+
+    .slick-track {
       height: 100%;
-  
-      .slick-track {
+
+      .slick-slide {
         height: 100%;
-  
-        .slick-slide {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .main-image {
+          width: 100%;
           height: 100%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-  
-          .main-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-          }
+          object-fit: cover;
         }
       }
     }
-  
-    .custom-arrow {
-      width: 60px;
-      height: 60px;
-      background: #fff;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 1;
-      opacity: 0;  // Bắt đầu với độ mờ
-      transition: opacity 0.3s;  // Thêm hiệu ứng chuyển đổi mượt mà
-    }
-  
-    &:hover .custom-arrow {
-      opacity: 1;  // Hiển thị khi trỏ chuột vào slider
-    }
-  
-    .custom-next-arrow {
-      right: 10px;
-    }
-  
-    .custom-prev-arrow {
-      left: 10px;
-    }
-  
-    .custom-next-arrow::before,
-    .custom-prev-arrow::before {
-      content: '';
-      border: solid black;
-      border-width: 0 3px 3px 0;
-      display: inline-block;
-      padding: 10px;
-      position: relative;
-      left: 2px; // Căn chỉnh vị trí mũi tên trong hình tròn
-    }
-  
-    .custom-next-arrow::before {
-      transform: rotate(-45deg);
-    }
-  
-    .custom-prev-arrow::before {
-      transform: rotate(135deg);
-    }
   }
-  
+
+  .custom-arrow {
+    width: 48px; // Giảm kích thước đi 20%
+    height: 48px; // Giảm kích thước đi 20%
+    background: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    opacity: 0; // Bắt đầu với độ mờ
+    transition: opacity 0.3s; // Thêm hiệu ứng chuyển đổi mượt mà
+  }
+
+  &:hover .custom-arrow {
+    opacity: 1; // Hiển thị khi trỏ chuột vào slider
+  }
+
+  .custom-next-arrow {
+    right: 10px;
+  }
+
+  .custom-prev-arrow {
+    left: 10px;
+  }
+
+  .custom-next-arrow::before,
+  .custom-prev-arrow::before {
+    content: '';
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 10px;
+    position: absolute; // Sử dụng position absolute để căn giữa
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg); // Sử dụng translate để căn giữa
+  }
+
+  .custom-prev-arrow::before {
+    transform: translate(-50%, -50%) rotate(135deg); // Sử dụng translate để căn giữa
+  }
+}
