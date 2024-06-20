@@ -18,6 +18,9 @@ const HomePage = () => {
   const handlePolicyClick = () => {
     navigate('/policy');
   };
+  const handleArticleClick = () => {
+    navigate('/article');
+  };
 
   return (
     <div className='container'>
@@ -77,7 +80,7 @@ const HomePage = () => {
                 alt='Charms'
                 className='category-image'
               />
-              <p className='category-text'>Charms</p>
+              <p className='category-text'>Brooch</p>
             </div>
           </div>
         </section>
@@ -151,7 +154,7 @@ const HomePage = () => {
                 enim ad minim veniam, quis nostrud exercitation ullamco laboris
                 nisi ut aliquip ex ea commodo consequat.
               </p>
-              <button className='section-btn'>Read more</button>
+              <button className='section-btn' onClick={handleArticleClick}>Read more</button>
             </div>
             <img
               src='https://c0.wallpaperflare.com/preview/984/867/753/jewellery-gold-wedding-indian.jpg'

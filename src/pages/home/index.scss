@@ -94,6 +94,7 @@
             width: 100%;
             box-shadow: 0 4px 4px 0 #d8d1ce;
             border-radius: 4px;
+            object-fit: cover;
           }
 
           .category-text {
@@ -114,6 +115,7 @@
       .product-item {
         width: 23%;
         max-width: 300px;
+        object-fit: cover;
 
         .product-image {
           width: 100%;
