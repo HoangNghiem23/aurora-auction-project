@@ -24,6 +24,7 @@ import { useSelector } from "react-redux";
 import { selectUser } from "./redux/features/counterSlice";
 import { toast } from "react-toastify";
 import { child } from "firebase/database";
+import DiamondAuction from "./pages/admin/jewelryauction/index.jsx";
 
 import Layout from "./components/layout";
 import AboutUs from "./pages/aboutus";
@@ -90,6 +91,10 @@ function App() {
             {
               path: "/admin/dashboard/jewelry",
               element: <JewelryManegement />,
+            },
+            {
+              path: "/admin/dashboard/jewelryauction",
+              element: <DiamondAuction />,
             },
           ],
         },

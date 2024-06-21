@@ -71,7 +71,7 @@ const Necklaces = () => {
                 {Array.from({ length: 10 }).map((_, index) => (
                   <div className="necklace-item" key={index}>
                     <img
-                      src="https://via.placeholder.com/200"
+                      src="https://th.bing.com/th/id/OIP.FLv8MBvxdb5LDw0hd6T65AHaGY?rs=1&pid=ImgDetMain"
                       alt={`Necklace ${index + 1}`}
                     />
                     <p>Necklace {index + 1}</p>

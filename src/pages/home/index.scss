@@ -101,7 +101,14 @@
             margin-top: 21px;
             font-family: 'CormorantGaramond', sans-serif;
             font-size: 24px;
+            color: #000; // Setting text color to black
+
+            a {
+              text-decoration: none; // Removing underline from links
+              color: #000; // Setting text color to black
+            }
           }
+          
         }
       }
     }
