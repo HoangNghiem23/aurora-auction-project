@@ -8,6 +8,7 @@ import {
   TeamOutlined,
   AppstoreAddOutlined,
   DollarOutlined,
+  UnorderedListOutlined,
 } from "@ant-design/icons";
 import { Avatar, Breadcrumb, Layout, Menu, Space, theme } from "antd";
 import { Footer } from "antd/es/layout/layout";
@@ -107,6 +108,11 @@ const Dashboard = () => {
           getItem("All Clubs", "all-clubs"),
         ]),
         getItem("Quản lý đấu giá", "jewelryauction", <DollarOutlined />),
+        getItem(
+          "Quản lý trang sức",
+          "jewelryinauctionlist",
+          <UnorderedListOutlined />
+        ),
       ]);
     }
   }, []);
