@@ -55,6 +55,17 @@ function JewelryInAuctionList() {
       dataIndex: "endTime",
       key: "endTime",
     },
+    {
+      title: "Sold Status",
+      dataIndex: "soldStatus",
+      key: "soldStatus",
+      render: (text) => (text ? "Sold" : "Not Sold"),
+    },
+    {
+      title: "Current Bid Amount",
+      dataIndex: "currentBidAmount",
+      key: "currentBidAmount",
+    },
   ];
 
   return (

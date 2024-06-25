@@ -1,71 +1,22 @@
-import { Button, Form, Input, Modal, Table, Popconfirm } from "antd";
+import { Table } from "antd";
 import { useEffect, useState } from "react";
 import api from "../../../config/axios";
 
-function DiamondAuction() {
-  const [Data, setData] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isUpdate, setIsUpdate] = useState(false);
-  const [currentAuction, setCurrentAuction] = useState(null);
-  const [form] = Form.useForm();
+function JewelryInAuctionList() {
+  const [data, setData] = useState([]);
 
   const fetchData = async () => {
     try {
       const response = await api.get("/auctions");
-      setData(response.data);
+      setData(response.data.filter((auction) => auction.isJewelry));
     } catch (error) {
-      console.log(error);
+      console.error("Error fetching data:", error);
     }
   };
 
   useEffect(() => {
     fetchData();
   }, []);
-
-  const handleDelete = async (values) => {
-    try {
-      await api.delete(`/auctions/${values.id}`);
-      setData(Data.filter((data) => data.id !== values.id));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleUpdateAuction = (auction) => {
-    setIsUpdate(true);
-    setCurrentAuction(auction);
-    form.setFieldsValue(auction);
-    setIsModalOpen(true);
-  };
-
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-    setIsUpdate(false);
-    setCurrentAuction(null);
-    form.resetFields();
-  };
-
-  const onFinish = async (values) => {
-    try {
-      if (isUpdate && currentAuction) {
-        await api.put(`/auctions/${currentAuction.id}`, values);
-        const updatedAuctions = Data.map((auction) =>
-          auction.id === currentAuction.id ? { ...auction, ...values } : auction
-        );
-        setData(updatedAuctions);
-      } else {
-        const response = await api.post("/auctions", values);
-        setData([...Data, response.data]);
-      }
-      handleCancel();
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const columns = [
     {
@@ -105,105 +56,24 @@ function DiamondAuction() {
       key: "endTime",
     },
     {
-      title: "Action",
-      render: (values) => (
-        <>
-          <Button
-            type="primary"
-            style={{ marginRight: 8 }}
-            onClick={() => handleUpdateAuction(values)}
-          >
-            Update
-          </Button>
-          <Popconfirm
-            title="Delete the auction"
-            description="Are you sure to delete this auction?"
-            onConfirm={() => handleDelete(values)}
-            okText="Yes"
-            cancelText="No"
-          >
-            <Button danger>Delete</Button>
-          </Popconfirm>
-        </>
-      ),
+      title: "Sold Status",
+      dataIndex: "soldStatus",
+      key: "soldStatus",
+      render: (text) => (text ? "Sold" : "Not Sold"),
+    },
+    {
+      title: "Current Bid Amount",
+      dataIndex: "currentBidAmount",
+      key: "currentBidAmount",
     },
   ];
 
   return (
     <div>
-      <Button type="primary" onClick={handleOpenModal}>
-        Add new auction
-      </Button>
-      <Modal
-        footer={false}
-        title={isUpdate ? "Update Auction" : "Add new Auction"}
-        open={isModalOpen}
-        onCancel={handleCancel}
-      >
-        <Form
-          form={form}
-          name="auctionForm"
-          labelCol={{ span: 8 }}
-          wrapperCol={{ span: 16 }}
-          onFinish={onFinish}
-          initialValues={{ remember: true }}
-        >
-          <Form.Item
-            label="Name"
-            name="name"
-            rules={[{ required: true, message: "Please input the name!" }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="Image URL"
-            name="image"
-            rules={[{ required: true, message: "Please input the image URL!" }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="Starting Bid"
-            name="startingBid"
-            rules={[
-              { required: true, message: "Please input the starting bid!" },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="Bid Step"
-            name="bidStep"
-            rules={[{ required: true, message: "Please input the bid step!" }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="Start Time"
-            name="startTime"
-            rules={[
-              { required: true, message: "Please input the start time!" },
-            ]}
-          >
-            <Input type="datetime-local" />
-          </Form.Item>
-          <Form.Item
-            label="End Time"
-            name="endTime"
-            rules={[{ required: true, message: "Please input the end time!" }]}
-          >
-            <Input type="datetime-local" />
-          </Form.Item>
-          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
-        </Form>
-      </Modal>
-      <Table dataSource={Data} columns={columns} rowKey="id" />
+      <h1>Jewelry Currently in Auction</h1>
+      <Table dataSource={data} columns={columns} rowKey="id" />
     </div>
   );
 }
 
-export default DiamondAuction;
+export default JewelryInAuctionList;
