@@ -27,12 +27,12 @@ const HomePage = () => {
           <p className="category-description">Indulge in what we offer.</p>
           <div className="category-items">
             <div className="category-item">
-              <img 
+              <img
                 src="https://fleckedwithgold.com/cdn/shop/files/ultraminiclover.jpg?v=1686489354"
                 alt="Necklaces"
                 className="category-image"
               />
-              <p  className="category-text">Necklaces</p>
+              <p className="category-text">Necklaces</p>
             </div>
             <div className="category-item">
               <img

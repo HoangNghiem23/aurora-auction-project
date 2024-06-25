@@ -31,6 +31,7 @@ import Article from "./pages/articte";
 import ItemDetails from "./pages/itemdetails";
 import HomePage from "./pages/home";
 import Necklaces from "./pages/5itemjewelry/necklaces";
+import Rings from "./pages/5itemjewelry/rings";
 
 function App() {
   const PrivateRoute = ({ children, role }) => {
@@ -144,6 +145,10 @@ function App() {
     {
       path: "/necklaces",
       element: <Necklaces />,
+    },
+    {
+      path: "/rings",
+      element: <Rings />,
     },
 
     {
