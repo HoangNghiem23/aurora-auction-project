@@ -1,16 +1,53 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import Header from "../../../components/header";
 import Footer from "../../../components/footer";
 import "./index.scss";
 
 const Necklaces = () => {
-  // State to keep track of the current sorting option
+  const [necklaces, setNecklaces] = useState([]);
   const [sortOption, setSortOption] = useState("popularity");
 
-  // Function to change the sort option based on user interaction
+  useEffect(() => {
+    fetchNecklaces();
+  }, [sortOption]);
+
+  const fetchNecklaces = async () => {
+    try {
+      const response = await axios.get("/api/necklaces"); // Replace with your actual API endpoint
+      let sortedNecklaces = response.data;
+
+      switch (sortOption) {
+        case "popularity":
+          sortedNecklaces = sortedNecklaces.sort(
+            (a, b) => b.popularity - a.popularity
+          );
+          break;
+        case "type":
+          sortedNecklaces = sortedNecklaces.sort((a, b) =>
+            a.type.localeCompare(b.type)
+          );
+          break;
+        case "gemstone":
+          sortedNecklaces = sortedNecklaces.sort((a, b) =>
+            a.gemstone.localeCompare(b.gemstone)
+          );
+          break;
+        case "price":
+          sortedNecklaces = sortedNecklaces.sort((a, b) => a.price - b.price);
+          break;
+        default:
+          break;
+      }
+
+      setNecklaces(sortedNecklaces);
+    } catch (error) {
+      console.error("Error fetching necklaces:", error);
+    }
+  };
+
   const handleSortChange = (option) => {
     setSortOption(option);
-    // Here you could also add logic to sort the necklace items based on the selected option
   };
 
   return (
@@ -22,7 +59,7 @@ const Necklaces = () => {
             <div className="necklaces-hero-content">
               <h1 className="necklaces-hero-title">Necklaces</h1>
               <p className="necklaces-hero-description">
-                Lorem ipsum dolor sit amet.
+                Discover our beautiful collection of necklaces.
               </p>
             </div>
           </section>
@@ -67,15 +104,11 @@ const Necklaces = () => {
                 </ul>
               </div>
               <div className="necklaces-items-section">
-                {/* Mapping over necklace items could be done here if data is dynamic */}
-                {Array.from({ length: 10 }).map((_, index) => (
+                {necklaces.map((necklace, index) => (
                   <div className="necklace-item" key={index}>
-                    <img
-                      src="https://via.placeholder.com/200"
-                      alt={`Necklace ${index + 1}`}
-                    />
-                    <p>Necklace {index + 1}</p>
-                    <p>${(index + 1) * 100}.00</p>
+                    <img src={necklace.imageUrl} alt={necklace.name} />
+                    <p>{necklace.name}</p>
+                    <p>${necklace.price}</p>
                   </div>
                 ))}
               </div>
