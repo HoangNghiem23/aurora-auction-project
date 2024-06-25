@@ -31,7 +31,7 @@ import AboutUs from "./pages/aboutus";
 import Article from "./pages/articte";
 import ItemDetails from "./pages/itemdetails";
 import HomePage from "./pages/home";
-import Necklaces from "./pages/5itemjewelry/necklaces";
+
 
 function App() {
   const PrivateRoute = ({ children, role }) => {
