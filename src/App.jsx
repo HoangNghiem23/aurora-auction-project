@@ -32,6 +32,7 @@ import ItemDetails from "./pages/itemdetails";
 import HomePage from "./pages/home";
 import Necklaces from "./pages/5itemjewelry/necklaces";
 import Rings from "./pages/5itemjewelry/rings";
+import AdminDashboard from "./pages/admin/dashboardadmin";
 
 function App() {
   const PrivateRoute = ({ children, role }) => {
@@ -91,6 +92,10 @@ function App() {
             {
               path: "/admin/dashboard/jewelry",
               element: <JewelryManegement />,
+            },
+            {
+              path: "/admin/dashboard/dashboardadmin",
+              element: <AdminDashboard />,
             },
           ],
         },

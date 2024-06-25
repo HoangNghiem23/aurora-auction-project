@@ -7,6 +7,7 @@ import {
   CheckCircleOutlined,
   TeamOutlined,
   AppstoreAddOutlined,
+  
 } from "@ant-design/icons";
 import { Avatar, Breadcrumb, Layout, Menu, Space, theme } from "antd";
 import { Footer } from "antd/es/layout/layout";
@@ -105,6 +106,7 @@ const Dashboard = () => {
           getItem("Club 3", "stats-club-3"),
           getItem("All Clubs", "all-clubs"),
         ]),
+        getItem("Dashboard Admin", "dashboardadmin", <BarChartOutlined />),
       ]);
     }
   }, []);
