@@ -4,6 +4,7 @@ import "./index.scss";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 import ImageSlider from "../../components/slider"; // Import slider
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
   return (
@@ -27,44 +28,54 @@ const HomePage = () => {
           <p className="category-description">Indulge in what we offer.</p>
           <div className="category-items">
             <div className="category-item">
-              <img
-                src="https://fleckedwithgold.com/cdn/shop/files/ultraminiclover.jpg?v=1686489354"
-                alt="Necklaces"
-                className="category-image"
-              />
-              <p className="category-text">Necklaces</p>
+              <Link to="/necklaces">
+                <img
+                  src="https://fleckedwithgold.com/cdn/shop/files/ultraminiclover.jpg?v=1686489354"
+                  alt="Necklaces"
+                  className="category-image"
+                />
+                <p className="category-text">Necklaces</p>
+              </Link>
             </div>
             <div className="category-item">
-              <img
-                src="https://www.lmfj.com/_next/image?url=https%3A%2F%2Fimages.prismic.io%2Flmfjcom%2F7727e45a-934a-4f51-be6e-f1b8fc7410e4_20221011%2Bearring%2Bdangle.png%3Fauto%3Dcompress%2Cformat&w=3840&q=75"
-                alt="Earrings"
-                className="category-image"
-              />
-              <p className="category-text">Earrings</p>
+              <Link to="/earrings">
+                <img
+                  src="https://www.lmfj.com/_next/image?url=https%3A%2F%2Fimages.prismic.io%2Flmfjcom%2F7727e45a-934a-4f51-be6e-f1b8fc7410e4_20221011%2Bearring%2Bdangle.png%3Fauto%3Dcompress%2Cformat&w=3840&q=75"
+                  alt="Earrings"
+                  className="category-image"
+                />
+                <p className="category-text">Earrings</p>
+              </Link>
             </div>
             <div className="category-item">
-              <img
-                src="https://alexandramarksjewelry.com/cdn/shop/files/PermanentJewelry_AlexandraMarks_1000x1000.png?v=1713974191"
-                alt="Bracelets"
-                className="category-image"
-              />
-              <p className="category-text">Bracelets</p>
+              <Link to="/bracelets">
+                <img
+                  src="https://alexandramarksjewelry.com/cdn/shop/files/PermanentJewelry_AlexandraMarks_1000x1000.png?v=1713974191"
+                  alt="Bracelets"
+                  className="category-image"
+                />
+                <p className="category-text">Bracelets</p>
+              </Link>
             </div>
             <div className="category-item">
-              <img
-                src="https://ajaffe.com/pub/media/wysiwyg/Engagaement_1280_x_586_pixels_01_Sep_2022-new.jpg"
-                alt="Rings"
-                className="category-image"
-              />
-              <p className="category-text">Rings</p>
+              <Link to="/rings">
+                <img
+                  src="https://ajaffe.com/pub/media/wysiwyg/Engagaement_1280_x_586_pixels_01_Sep_2022-new.jpg"
+                  alt="Rings"
+                  className="category-image"
+                />
+                <p className="category-text">Rings</p>
+              </Link>
             </div>
             <div className="category-item">
-              <img
-                src="https://m.media-amazon.com/images/I/61b0IWUpv-L._AC_UY1000_.jpg"
-                alt="Charms"
-                className="category-image"
-              />
-              <p className="category-text">Charms</p>
+              <Link to="/charms">
+                <img
+                  src="https://m.media-amazon.com/images/I/61b0IWUpv-L._AC_UY1000_.jpg"
+                  alt="Charms"
+                  className="category-image"
+                />
+                <p className="category-text">Charms</p>
+              </Link>
             </div>
           </div>
         </section>

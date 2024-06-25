@@ -32,7 +32,9 @@ import ItemDetails from "./pages/itemdetails";
 import HomePage from "./pages/home";
 import Necklaces from "./pages/5itemjewelry/necklaces";
 import Rings from "./pages/5itemjewelry/rings";
-
+import Earrings from "./pages/5itemjewelry/earrings";
+import Bracelets from "./pages/5itemjewelry/bracelets";
+import Charms from "./pages/5itemjewelry/charms";
 function App() {
   const PrivateRoute = ({ children, role }) => {
     const navigate = useNavigate();
@@ -149,6 +151,18 @@ function App() {
     {
       path: "/rings",
       element: <Rings />,
+    },
+    {
+      path: "/earrings",
+      element: <Earrings />,
+    },
+    {
+      path: "/bracelets",
+      element: <Bracelets />,
+    },
+    {
+      path: "/charms",
+      element: <Charms />,
     },
 
     {
