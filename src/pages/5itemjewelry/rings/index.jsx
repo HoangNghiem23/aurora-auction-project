@@ -4,45 +4,43 @@ import Header from "../../../components/header";
 import Footer from "../../../components/footer";
 import "./index.scss";
 
-const Necklaces = () => {
-  const [necklaces, setNecklaces] = useState([]);
+const Rings = () => {
+  const [rings, setRings] = useState([]);
   const [sortOption, setSortOption] = useState("popularity");
 
   useEffect(() => {
-    fetchNecklaces();
+    fetchRings();
   }, [sortOption]);
 
-  const fetchNecklaces = async () => {
+  const fetchRings = async () => {
     try {
-      const response = await axios.get("/api/necklaces"); // Replace with your actual API endpoint
-      let sortedNecklaces = response.data;
+      const response = await axios.get("/api/rings"); // Replace with your actual API endpoint
+      let sortedRings = response.data;
 
       switch (sortOption) {
         case "popularity":
-          sortedNecklaces = sortedNecklaces.sort(
-            (a, b) => b.popularity - a.popularity
-          );
+          sortedRings = sortedRings.sort((a, b) => b.popularity - a.popularity);
           break;
         case "type":
-          sortedNecklaces = sortedNecklaces.sort((a, b) =>
+          sortedRings = sortedRings.sort((a, b) =>
             a.type.localeCompare(b.type)
           );
           break;
         case "gemstone":
-          sortedNecklaces = sortedNecklaces.sort((a, b) =>
+          sortedRings = sortedRings.sort((a, b) =>
             a.gemstone.localeCompare(b.gemstone)
           );
           break;
         case "price":
-          sortedNecklaces = sortedNecklaces.sort((a, b) => a.price - b.price);
+          sortedRings = sortedRings.sort((a, b) => a.price - b.price);
           break;
         default:
           break;
       }
 
-      setNecklaces(sortedNecklaces);
+      setRings(sortedRings);
     } catch (error) {
-      console.error("Error fetching necklaces:", error);
+      console.error("Error fetching rings:", error);
     }
   };
 
@@ -51,15 +49,15 @@ const Necklaces = () => {
   };
 
   return (
-    <div className="necklaces-wrapper">
+    <div className="rings-wrapper">
       <Header />
-      <div className="necklaces-container">
-        <main className="necklaces-main-content">
-          <section className="necklaces-hero-section">
-            <div className="necklaces-hero-content">
-              <h1 className="necklaces-hero-title">Necklaces</h1>
-              <p className="necklaces-hero-description">
-                Discover our beautiful collection of necklaces.
+      <div className="rings-container">
+        <main className="rings-main-content">
+          <section className="rings-hero-section">
+            <div className="rings-hero-content">
+              <h1 className="rings-hero-title">Rings</h1>
+              <p className="rings-hero-description">
+                Discover our beautiful collection of rings.
               </p>
             </div>
           </section>
@@ -103,12 +101,12 @@ const Necklaces = () => {
                   </li>
                 </ul>
               </div>
-              <div className="necklaces-items-section">
-                {necklaces.map((necklace, index) => (
-                  <div className="necklace-item" key={index}>
-                    <img src={necklace.imageUrl} alt={necklace.name} />
-                    <p>{necklace.name}</p>
-                    <p>${necklace.price}</p>
+              <div className="rings-items-section">
+                {rings.map((ring, index) => (
+                  <div className="ring-item" key={index}>
+                    <img src={ring.imageUrl} alt={ring.name} />
+                    <p>{ring.name}</p>
+                    <p>${ring.price}</p>
                   </div>
                 ))}
               </div>
@@ -121,4 +119,4 @@ const Necklaces = () => {
   );
 };
 
-export default Necklaces;
+export default Rings;

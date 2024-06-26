@@ -4,45 +4,47 @@ import Header from "../../../components/header";
 import Footer from "../../../components/footer";
 import "./index.scss";
 
-const Necklaces = () => {
-  const [necklaces, setNecklaces] = useState([]);
+const Charms = () => {
+  const [charms, setCharms] = useState([]);
   const [sortOption, setSortOption] = useState("popularity");
 
   useEffect(() => {
-    fetchNecklaces();
+    fetchCharms();
   }, [sortOption]);
 
-  const fetchNecklaces = async () => {
+  const fetchCharms = async () => {
     try {
-      const response = await axios.get("/api/necklaces"); // Replace with your actual API endpoint
-      let sortedNecklaces = response.data;
+      const response = await axios.get(
+        ""//text thử mock api hỏi Thịnh 
+      );
+      let sortedCharms = response.data;
 
       switch (sortOption) {
         case "popularity":
-          sortedNecklaces = sortedNecklaces.sort(
+          sortedCharms = sortedCharms.sort(
             (a, b) => b.popularity - a.popularity
           );
           break;
         case "type":
-          sortedNecklaces = sortedNecklaces.sort((a, b) =>
+          sortedCharms = sortedCharms.sort((a, b) =>
             a.type.localeCompare(b.type)
           );
           break;
         case "gemstone":
-          sortedNecklaces = sortedNecklaces.sort((a, b) =>
+          sortedCharms = sortedCharms.sort((a, b) =>
             a.gemstone.localeCompare(b.gemstone)
           );
           break;
         case "price":
-          sortedNecklaces = sortedNecklaces.sort((a, b) => a.price - b.price);
+          sortedCharms = sortedCharms.sort((a, b) => a.price - b.price);
           break;
         default:
           break;
       }
 
-      setNecklaces(sortedNecklaces);
+      setCharms(sortedCharms);
     } catch (error) {
-      console.error("Error fetching necklaces:", error);
+      console.error("Error fetching charms:", error);
     }
   };
 
@@ -51,15 +53,15 @@ const Necklaces = () => {
   };
 
   return (
-    <div className="necklaces-wrapper">
+    <div className="charms-wrapper">
       <Header />
-      <div className="necklaces-container">
-        <main className="necklaces-main-content">
-          <section className="necklaces-hero-section">
-            <div className="necklaces-hero-content">
-              <h1 className="necklaces-hero-title">Necklaces</h1>
-              <p className="necklaces-hero-description">
-                Discover our beautiful collection of necklaces.
+      <div className="charms-container">
+        <main className="charms-main-content">
+          <section className="charms-hero-section">
+            <div className="charms-hero-content">
+              <h1 className="charms-hero-title">Charms</h1>
+              <p className="charms-hero-description">
+                Discover our beautiful collection of charms.
               </p>
             </div>
           </section>
@@ -103,12 +105,12 @@ const Necklaces = () => {
                   </li>
                 </ul>
               </div>
-              <div className="necklaces-items-section">
-                {necklaces.map((necklace, index) => (
-                  <div className="necklace-item" key={index}>
-                    <img src={necklace.imageUrl} alt={necklace.name} />
-                    <p>{necklace.name}</p>
-                    <p>${necklace.price}</p>
+              <div className="charms-items-section">
+                {charms.map((charm, index) => (
+                  <div className="charm-item" key={index}>
+                    <img src={charm.imageUrl} alt={charm.name} />
+                    <p>{charm.name}</p>
+                    <p>${charm.price}</p>
                   </div>
                 ))}
               </div>
@@ -121,4 +123,4 @@ const Necklaces = () => {
   );
 };
 
-export default Necklaces;
+export default Charms;

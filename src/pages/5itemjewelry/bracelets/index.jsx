@@ -4,45 +4,45 @@ import Header from "../../../components/header";
 import Footer from "../../../components/footer";
 import "./index.scss";
 
-const Necklaces = () => {
-  const [necklaces, setNecklaces] = useState([]);
+const Bracelets = () => {
+  const [bracelets, setBracelets] = useState([]);
   const [sortOption, setSortOption] = useState("popularity");
 
   useEffect(() => {
-    fetchNecklaces();
+    fetchBracelets();
   }, [sortOption]);
 
-  const fetchNecklaces = async () => {
+  const fetchBracelets = async () => {
     try {
-      const response = await axios.get("/api/necklaces"); // Replace with your actual API endpoint
-      let sortedNecklaces = response.data;
+      const response = await axios.get("/api/bracelets"); // Replace with your actual API endpoint
+      let sortedBracelets = response.data;
 
       switch (sortOption) {
         case "popularity":
-          sortedNecklaces = sortedNecklaces.sort(
+          sortedBracelets = sortedBracelets.sort(
             (a, b) => b.popularity - a.popularity
           );
           break;
         case "type":
-          sortedNecklaces = sortedNecklaces.sort((a, b) =>
+          sortedBracelets = sortedBracelets.sort((a, b) =>
             a.type.localeCompare(b.type)
           );
           break;
         case "gemstone":
-          sortedNecklaces = sortedNecklaces.sort((a, b) =>
+          sortedBracelets = sortedBracelets.sort((a, b) =>
             a.gemstone.localeCompare(b.gemstone)
           );
           break;
         case "price":
-          sortedNecklaces = sortedNecklaces.sort((a, b) => a.price - b.price);
+          sortedBracelets = sortedBracelets.sort((a, b) => a.price - b.price);
           break;
         default:
           break;
       }
 
-      setNecklaces(sortedNecklaces);
+      setBracelets(sortedBracelets);
     } catch (error) {
-      console.error("Error fetching necklaces:", error);
+      console.error("Error fetching bracelets:", error);
     }
   };
 
@@ -51,15 +51,15 @@ const Necklaces = () => {
   };
 
   return (
-    <div className="necklaces-wrapper">
+    <div className="bracelets-wrapper">
       <Header />
-      <div className="necklaces-container">
-        <main className="necklaces-main-content">
-          <section className="necklaces-hero-section">
-            <div className="necklaces-hero-content">
-              <h1 className="necklaces-hero-title">Necklaces</h1>
-              <p className="necklaces-hero-description">
-                Discover our beautiful collection of necklaces.
+      <div className="bracelets-container">
+        <main className="bracelets-main-content">
+          <section className="bracelets-hero-section">
+            <div className="bracelets-hero-content">
+              <h1 className="bracelets-hero-title">Bracelets</h1>
+              <p className="bracelets-hero-description">
+                Discover our beautiful collection of bracelets.
               </p>
             </div>
           </section>
@@ -78,9 +78,7 @@ const Necklaces = () => {
                     Popularity
                   </li>
                   <li
-                    className={`sort-option ${
-                      sortOption === "type" ? "active" : ""
-                    }`}
+                    className={`sort-option ${sortOption === "type" ? "active" : ""}`}
                     onClick={() => handleSortChange("type")}
                   >
                     Type
@@ -94,21 +92,19 @@ const Necklaces = () => {
                     Gemstone
                   </li>
                   <li
-                    className={`sort-option ${
-                      sortOption === "price" ? "active" : ""
-                    }`}
+                    className={`sort-option ${sortOption === "price" ? "active" : ""}`}
                     onClick={() => handleSortChange("price")}
                   >
                     Price
                   </li>
                 </ul>
               </div>
-              <div className="necklaces-items-section">
-                {necklaces.map((necklace, index) => (
-                  <div className="necklace-item" key={index}>
-                    <img src={necklace.imageUrl} alt={necklace.name} />
-                    <p>{necklace.name}</p>
-                    <p>${necklace.price}</p>
+              <div className="bracelets-items-section">
+                {bracelets.map((bracelet, index) => (
+                  <div className="bracelet-item" key={index}>
+                    <img src={bracelet.imageUrl} alt={bracelet.name} />
+                    <p>{bracelet.name}</p>
+                    <p>${bracelet.price}</p>
                   </div>
                 ))}
               </div>
@@ -121,4 +117,4 @@ const Necklaces = () => {
   );
 };
 
-export default Necklaces;
+export default Bracelets;

@@ -1,0 +1,127 @@
+// Assuming this is part of your existing SCSS for the header
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+  
+    .menu-left,
+    .menu-right {
+      display: flex;
+      align-items: center;
+    }
+  
+    .logo {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 24px; // Adjust this as necessary to fit your design
+    }
+  
+    // Responsive adjustments for smaller screens
+    @media (max-width: 768px) {
+      flex-direction: column;
+      text-align: center;
+  
+      .logo {
+        position: relative;
+        left: auto;
+        transform: none;
+        margin-top: 10px;
+      }
+  
+      .menu-left,
+      .menu-right {
+        justify-content: center;
+        padding: 10px 0;
+      }
+    }
+  }
+  
+  // Continue with other existing or new styles
+  .earrings-wrapper {
+    padding: 20px;
+    background-color: #fff;
+  
+    .earrings-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+  
+      .earrings-hero-section {
+        margin-bottom: 20px;
+  
+        .earrings-hero-content {
+          h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+          }
+  
+          p {
+            font-size: 16px;
+            color: #666;
+          }
+        }
+      }
+  
+      .content-section {
+        .filter-section {
+          .filter-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+  
+            h3 {
+              margin-right: 20px;
+              font-weight: normal;
+            }
+  
+            .sort-options {
+              list-style: none;
+              display: flex;
+              padding: 0;
+  
+              .sort-option {
+                padding: 8px 16px;
+                margin-right: 10px;
+                cursor: pointer;
+                background-color: #f7f7f7;
+                border-radius: 20px;
+                border: 1px solid #ddd;
+  
+                &:hover,
+                &.active {
+                  background-color: #e0e0e0;
+                }
+              }
+            }
+          }
+  
+          .earrings-items-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between; // Ensures even spacing between items
+            align-items: flex-start;
+  
+            .earring-item {
+              width: calc(20% - 10px); // Calculates width to fit 5 items per row with proper gaps
+              margin-bottom: 20px;
+  
+              img {
+                width: 100%; // Ensures image takes up all available width
+                height: auto;
+              }
+  
+              p {
+                margin-top: 5px;
+                font-size: 14px;
+                color: #333;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  

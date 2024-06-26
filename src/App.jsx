@@ -1,8 +1,16 @@
 import React from 'react';
-import { Navigate, RouterProvider, createBrowserRouter, useNavigate } from 'react-router-dom';
+import {
+  Navigate,
+  RouterProvider,
+  createBrowserRouter,
+  useNavigate,
+} from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { selectUser } from './redux/features/counterSlice';
 import { toast } from 'react-toastify';
+import { selectUser } from './redux/features/counterSlice';
+import { child } from 'firebase/database';
+
+// Pages
 import HomePage from './pages/home';
 import LoginPopup from './pages/login';
 import RegisterPopup from './pages/register';
@@ -15,7 +23,6 @@ import Jewelry from './pages/jewelry';
 import ManagermentDashboard from './pages/manager/Dashboard';
 import ManagerJewelry from './pages/manager/Jewelry';
 import OrderReview from './pages/test/Order-Review';
-import LayoutTest from './components/compo-test/layout-test';
 import FillInfo from './pages/test/Infomation-Shipment';
 import Account from './pages/admin/account';
 import JewelryManegement from './pages/admin/jewelrymanagerment';
@@ -24,6 +31,16 @@ import Policy from './pages/policy';
 import ItemDetails from './pages/itemdetails';
 import Article from './pages/article';
 
+// Components
+import Layout from './components/layout';
+import LayoutTest from './components/compo-test/layout-test';
+
+// Jewelry Categories
+import Necklaces from './pages/5itemjewelry/necklaces';
+import Rings from './pages/5itemjewelry/rings';
+import Earrings from './pages/5itemjewelry/earrings';
+import Bracelets from './pages/5itemjewelry/bracelets';
+import Charms from './pages/5itemjewelry/charms';
 function App() {
   const PrivateRoute = ({ children, role }) => {
     const navigate = useNavigate();
@@ -149,6 +166,43 @@ function App() {
         },
       ],
     },
+
+    {
+      path: "/necklaces",
+      element: <Necklaces />,
+    },
+    {
+      path: "/rings",
+      element: <Rings />,
+    },
+    {
+      path: "/earrings",
+      element: <Earrings />,
+    },
+    {
+      path: "/bracelets",
+      element: <Bracelets />,
+    },
+    {
+      path: "/charms",
+      element: <Charms />,
+    },
+
+    {
+      path: "/testt",
+      element: <Layout />,
+      children: [
+        {
+          path: "aboutus",
+          element: <AboutUs />,
+        },
+        {
+          path: "articte",
+          element: <Article />,
+        },
+      ],
+    },
+
   ]);
 
   return <RouterProvider router={router} />;
