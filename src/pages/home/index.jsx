@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Form, Input, Checkbox, Button, Row, Col } from "antd";
 import "./index.scss";
@@ -6,23 +7,38 @@ import Footer from "../../components/footer";
 import ImageSlider from "../../components/slider"; // Import slider
 import { Link } from "react-router-dom";
 
+
 const HomePage = () => {
+  const navigate = useNavigate();
+
+  const handleAboutUsClick = () => {
+    navigate('/aboutus');
+  };
+
+  const handlePolicyClick = () => {
+    navigate('/policy');
+  };
+  const handleArticleClick = () => {
+    navigate('/article');
+  };
+
   return (
-    <div className="container">
+    <div className='container'>
       <Header />
-      <main className="main-content">
-        <section className="hero-section">
+      <main className='main-content'>
+        <section className='hero-section'>
           <ImageSlider />
-          <div className="hero-text">
-            <h1 className="hero-title">the autumn equinox</h1>
-            <p className="hero-description">
+          <div className='hero-text'>
+            <h1 className='hero-title'>the autumn equinox</h1>
+            <p className='hero-description'>
               Fall has arrived.
               <br />
               Shop for our new releases starting today.
             </p>
-            <button className="hero-btn">SHOP NOW</button>
+            <button className='hero-btn'>SHOP NOW</button>
           </div>
         </section>
+
         <section className="category-section">
           <h2 className="category-title">Shop by category</h2>
           <p className="category-description">Indulge in what we offer.</p>
@@ -76,6 +92,7 @@ const HomePage = () => {
                 />
                 <p className="category-text">Charms</p>
               </Link>
+
             </div>
           </div>
         </section>
@@ -88,9 +105,7 @@ const HomePage = () => {
               className="product-image"
             />
             <p className="product-title">Iconic Jewels: Her Sense of Style</p>
-            <p className="product-date">
-              2-16 MAY 2024 | 12:00 PM CEST | GENEVA
-            </p>
+            <p className="product-date">2-16 MAY 2024 | 12:00 PM CEST | GENEVA</p>
             <button className="add-to-cart-button">BILD</button>
           </div>
           <div className="product-item">
@@ -100,9 +115,7 @@ const HomePage = () => {
               className="product-image"
             />
             <p className="product-title">Iconic Jewels: Her Sense of Style</p>
-            <p className="product-date">
-              2-16 MAY 2024 | 12:00 PM CEST | GENEVA
-            </p>
+            <p className="product-date">2-16 MAY 2024 | 12:00 PM CEST | GENEVA</p>
             <button className="add-to-cart-button">BILD</button>
           </div>
           <div className="product-item">
@@ -112,9 +125,7 @@ const HomePage = () => {
               className="product-image"
             />
             <p className="product-title">Iconic Jewels: Her Sense of Style</p>
-            <p className="product-date">
-              2-16 MAY 2024 | 12:00 PM CEST | GENEVA
-            </p>
+            <p className="product-date">2-16 MAY 2024 | 12:00 PM CEST | GENEVA</p>
             <button className="add-to-cart-button">ADD TO CART</button>
           </div>
           <div className="product-item">
@@ -124,62 +135,60 @@ const HomePage = () => {
               className="product-image"
             />
             <p className="product-title">Iconic Jewels: Her Sense of Style</p>
-            <p className="product-date">
-              2-16 MAY 2024 | 12:00 PM CEST | GENEVA
-            </p>
+            <p className="product-date">2-16 MAY 2024 | 12:00 PM CEST | GENEVA</p>
             <button className="add-to-cart-button">ADD TO CART</button>
           </div>
         </section>
-        <section className="additional-content">
-          <div className="section-item">
+        <section className='additional-content'>
+          <div className='section-item'>
             <img
-              src="https://i.pinimg.com/originals/ff/9c/20/ff9c204f62b65141a988cde3c7b1484f.jpg"
-              alt="Jewelry Image 1"
-              className="section-image"
+              src='https://i.pinimg.com/originals/ff/9c/20/ff9c204f62b65141a988cde3c7b1484f.jpg'
+              alt='Jewelry Image 1'
+              className='section-image'
             />
-            <div className="section-text">
-              <h3 className="section-title">Lorem ipsum dolor sit amet</h3>
-              <p className="section-description">
+            <div className='section-text'>
+              <h3 className='section-title'>About us</h3>
+              <p className='section-description'>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                 eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
                 enim ad minim veniam, quis nostrud exercitation ullamco laboris
                 nisi ut aliquip ex ea commodo consequat.
               </p>
-              <button className="section-btn">READ MORE</button>
+              <button className='section-btn' onClick={handleAboutUsClick}>About Us</button>
             </div>
           </div>
-          <div className="section-item">
-            <div className="section-text">
-              <h3 className="section-title">Gifts of the season</h3>
-              <p className="section-description">
+          <div className='section-item'>
+            <div className='section-text'>
+              <h3 className='section-title'>Article</h3>
+              <p className='section-description'>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                 eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
                 enim ad minim veniam, quis nostrud exercitation ullamco laboris
                 nisi ut aliquip ex ea commodo consequat.
               </p>
-              <button className="section-btn">SHOP GIFTS</button>
+              <button className='section-btn' onClick={handleArticleClick}>Read more</button>
             </div>
             <img
-              src="https://c0.wallpaperflare.com/preview/984/867/753/jewellery-gold-wedding-indian.jpg"
-              alt="Jewelry Image 2"
-              className="section-image"
+              src='https://c0.wallpaperflare.com/preview/984/867/753/jewellery-gold-wedding-indian.jpg'
+              alt='Jewelry Image 2'
+              className='section-image'
             />
           </div>
-          <div className="section-item">
+          <div className='section-item'>
             <img
-              src="https://images.rawpixel.com/image_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcHg4MDQyMTItaW1hZ2Uta3d2eGg0NGwuanBn.jpg"
-              alt="Sunset Image"
-              className="section-image"
+              src='https://images.rawpixel.com/image_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcHg4MDQyMTItaW1hZ2Uta3d2eGg0NGwuanBn.jpg'
+              alt='Sunset Image'
+              className='section-image'
             />
-            <div className="section-text">
-              <h3 className="section-title">What were we made for?</h3>
-              <p className="section-description">
+            <div className='section-text'>
+              <h3 className='section-title'>Chính sách mua hàng Policy</h3>
+              <p className='section-description'>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                 eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
                 enim ad minim veniam, quis nostrud exercitation ullamco laboris
                 nisi ut aliquip ex ea commodo consequat.
               </p>
-              <button className="section-btn">ABOUT US</button>
+              <button className='section-btn' onClick={handlePolicyClick}>READ MORE</button>
             </div>
           </div>
         </section>
@@ -190,3 +199,4 @@ const HomePage = () => {
 };
 
 export default HomePage;
+

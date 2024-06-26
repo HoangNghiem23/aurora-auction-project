@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./index.scss";
-import HeaderTest from "../../components/compo-test/header-test";
-import FooterTest from "../../components/compo-test/footer-test";
+import Header from '../../components/header';
+import Footer from '../../components/footer';
 import { ShoppingOutlined } from "@ant-design/icons";
 
 const Jewelry = () => {
@@ -96,7 +96,7 @@ const Jewelry = () => {
 
   return (
     <>
-      <HeaderTest />
+      <Header />
       <div className="jewelry-section">
         <div className="jewelry-content">
           <div className="jewelry-text">
@@ -234,7 +234,7 @@ const Jewelry = () => {
           </div>
         </div>
       </div>
-      <FooterTest />
+      <Footer />
     </>
   );
 };

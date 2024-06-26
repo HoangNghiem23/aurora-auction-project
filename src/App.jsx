@@ -1,40 +1,46 @@
+import React from 'react';
 import {
   Navigate,
   RouterProvider,
   createBrowserRouter,
   useNavigate,
-} from "react-router-dom";
-import Homepages from "./pages/home";
-import LoginPopup from "./pages/login";
-import RegisterPopup from "./pages/register";
-import ForgetPassword from "./pages/forgetpassword";
-import ResetPassword from "./pages/resetpassword";
-import EmailTemplate from "./pages/emailtemplate";
-import Dashboard from "./pages/admin/dashboard";
-import Category from "./pages/admin/category";
-import Jewelry from "./pages/jewelry";
-import ManagermentDashboard from "./pages/manager/Dashboard";
-import ManagerJewelry from "./pages/manager/Jewelry";
-import OrderReview from "./pages/test/Order-Review";
-import LayoutTest from "./components/compo-test/layout-test";
-import FillInfo from "./pages/test/Infomation-Shipment";
-import Account from "./pages/admin/account";
-import JewelryManegement from "./pages/admin/jewelrymanagerment";
-import { useSelector } from "react-redux";
-import { selectUser } from "./redux/features/counterSlice";
-import { toast } from "react-toastify";
-import { child } from "firebase/database";
+} from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import { selectUser } from './redux/features/counterSlice';
+import { child } from 'firebase/database';
 
-import Layout from "./components/layout";
-import AboutUs from "./pages/aboutus";
-import Article from "./pages/articte";
-import ItemDetails from "./pages/itemdetails";
-import HomePage from "./pages/home";
-import Necklaces from "./pages/5itemjewelry/necklaces";
-import Rings from "./pages/5itemjewelry/rings";
-import Earrings from "./pages/5itemjewelry/earrings";
-import Bracelets from "./pages/5itemjewelry/bracelets";
-import Charms from "./pages/5itemjewelry/charms";
+// Pages
+import HomePage from './pages/home';
+import LoginPopup from './pages/login';
+import RegisterPopup from './pages/register';
+import ForgetPassword from './pages/forgetpassword';
+import ResetPassword from './pages/resetpassword';
+import EmailTemplate from './pages/emailtemplate';
+import Dashboard from './pages/admin/dashboard';
+import Category from './pages/admin/category';
+import Jewelry from './pages/jewelry';
+import ManagermentDashboard from './pages/manager/Dashboard';
+import ManagerJewelry from './pages/manager/Jewelry';
+import OrderReview from './pages/test/Order-Review';
+import FillInfo from './pages/test/Infomation-Shipment';
+import Account from './pages/admin/account';
+import JewelryManegement from './pages/admin/jewelrymanagerment';
+import AboutUs from './pages/aboutus';
+import Policy from './pages/policy';
+import ItemDetails from './pages/itemdetails';
+import Article from './pages/article';
+
+// Components
+import Layout from './components/layout';
+import LayoutTest from './components/compo-test/layout-test';
+
+// Jewelry Categories
+import Necklaces from './pages/5itemjewelry/necklaces';
+import Rings from './pages/5itemjewelry/rings';
+import Earrings from './pages/5itemjewelry/earrings';
+import Bracelets from './pages/5itemjewelry/bracelets';
+import Charms from './pages/5itemjewelry/charms';
 function App() {
   const PrivateRoute = ({ children, role }) => {
     const navigate = useNavigate();
@@ -70,6 +76,22 @@ function App() {
     {
       path: "/itemdetails",
       element: <ItemDetails />,
+    },
+    {
+      path: "/jewelry",
+      element: <Jewelry />,
+    },
+    {
+      path: "/aboutus",
+      element: <AboutUs />,
+    },
+    {
+      path: "/policy",
+      element: <Policy />,
+    },
+    {
+      path: "/article",
+      element: <Article />,
     },
     {
       path: "/admin",
@@ -144,6 +166,7 @@ function App() {
         },
       ],
     },
+
     {
       path: "/necklaces",
       element: <Necklaces />,
@@ -179,6 +202,7 @@ function App() {
         },
       ],
     },
+
   ]);
 
   return <RouterProvider router={router} />;
