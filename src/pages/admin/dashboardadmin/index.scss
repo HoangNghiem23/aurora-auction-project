@@ -1,0 +1,18 @@
+.adminDashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  
+    .section {
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+  
+    .overview {
+      background-color: #f8f8f8;
+    }
+  
+    /* Add more styles specific to other sections */
+  }
+  

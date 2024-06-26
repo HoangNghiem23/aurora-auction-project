@@ -7,6 +7,7 @@ import './index.scss';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
 import ImageSlider from '../../components/slider'; // Import slider
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -38,17 +39,19 @@ const HomePage = () => {
             <button className='hero-btn'>SHOP NOW</button>
           </div>
         </section>
-        <section className='category-section'>
-          <h2 className='category-title'>Shop by category</h2>
-          <p className='category-description'>Indulge in what we offer.</p>
-          <div className='category-items'>
-            <div className='category-item'>
+
+        <section className="category-section">
+          <h2 className="category-title">Shop by category</h2>
+          <p className="category-description">Indulge in what we offer.</p>
+          <div className="category-items">
+            <div className="category-item">
               <img
-                src='https://fleckedwithgold.com/cdn/shop/files/ultraminiclover.jpg?v=1686489354'
-                alt='Necklaces'
-                className='category-image'
+                src="https://fleckedwithgold.com/cdn/shop/files/ultraminiclover.jpg?v=1686489354"
+                alt="Necklaces"
+                className="category-image"
               />
-              <p className='category-text'>Necklaces</p>
+              <p className="category-text">Necklaces</p>
+
             </div>
             <div className='category-item'>
               <img
