@@ -1,3 +1,4 @@
+
 import {
   Navigate,
   RouterProvider,
@@ -34,6 +35,7 @@ import Necklaces from "./pages/5itemjewelry/necklaces";
 import Rings from "./pages/5itemjewelry/rings";
 import AdminDashboard from "./pages/admin/dashboardadmin";
 
+
 function App() {
   const PrivateRoute = ({ children, role }) => {
     const navigate = useNavigate();
@@ -69,6 +71,22 @@ function App() {
     {
       path: "/itemdetails",
       element: <ItemDetails />,
+    },
+    {
+      path: "/jewelry",
+      element: <Jewelry />,
+    },
+    {
+      path: "/aboutus",
+      element: <AboutUs />,
+    },
+    {
+      path: "/policy",
+      element: <Policy />,
+    },
+    {
+      path: "/article",
+      element: <Article />,
     },
     {
       path: "/admin",
@@ -147,29 +165,7 @@ function App() {
         },
       ],
     },
-    {
-      path: "/necklaces",
-      element: <Necklaces />,
-    },
-    {
-      path: "/rings",
-      element: <Rings />,
-    },
 
-    {
-      path: "/testt",
-      element: <Layout />,
-      children: [
-        {
-          path: "aboutus",
-          element: <AboutUs />,
-        },
-        {
-          path: "articte",
-          element: <Article />,
-        },
-      ],
-    },
   ]);
 
   return <RouterProvider router={router} />;
