@@ -1,0 +1,25 @@
+.form-request-sell {
+  height: auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 30px;
+
+  .title-first {
+    margin-bottom: 50px;
+    font-size: 30px;
+  }
+
+  .form-main {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .ant-table-wrapper {
+    width: 100%;
+    max-width: 1000px;
+  }
+}

@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import {
   ProfileOutlined,
-  HeartOutlined,
-  UserOutlined,
-  BarChartOutlined,
-  CheckCircleOutlined,
-  TeamOutlined,
-  AppstoreAddOutlined,
-  ProductOutlined,
+  // HeartOutlined,
+  // UserOutlined,
+  // BarChartOutlined,
+  // CheckCircleOutlined,
+  // TeamOutlined,
+  // AppstoreAddOutlined,
+  // ProductOutlined,
 } from "@ant-design/icons";
 import { Avatar, Breadcrumb, Layout, Menu, Space, theme } from "antd";
 import { Footer } from "antd/es/layout/layout";
@@ -42,7 +42,10 @@ const Manager = () => {
 
   useEffect(() => {
     if (role === "manager") {
-      setItems([getItem("Auction Section", "auction", <ProfileOutlined />)]);
+      setItems([
+        getItem("Auction Section", "auction", <ProfileOutlined />),
+        getItem("Request Auction", "request-auction", <ProfileOutlined />),
+      ]);
     }
   }, []);
 

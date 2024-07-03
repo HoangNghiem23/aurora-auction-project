@@ -24,7 +24,7 @@ function getItem(label, key, icon, children) {
   };
 }
 
-const Manager = () => {
+const StaffPage = () => {
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer, borderRadiusLG },
@@ -34,7 +34,7 @@ const Manager = () => {
   const location = useLocation();
   const currentURI =
     location.pathname.split("/")[location.pathname.split("/").length - 1];
-  const role = "manager";
+  const role = "staff";
 
   const dataOpen = JSON.parse(localStorage.getItem("keys")) ?? [];
 
@@ -67,22 +67,16 @@ const Manager = () => {
     }
     if (role === "staff") {
       setItems([
-        getItem("Category", "category"),
-        getItem("Hồ sơ", "profile", <ProfileOutlined />),
-        getItem("Club", "clubs", <HeartOutlined />, [
-          getItem("Time Slot", "time-slot"),
-          getItem("Promotion", "promotion"),
-        ]),
-        getItem("Booking", "booking", <CheckCircleOutlined />, [
-          getItem("Court ID 1", "court-1"),
-          getItem("Court ID 2", "court-2"),
-        ]),
+        // getItem("Yêu Cầu Đấu Giá", "request", <CheckCircleOutlined />, [
+        //   getItem("Court ID 1", "court-1"),
+        //   getItem("Court ID 2", "court-2"),
+        // ]),
+        getItem("Yêu Cầu Đấu Giá", "request", <AppstoreAddOutlined />),
       ]);
     }
 
     if (role === "admin") {
       setItems([
-        getItem("product", "product", <AppstoreAddOutlined />),
         getItem("Category", "category", <AppstoreAddOutlined />),
         getItem("Hồ sơ", "profile", <ProfileOutlined />),
         getItem("Quản lý Clubs", "clubs", <HeartOutlined />, [
@@ -169,15 +163,13 @@ const Manager = () => {
                     key={subItem.key}
                     onClick={(e) => handleSelectKey(e.keyPath[1])}
                   >
-                    <Link to={`/manager/dashboard/${subItem.key}`}>
-                      {subItem.label}
-                    </Link>
+                    <Link to={`/staff/${subItem.key}`}>{subItem.label}</Link>
                   </Menu.Item>
                 ))}
               </Menu.SubMenu>
             ) : (
               <Menu.Item key={item.key} icon={item.icon}>
-                <Link to={`/manager/dashboard/${item.key}`}>{item.label}</Link>
+                <Link to={`/staff/${item.key}`}>{item.label}</Link>
               </Menu.Item>
             )
           )}
@@ -218,4 +210,4 @@ const Manager = () => {
   );
 };
 
-export default Manager;
+export default StaffPage;

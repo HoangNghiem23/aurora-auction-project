@@ -1,0 +1,28 @@
+.order-management {
+  .tabs {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    .tab {
+      cursor: pointer;
+      padding: 10px;
+      border: 1px solid gray;
+      transition: all 0.3s ease;
+      margin: 5px;
+      &.active {
+        border: 2px solid blue;
+      }
+      &:hover {
+        background-color: #f0f0f0;
+      }
+    }
+  }
+
+  .table-container {
+    margin-top: 20px;
+  }
+}
+.add-request {
+  margin-right: 10px;
+}

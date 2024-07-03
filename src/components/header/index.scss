@@ -19,12 +19,18 @@
       display: flex;
       gap: 23px;
       list-style-type: none;
+      position: relative;
 
       .nav-link {
         text-decoration: none;
         color: black;
         text-transform: uppercase;
         font-family: Arial, Helvetica, sans-serif;
+        position: relative;
+
+        &:hover .dropdown-menu {
+          display: block;
+        }
       }
     }
   }
@@ -34,6 +40,11 @@
     align-items: center;
     font-size: 27px;
     font-weight: 400;
+
+    a {
+      text-decoration: none;
+      color: black;
+    }
   }
 
   .search-and-icons {
@@ -73,6 +84,57 @@
     .cart-icon,
     .profile-icon {
       height: 18px;
+    }
+
+    .profile-container {
+      position: relative;
+
+      .profile-options {
+        position: absolute;
+        top: 45px; // Adjust this value according to your layout
+        right: 1px;
+        display: flex;
+        flex-direction: column;
+        z-index: 1;
+        width: 100px;
+        background-color: white;
+        border: 1px solid #ddd;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+        a {
+          text-decoration: none;
+          color: black;
+          font-size: 20px;
+          text-align: center;
+          font-family: Arial, Helvetica, sans-serif;
+          padding: 10px 0;
+          &:hover {
+            background-color: #f0f0f0;
+          }
+        }
+      }
+    }
+  }
+
+  .dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    padding: 10px 0;
+
+    a {
+      display: block;
+      padding: 10px 20px;
+      text-decoration: none;
+      color: black;
+      white-space: nowrap;
+      &:hover {
+        background-color: #f0f0f0;
+      }
     }
   }
 }
