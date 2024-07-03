@@ -41,93 +41,8 @@ const Manager = () => {
   const [openKeys, setOpenKeys] = useState(dataOpen);
 
   useEffect(() => {
-    if (role === "owner") {
-      setItems([
-        getItem("Category", "category"),
-        getItem("Hồ sơ", "profile", <ProfileOutlined />),
-        getItem("Quản lý Clubs", "club", <HeartOutlined />, [
-          getItem("Club 1", "club1"),
-          getItem("Club 2", "club2"),
-          getItem("Club 3", "club3"),
-          getItem("All Promotion", "all-promotion"),
-        ]),
-        getItem("Quản lý Staffs", "staffs", <UserOutlined />, [
-          getItem("Club 1", "staff-club-1"),
-          getItem("Club 2", "staff-club-2"),
-          getItem("Club 3", "staff-club-3"),
-          getItem("All Staffs", "all-staffs"),
-        ]),
-        getItem("Thống kê", "statistics", <BarChartOutlined />, [
-          getItem("Club 1", "stats-club-1"),
-          getItem("Club 2", "stats-club-2"),
-          getItem("Club 3", "stats-club-3"),
-          getItem("All Clubs", "all-clubs"),
-        ]),
-      ]);
-    }
-    if (role === "staff") {
-      setItems([
-        getItem("Category", "category"),
-        getItem("Hồ sơ", "profile", <ProfileOutlined />),
-        getItem("Club", "clubs", <HeartOutlined />, [
-          getItem("Time Slot", "time-slot"),
-          getItem("Promotion", "promotion"),
-        ]),
-        getItem("Booking", "booking", <CheckCircleOutlined />, [
-          getItem("Court ID 1", "court-1"),
-          getItem("Court ID 2", "court-2"),
-        ]),
-      ]);
-    }
-
-    if (role === "admin") {
-      setItems([
-        getItem("product", "product", <AppstoreAddOutlined />),
-        getItem("Category", "category", <AppstoreAddOutlined />),
-        getItem("Hồ sơ", "profile", <ProfileOutlined />),
-        getItem("Quản lý Clubs", "clubs", <HeartOutlined />, [
-          getItem("Club 1", "club1"),
-          getItem("Club 2", "club2"),
-          getItem("Club 3", "club3"),
-          getItem("All Promotion", "all-promotion"),
-        ]),
-        getItem("Quản lý Accounts", "accounts", <TeamOutlined />, [
-          getItem("Club 1", "account-club-1"),
-          getItem("Club 2", "account-club-2"),
-          getItem("Club 3", "account-club-3"),
-          getItem("All Staffs", "all-staffs"),
-        ]),
-        getItem("Thống kê", "statistics", <BarChartOutlined />, [
-          getItem("Club 1", "stats-club-1"),
-          getItem("Club 2", "stats-club-2"),
-          getItem("Club 3", "stats-club-3"),
-          getItem("All Clubs", "all-clubs"),
-        ]),
-      ]);
-    }
     if (role === "manager") {
-      setItems([
-        getItem("Jewelry", "jewelry", <ProductOutlined />),
-        getItem("Hồ sơ", "profile", <ProfileOutlined />),
-        getItem("Quản lý Clubs", "club", <HeartOutlined />, [
-          getItem("Club 1", "club1"),
-          getItem("Club 2", "club2"),
-          getItem("Club 3", "club3"),
-          getItem("All Promotion", "all-promotion"),
-        ]),
-        getItem("Quản lý Staffs", "staffs", <UserOutlined />, [
-          getItem("Club 1", "staff-club-1"),
-          getItem("Club 2", "staff-club-2"),
-          getItem("Club 3", "staff-club-3"),
-          getItem("All Staffs", "all-staffs"),
-        ]),
-        getItem("Thống kê", "statistics", <BarChartOutlined />, [
-          getItem("Club 1", "stats-club-1"),
-          getItem("Club 2", "stats-club-2"),
-          getItem("Club 3", "stats-club-3"),
-          getItem("All Clubs", "all-clubs"),
-        ]),
-      ]);
+      setItems([getItem("Auction Section", "auction", <ProfileOutlined />)]);
     }
   }, []);
 
@@ -169,15 +84,13 @@ const Manager = () => {
                     key={subItem.key}
                     onClick={(e) => handleSelectKey(e.keyPath[1])}
                   >
-                    <Link to={`/manager/dashboard/${subItem.key}`}>
-                      {subItem.label}
-                    </Link>
+                    <Link to={`/manager/${subItem.key}`}>{subItem.label}</Link>
                   </Menu.Item>
                 ))}
               </Menu.SubMenu>
             ) : (
               <Menu.Item key={item.key} icon={item.icon}>
-                <Link to={`/manager/dashboard/${item.key}`}>{item.label}</Link>
+                <Link to={`/manager/${item.key}`}>{item.label}</Link>
               </Menu.Item>
             )
           )}
