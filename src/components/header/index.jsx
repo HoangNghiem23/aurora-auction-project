@@ -1,11 +1,15 @@
 import { useState } from "react";
 import "./index.scss";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logout, selectUser } from "../../redux/features/counterSlice";
 
 const Header = () => {
   const [showProfileOptions, setShowProfileOptions] = useState(false);
   const [showAuctionsDropdown, setShowAuctionsDropdown] = useState(false);
-
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user = useSelector(selectUser);
   const toggleProfileOptions = () => {
     setShowProfileOptions(!showProfileOptions);
   };
@@ -88,7 +92,23 @@ const Header = () => {
           />
           {showProfileOptions && (
             <div className="profile-options">
-              <Link to="/login">Login</Link>
+              {user == null ? (
+                <Link to="/login">Login</Link>
+              ) : (
+                <a
+                  style={{
+                    cursor: "pointer",
+                  }}
+                  onClick={() => {
+                    dispatch(logout());
+                    localStorage.clear();
+                    return navigate("/login");
+                  }}
+                >
+                  Logout
+                </a>
+              )}
+
               {/* <Link to="/register">Sign In</Link> */}
             </div>
           )}

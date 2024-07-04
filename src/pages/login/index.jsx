@@ -23,7 +23,12 @@ function LoginPopup() {
         localStorage.setItem("token", user.token); // Save token to localStorage
         localStorage.setItem("role", user.roleEnum); // Save role to localStorage
         toast.success("Login success");
-        navigate("/");
+        if (user.roleEnum === "STAFF") {
+          navigate("/staff");
+        }
+        else {
+          navigate("/");
+        }
       } else {
         toast.error("Invalid response from server");
       }
