@@ -44,15 +44,15 @@ function AuctionManager() {
     setPreviewOpen(true);
   };
   const fetchStaffList = async () => {
-    const response = await api.get("/auction");
+    const response = await api.get("/staff");
     setStaffList(response.data);
   };
   useEffect(() => fetchStaffList(), []);
-  console.log(stafflist);
   const option = stafflist.map((staff) => {
+    console.log(staff);
     return {
-      value: staff.id,
-      label: staff.name,
+      value: staff?.id,
+      label: staff?.firstname,
     };
   });
   console.log(option);
@@ -79,6 +79,7 @@ function AuctionManager() {
   const fetchData = async () => {
     try {
       const response = await api.get("/auction");
+      console.log(response);
       setData(response.data);
     } catch (error) {
       console.log(error);
@@ -158,20 +159,14 @@ function AuctionManager() {
   };
 
   const columns = [
+    { title: "ID", dataIndex: "id", key: "id" },
+    { title: "Name", dataIndex: "name", key: "name" },
+    { title: "Description", dataIndex: "description", key: "description" },
     {
-      title: "ID",
-      dataIndex: "id",
-      key: "id",
-    },
-    {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-    },
-    {
-      title: "Description",
-      dataIndex: "description",
-      key: "description",
+      title: "Staff",
+      dataIndex: "account",
+      key: "account",
+      render: (account) => (account ? account.firstname : "Unknown"),
     },
     {
       title: "Start Date",
@@ -187,17 +182,13 @@ function AuctionManager() {
       render: (text) =>
         text ? moment(text).format("YYYY-MM-DD HH:mm:ss") : "",
     },
-    {
-      title: "Title",
-      dataIndex: "title",
-      key: "title",
-    },
+    { title: "Title", dataIndex: "title", key: "title" },
     {
       title: "Image",
       dataIndex: "image",
       key: "image",
       render: (text) => (
-        <Image src={text} alt="request" style={{ width: "100px" }} />
+        <Image src={text} alt="auction" style={{ width: "100px" }} />
       ),
     },
     {
@@ -224,7 +215,6 @@ function AuctionManager() {
       ),
     },
   ];
-
   return (
     <div>
       <Button type="primary" onClick={handleOpenModal}>
@@ -261,7 +251,7 @@ function AuctionManager() {
           >
             <TextArea rows={4} />
           </Form.Item>
-          <Form.Item label="Staff" name="staffId">
+          <Form.Item label="Staff" name="staff_id">
             {/* lấy API của staff */}
             <Select
               showSearch
