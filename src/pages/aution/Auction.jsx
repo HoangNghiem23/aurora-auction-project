@@ -22,6 +22,7 @@ import { selectUser } from "../../redux/features/counterSlice";
 import Header from "../../components/header";
 import { toast } from "react-toastify";
 import MoneyCurrent from "../moneycurrent";
+import useRealtime from "../../assets/hook/useRealtime";
 
 function Auction() {
   const [submit, setSubmit] = useState([]);
@@ -30,6 +31,12 @@ function Auction() {
   const [data, setData] = useState([]);
   const user = useSelector(selectUser);
   const lastItemRef = useRef(null);
+
+  useRealtime(async (body) => {
+    if (body.body === "addBid") {
+      await fetch();
+    }
+  });
 
   const fetch = async () => {
     try {
@@ -51,7 +58,7 @@ function Auction() {
 
       toast.success("Bid successfully placed");
       form.resetFields();
-      fetch();
+      // fetch();
     } catch (error) {
       toast.error(error.response.data);
     }
