@@ -45,8 +45,9 @@ import ItemDetails from "./pages/itemdetails";
 //about
 import Policy from "./pages/policy";
 import Article from "./pages/article";
-import Auction from "./pages/aution/Auction";
+
 import AboutUs from "./pages/aboutus";
+import Auction from "./pages/aution/Auction";
 // import useRealtime from "./assets/hook/useRealtime";
 
 function App() {
@@ -203,11 +204,16 @@ function App() {
         },
       ],
     },
+    {
+      path: "/auction",
+      element: <Auction />,
+    },
     // {
     //   path: "/test-chuc-nang",
     //   element: <OrderManagement />,
     // },
   ]);
+  
 
   //  useRealtime((data) => {
   //    console.log(data);
