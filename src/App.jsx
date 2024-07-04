@@ -48,6 +48,7 @@ import Article from "./pages/article";
 
 import AboutUs from "./pages/aboutus";
 import Auction from "./pages/aution/Auction";
+import useRealtime from "./assets/hook/useRealtime";
 // import useRealtime from "./assets/hook/useRealtime";
 
 function App() {
@@ -215,9 +216,10 @@ function App() {
   ]);
   
 
-  //  useRealtime((data) => {
-  //    console.log(data);
-  //  });
+   useRealtime((data) => {
+     console.log(data);
+   });
+   
   return <RouterProvider router={router} />;
 }
 
