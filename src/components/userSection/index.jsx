@@ -1,7 +1,7 @@
 import { Avatar, Divider } from "antd";
 import React from "react";
 
-function UserSection({ isMe = false }) {
+function UserSection({ isMe = false, img, name,money}) {
   return (
     <>
       <Divider />
@@ -16,7 +16,7 @@ function UserSection({ isMe = false }) {
       >
         <Avatar
           size={50}
-          src="https://life.thanhcong.vn/wp-content/uploads/2023/01/con-vat-yeu-thich-con-meo.jpg"
+          src="https://static.thenounproject.com/png/2643408-200.png"
         />
         <div
           style={{
@@ -25,14 +25,14 @@ function UserSection({ isMe = false }) {
             flexDirection: "column",
           }}
         >
-          <h3>Thinh</h3>
+          <h3>{name}</h3>
           <h4
             style={{
               marginLeft: "3px",
               color: "green",
             }}
           >
-            300$
+            {money}$
           </h4>
         </div>
       </div>

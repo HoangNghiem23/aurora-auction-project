@@ -3,10 +3,13 @@ import { Link } from "react-router-dom";
 import { DownOutlined, SearchOutlined, UpOutlined } from "@ant-design/icons";
 import "./index.scss";
 import Header from "../../components/header";
-// import { Footer } from "antd/es/layout/layout";
 import { Button } from "antd";
 import Footer from "../../components/footer";
 import api from "../../config/axios";
+import moment from "moment";
+import momentDurationFormatSetup from "moment-duration-format";
+
+momentDurationFormatSetup(moment);
 
 const UpcomingAuction = () => {
   const [sortBy, setSortBy] = useState("Relevance");
@@ -17,7 +20,7 @@ const UpcomingAuction = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [priceRange, setPriceRange] = useState({ from: 0, to: Infinity });
   const [selectedCategory, setSelectedCategory] = useState("");
-
+  const [data, setData] = useState([]);
   const itemsPerPage = 12;
 
   const handleSortChange = (value) => {
@@ -38,69 +41,42 @@ const UpcomingAuction = () => {
     setFiltersVisible(false); // Tắt filter để dễ kiểm tra
   };
 
-  const imgdemo2 =
-    "https://sothebys-com.brightspotcdn.com/dims4/default/8b753ec/2147483647/strip/true/crop/593x700+4+0/resize/309x365!/format/webp/quality/90/?url=https%3A%2F%2Fsothebys-md.brightspotcdn.com%2Fe0%2F36%2F315a45e440319dca83d595bdb711%2Fpf2409-cyzys-600x700-calendar.jpg";
-
-  const imgdemo3 =
-    "https://sothebys-com.brightspotcdn.com/dims4/default/cf7af46/2147483647/strip/true/crop/1912x2259+12+0/resize/309x365!/format/webp/quality/90/?url=https%3A%2F%2Fsothebys-md.brightspotcdn.com%2F1e%2F4b%2Fb1443322430ba261aa8967276247%2Fn11420-ccb57-t2-01a-cal.jpg";
-
-  const products = [
-    {
-      src: imgdemo2,
-      status: "UPCOMING AUCTION",
-      label: "White Gold, Multicolor Sapphire and Diamond Floral Necklace",
-      product_time_location: "19 JUNE 2024 | 2:30 PM CEST | PARIS",
-      price: 3000,
-      link: "/product1",
-    },
-    {
-      src: imgdemo2,
-      label: "White Gold, Multicolor Sapphire and Diamond Floral Necklace",
-      status: "UPCOMING AUCTION",
-      product_time_location: "19 JUNE 2024 | 2:30 PM CEST | PARIS",
-      price: 6000,
-      link: "/product1",
-    },
-    {
-      src: imgdemo2,
-      label: "White Gold, Multicolor Sapphire and Diamond Floral Necklace",
-      status: "UPCOMING AUCTION",
-      product_time_location: "19 JUNE 2024 | 2:30 PM CEST | PARIS",
-      price: 9000,
-      link: "/product1",
-    },
-    {
-      src: imgdemo3,
-      label: "White Gold, Multicolor Sapphire and Diamond Floral Necklace",
-      status: "UPCOMING AUCTION",
-      product_time_location: "19 JUNE 2024 | 2:30 PM CEST | PARIS",
-      price: 12000,
-      link: "/product1",
-    },
-    {
-      src: imgdemo3,
-      label: "White Gold, Multicolor Sapphire and Diamond Floral Necklace",
-      status: "UPCOMING AUCTION",
-      product_time_location: "19 JUNE 2024 | 2:30 PM CEST | PARIS",
-      price: 15000,
-      link: "/product1",
-    },
-    {
-      src: imgdemo3,
-      label: "White Gold, Multicolor Sapphire and Diamond Floral Necklace",
-      status: "UPCOMING AUCTION",
-      product_time_location: "19 JUNE 2024 | 2:30 PM CEST | PARIS",
-      price: 18000,
-      link: "/product1",
-    },
-  ];
-
-  const handlePageClick = (event) => {
-    setCurrentPage(event.selected);
+  const fetch = async () => {
+    try {
+      const response = await api.get("/auction/AllAuctionsReady");
+      console.log(response.data);
+      setData(response.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
+  useEffect(() => {
+    fetch();
+  }, []);
+
+  const calculateCountdown = (endDate) => {
+    const now = moment();
+    const duration = moment.duration(moment(endDate).diff(now));
+    return duration.format("D[d] : HH[h]: mm[m] ss[s]");
+  };
+
+  const updateCountdowns = () => {
+    setData((prevData) =>
+      prevData.map((product) => ({
+        ...product,
+        countdown: calculateCountdown(product.start_date),
+      }))
+    );
+  };
+
+  useEffect(() => {
+    const interval = setInterval(updateCountdowns, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
   const offset = currentPage * itemsPerPage;
-  let filteredProducts = products.filter(
+  let filteredProducts = data.filter(
     (product) =>
       product.price >= priceRange.from && product.price <= priceRange.to
   );
@@ -113,24 +89,10 @@ const UpcomingAuction = () => {
 
   const currentProducts = filteredProducts.slice(offset, offset + itemsPerPage);
 
-  const fetch = async () => {
-    try {
-      const response = await api.get("/auction");
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    fetch();
-  }, []);
-
   return (
     <>
       <div className="jewelry-section">
         <div className="text-first">Upcoming Auctions</div>
-
         <div className="results-and-filters">
           <div className="result">SHOWING 114 RESULTS</div>
           <div className="filters">
@@ -138,7 +100,6 @@ const UpcomingAuction = () => {
               <input type="text" placeholder="Search Jewelry" />
               <SearchOutlined />
             </div>
-
             <button
               className="filter-btn-hide-filters"
               onClick={() => setFiltersVisible(!filtersVisible)}
@@ -223,7 +184,6 @@ const UpcomingAuction = () => {
                   </div>
                 )}
               </div>
-
               <div className="filter-section category-filter">
                 <h4>CATEGORY</h4>
                 <div className="category-list">
@@ -232,7 +192,6 @@ const UpcomingAuction = () => {
                       type="checkbox"
                       name="category"
                       value="Contemporary Art"
-                      // checked={selectedCategory === "Contemporary Art"}
                       onChange={(e) => setSelectedCategory(e.target.value)}
                     />{" "}
                     Contemporary Art
@@ -242,9 +201,6 @@ const UpcomingAuction = () => {
                       type="checkbox"
                       name="category"
                       value="Impressionist & Modern Art"
-                      // checked={
-                      //   selectedCategory === "Impressionist & Modern Art"
-                      // }
                       onChange={(e) => setSelectedCategory(e.target.value)}
                     />{" "}
                     Impressionist & Modern Art
@@ -254,7 +210,6 @@ const UpcomingAuction = () => {
                       type="checkbox"
                       name="category"
                       value="Jewelry"
-                      // checked={selectedCategory === "Jewelry"}
                       onChange={(e) => setSelectedCategory(e.target.value)}
                     />{" "}
                     Jewelry
@@ -264,7 +219,6 @@ const UpcomingAuction = () => {
                       type="checkbox"
                       name="category"
                       value="Watches"
-                      // checked={selectedCategory === "Watches"}
                       onChange={(e) => setSelectedCategory(e.target.value)}
                     />{" "}
                     Watches
@@ -274,7 +228,6 @@ const UpcomingAuction = () => {
                       type="checkbox"
                       name="category"
                       value="Wine"
-                      // checked={selectedCategory === "Wine"}
                       onChange={(e) => setSelectedCategory(e.target.value)}
                     />{" "}
                     Wine
@@ -290,19 +243,24 @@ const UpcomingAuction = () => {
                 !filtersVisible ? "full-width" : ""
               } ${viewMode}`}
             >
-              {currentProducts.map((product) => (
-                <div className="jewelry-product" key={product.label}>
-                  <Link to={product.link}>
-                    <img src={product.src} alt={product.label} />
+              {data.map((product) => (
+                <div className="jewelry-product" key={product?.label}>
+                  <Link to={`/auction/${product?.id}`}>
+                    <img src={product?.image} alt={product?.description} />
                     <div className="product-details">
-                      <div className="product-status">{product.status}</div>
-                      <div className="product-name">{product.label}</div>
-                      <div className="product-time-location">
-                        {product.product_time_location}
+                      <div className="product-status">
+                        {product?.auctionsStatusEnum}
                       </div>
-                      <div className="product-price">{product.price} USD</div>
+                      <div className="product-name">{product?.label}</div>
+                      <div className="product-time-location">
+                        {product?.countdown}
+                      </div>
+                      <div className="product-price">
+                        {product?.jewelry?.low_estimated_price} USD -{" "}
+                        {product?.jewelry?.high_estimated_price} USD
+                      </div>
                       <Button className="product-bid">
-                        <Link to={""}>BID</Link>
+                        <Link to={product?.link}>BID</Link>
                       </Button>
                     </div>
                   </Link>

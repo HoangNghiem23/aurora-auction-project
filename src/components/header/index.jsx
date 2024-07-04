@@ -3,6 +3,7 @@ import "./index.scss";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, selectUser } from "../../redux/features/counterSlice";
+import { Button } from "antd";
 
 const Header = () => {
   const [showProfileOptions, setShowProfileOptions] = useState(false);
@@ -95,18 +96,28 @@ const Header = () => {
               {user == null ? (
                 <Link to="/login">Login</Link>
               ) : (
-                <a
-                  style={{
-                    cursor: "pointer",
-                  }}
-                  onClick={() => {
-                    dispatch(logout());
-                    localStorage.clear();
-                    return navigate("/login");
-                  }}
-                >
-                  Logout
-                </a>
+                <>
+                  <a
+                    style={{
+                      marginBottom: "20px",
+                    }}
+                  >
+                    Nap tien
+                  </a>
+
+                  <a
+                    style={{
+                      cursor: "pointer",
+                    }}
+                    onClick={() => {
+                      dispatch(logout());
+                      localStorage.clear();
+                      return navigate("/login");
+                    }}
+                  >
+                    Logout
+                  </a>
+                </>
               )}
 
               {/* <Link to="/register">Sign In</Link> */}

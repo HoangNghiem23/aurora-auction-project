@@ -87,10 +87,7 @@ function App() {
           path: "auction-results",
           element: <AuctioResults />,
         },
-        {
-          path: "sell",
-          element: <SellPagse />,
-        },
+
         {
           path: "aboutus",
           element: <AboutUs />,
@@ -111,12 +108,15 @@ function App() {
           path: "/fillinfo",
           element: <FillInfo />,
         },
-
-        {
-          path: "/auction",
-          element: <Auction />,
-        },
       ],
+    },
+    {
+      path: "sell",
+      element: <SellPagse />,
+    },
+    {
+      path: "/auction/:id",
+      element: <Auction />,
     },
     {
       path: "/login",
