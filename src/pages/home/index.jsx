@@ -23,7 +23,6 @@ const HomePage = () => {
 
   return (
     <div className="container">
-      <Header />
       <main className="main-content">
         <section className="hero-section">
           <ImageSlider />
@@ -194,7 +193,6 @@ const HomePage = () => {
           </div>
         </section>
       </main>
-      <Footer />
     </div>
   );
 };

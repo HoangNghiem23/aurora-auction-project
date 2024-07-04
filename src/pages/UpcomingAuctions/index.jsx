@@ -1,16 +1,12 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { DownOutlined, SearchOutlined, UpOutlined } from "@ant-design/icons";
-import ReactPaginate from "react-paginate";
 import "./index.scss";
-import { ShoppingOutlined } from "@ant-design/icons";
 import Header from "../../components/header";
 // import { Footer } from "antd/es/layout/layout";
-import { Swiper, SwiperSlide } from "swiper/react";
-// import { Pagination, Navigation, Autoplay } from "swiper/modules";
 import { Button } from "antd";
 import Footer from "../../components/footer";
-// import FooterTest from "../../components/compo-test/footer-test";
+import api from "../../config/axios";
 
 const UpcomingAuction = () => {
   const [sortBy, setSortBy] = useState("Relevance");
@@ -21,7 +17,6 @@ const UpcomingAuction = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [priceRange, setPriceRange] = useState({ from: 0, to: Infinity });
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [swiperRef, setSwiperRef] = useState(null);
 
   const itemsPerPage = 12;
 
@@ -118,51 +113,23 @@ const UpcomingAuction = () => {
 
   const currentProducts = filteredProducts.slice(offset, offset + itemsPerPage);
 
+  const fetch = async () => {
+    try {
+      const response = await api.get("/auction");
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetch();
+  }, []);
+
   return (
     <>
-      <Header />
       <div className="jewelry-section">
         <div className="text-first">Upcoming Auctions</div>
-        {/* 
-        <Swiper
-          spaceBetween={30}
-          centeredSlides={true}
-          autoplay={{
-            delay: 2500,
-            disableOnInteraction: false,
-          }}
-          pagination={{
-            clickable: true,
-          }}
-          navigation={true}
-          modules={[Autoplay, Pagination, Navigation]}
-          className="mySwiper"
-        >
-          <SwiperSlide>
-            <img
-              src="https://sothebys-com.brightspotcdn.com/dims4/default/bd49ee5/2147483647/strip/true/crop/4000x2244+0+212/resize/802x450!/format/webp/quality/90/?url=http%3A%2F%2Fsothebys-brightspot.s3.amazonaws.com%2Fdotcom%2Fba%2Ff8%2Fbb777389449fa4a6220d6b53e4df%2F1-sothebys2023-1108-181128-3858-alivecoverage.jpg"
-              alt=""
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img
-              src="https://sothebys-com.brightspotcdn.com/dims4/default/83e6f5d/2147483647/strip/true/crop/1604x900+2+0/resize/802x450!/format/webp/quality/90/?url=http%3A%2F%2Fsothebys-brightspot.s3.amazonaws.com%2Fdotcom%2Fe0%2F95%2Fd527470e4416a3cba4309bf0205a%2F061424-calendar-handbags.png"
-              alt=""
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img
-              src="https://sothebys-com.brightspotcdn.com/dims4/default/5f36610/2147483647/strip/true/crop/1604x900+2+0/resize/802x450!/format/webp/quality/90/?url=http%3A%2F%2Fsothebys-brightspot.s3.amazonaws.com%2Fdotcom%2F96%2F5b%2Fefe53eb4472e95c045493507072b%2F061424-calendar-rolex.png"
-              alt=""
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img
-              src="https://sothebys-com.brightspotcdn.com/dims4/default/742bc77/2147483647/strip/true/crop/1440x808+0+83/resize/802x450!/format/webp/quality/90/?url=http%3A%2F%2Fsothebys-brightspot.s3.amazonaws.com%2Fdotcom%2F60%2F01%2Fee9459254848b8d8f889c4392ee4%2Fdownload.jpeg"
-              alt=""
-            />
-          </SwiperSlide>
-        </Swiper> */}
 
         <div className="results-and-filters">
           <div className="result">SHOWING 114 RESULTS</div>
@@ -345,7 +312,6 @@ const UpcomingAuction = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 };
