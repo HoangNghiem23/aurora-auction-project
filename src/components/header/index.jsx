@@ -3,22 +3,45 @@ import "./index.scss";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, selectUser } from "../../redux/features/counterSlice";
-import { Button } from "antd";
+import { Button, Input, InputNumber, Modal } from "antd";
+import api from "../../config/axios";
+
 
 const Header = () => {
   const [showProfileOptions, setShowProfileOptions] = useState(false);
   const [showAuctionsDropdown, setShowAuctionsDropdown] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [data, setData] = useState([]);
   const user = useSelector(selectUser);
   const toggleProfileOptions = () => {
     setShowProfileOptions(!showProfileOptions);
   };
+  const [number, setNumber] = useState(0);
 
   const toggleAuctionsDropdown = () => {
     setShowAuctionsDropdown(!showAuctionsDropdown);
   };
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleOk = async () => {
+    // setIsModalOpen(false);
+    console.log(number);
 
+    const response = await api.post("/wallet/request-recharge-vnpay", {
+      amount: number,
+    });
+
+    console.log(response.data);
+    window.open(response.data)
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleRecharge = () => {};
   return (
     <header className="header">
       <div className="header-location-nav">
@@ -98,11 +121,28 @@ const Header = () => {
               ) : (
                 <>
                   <a
+                    onClick={handleRecharge}
                     style={{
                       marginBottom: "20px",
+                      cursor: "pointer",
                     }}
                   >
-                    Nap tien
+                    <Button type="primary" onClick={showModal}>
+                      Rechage
+                    </Button>
+                    <>
+                      <Modal
+                        title="Basic Modal"
+                        open={isModalOpen}
+                        onOk={handleOk}
+                        onCancel={handleCancel}
+                      >
+                        <InputNumber onChange={(e) => setNumber(e)} />
+                      </Modal>
+                      <Button type="primary" onClick={showModal} style={{marginTop:30}}>
+                      Số dư 
+                    </Button>
+                    </>
                   </a>
 
                   <a

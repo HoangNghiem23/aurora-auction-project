@@ -36,6 +36,7 @@ function AuctionManager() {
   const [stafflist, setStaffList] = useState([]);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
+
   const handlePreview = async (file) => {
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj);
@@ -43,20 +44,23 @@ function AuctionManager() {
     setPreviewImage(file.url || file.preview);
     setPreviewOpen(true);
   };
+
   const fetchStaffList = async () => {
     const response = await api.get("/staff");
     setStaffList(response.data);
   };
+
   useEffect(() => fetchStaffList(), []);
+
   const option = stafflist.map((staff) => {
-    console.log(staff);
     return {
       value: staff?.id,
       label: staff?.firstname,
     };
   });
-  console.log(option);
+
   const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
+
   const uploadButton = (
     <button
       style={{
@@ -79,7 +83,6 @@ function AuctionManager() {
   const fetchData = async () => {
     try {
       const response = await api.get("/auction");
-      console.log(response);
       setData(response.data);
     } catch (error) {
       console.log(error);
@@ -99,27 +102,20 @@ function AuctionManager() {
     }
   };
 
-  const handleUpdateAuction = (auction) => {
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleUpdateClick = (auction) => {
     setIsUpdate(true);
     setCurrentAuction(auction);
+    setIsModalOpen(true);
     form.setFieldsValue({
       ...auction,
       start_date: auction.start_date ? moment(auction.start_date) : null,
       end_date: auction.end_date ? moment(auction.end_date) : null,
     });
-    setIsModalOpen(true);
-    setFileList([
-      {
-        uid: "-1",
-        name: "image",
-        status: "done",
-        url: auction.image,
-      },
-    ]);
-  };
-
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
+    setFileList([{ url: auction.image }]);
   };
 
   const handleCancel = () => {
@@ -131,7 +127,6 @@ function AuctionManager() {
   };
 
   const onFinish = async (values) => {
-    console.log(values);
     try {
       const url = fileList[0]?.originFileObj
         ? await uploadFile(fileList[0].originFileObj)
@@ -143,7 +138,7 @@ function AuctionManager() {
       values.end_date = values.end_date ? values.end_date.toISOString() : null;
 
       if (isUpdate && currentAuction) {
-        const response = await api.put(`/auction/${currentAuction.id}`, values);
+        await api.put(`/auction/${currentAuction.id}`, values);
         const updatedAuctions = data.map((auction) =>
           auction.id === currentAuction.id ? { ...auction, ...values } : auction
         );
@@ -198,7 +193,7 @@ function AuctionManager() {
           <Button
             type="primary"
             style={{ marginRight: 8 }}
-            onClick={() => handleUpdateAuction(values)}
+            onClick={() => handleUpdateClick(values)}
           >
             Update
           </Button>
@@ -215,6 +210,7 @@ function AuctionManager() {
       ),
     },
   ];
+
   return (
     <div>
       <Button type="primary" onClick={handleOpenModal}>
@@ -252,7 +248,6 @@ function AuctionManager() {
             <TextArea rows={4} />
           </Form.Item>
           <Form.Item label="Staff" name="staff_id">
-            {/* lấy API của staff */}
             <Select
               showSearch
               placeholder="Select a person"
