@@ -6,7 +6,6 @@ import { logout, selectUser } from "../../redux/features/counterSlice";
 import { Button, Input, InputNumber, Modal } from "antd";
 import api from "../../config/axios";
 
-
 const Header = () => {
   const [showProfileOptions, setShowProfileOptions] = useState(false);
   const [showAuctionsDropdown, setShowAuctionsDropdown] = useState(false);
@@ -35,7 +34,7 @@ const Header = () => {
     });
 
     console.log(response.data);
-    window.open(response.data)
+    window.open(response.data);
   };
   const handleCancel = () => {
     setIsModalOpen(false);
@@ -121,27 +120,35 @@ const Header = () => {
               ) : (
                 <>
                   <a
+                    style={{
+                      cursor: "pointer",
+                    }}
+                    onClick={() => {
+                      dispatch(logout());
+                      localStorage.clear();
+                      return navigate("/my-account/profile");
+                    }}
+                  >
+                    Profile
+                  </a>
+                  <a
                     onClick={handleRecharge}
                     style={{
-                      marginBottom: "20px",
                       cursor: "pointer",
                     }}
                   >
-                    <Button type="primary" onClick={showModal}>
+                    <div type="primary" onClick={showModal}>
                       Rechage
-                    </Button>
+                    </div>
                     <>
                       <Modal
-                        title="Basic Modal"
+                        title="Enter the amount"
                         open={isModalOpen}
                         onOk={handleOk}
                         onCancel={handleCancel}
                       >
-                        <InputNumber onChange={(e) => setNumber(e)} />
+                        <Input />
                       </Modal>
-                      <Button type="primary" onClick={showModal} style={{marginTop:30}}>
-                      Số dư 
-                    </Button>
                     </>
                   </a>
 
