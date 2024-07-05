@@ -1,0 +1,22 @@
+.transaction-history {
+    h1 {
+      font-family: "BoldCereal";
+      font-size: 1.5em;
+      margin-bottom: 1em;
+      color: #3c3c3c;
+    }
+    .ant-table-content {
+      .ant-table-thead {
+        .ant-table-cell {
+          background-color: rgb(46, 46, 46);
+          color: rgb(255, 255, 255);
+          font-family: "BoldCereal" !important;
+        }
+      }
+      .ant-table-tbody {
+        .ant-table-cell {
+          font-family: "MediumCereal" !important;
+        }
+      }
+    }
+  }
