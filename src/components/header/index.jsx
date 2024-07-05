@@ -120,6 +120,16 @@ const Header = () => {
               ) : (
                 <>
                   <a
+                    style={{
+                      cursor: "pointer",
+                    }}
+                    onClick={() => {
+                      return navigate("/my-account/profile");
+                    }}
+                  >
+                    Profile
+                  </a>
+                  <a
                     onClick={handleRecharge}
                     style={{
                       marginBottom: "20px",

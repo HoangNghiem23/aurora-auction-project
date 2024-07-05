@@ -23,9 +23,10 @@ import Header from "../../components/header";
 import { toast } from "react-toastify";
 import MoneyCurrent from "../moneycurrent";
 import useRealtime from "../../assets/hook/useRealtime";
+import { formatMoney } from "../../assets/hook/useFormat";
 
 function Auction() {
-  const [submit, setSubmit] = useState([]);
+  const [balance, setBalance] = useState(0);
   const [form] = Form.useForm();
   const { id } = useParams();
   const [data, setData] = useState([]);
@@ -47,9 +48,22 @@ function Auction() {
       console.log(error);
     }
   };
+
+  const getCurrentMoney = async () => {
+    try {
+      const response = await api.get(`/wallet/walletDetail/${user?.id}`);
+      setBalance(formatMoney(response.data.amount));
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
     fetch();
   }, []);
+
+  useEffect(() => {
+    getCurrentMoney();
+  }, [data]);
 
   const handleOnFinish = async (values) => {
     try {
@@ -118,22 +132,11 @@ function Auction() {
               />
             </div>
             <Card
-              title="Diễn biến cuộc đấu giá"
+              title={`Số dư hiện tại  ${balance}$`}
               className="bet-card"
               bordered={false}
-              style={{ height: "400px" }}
+              style={{ height: "fitContent" }}
             >
-              <Descriptions title="User Info">
-                <Descriptions.Item label="status" span={24}>
-                  status
-                </Descriptions.Item>
-                <Descriptions.Item label={<EyeOutlined />}>
-                  people
-                </Descriptions.Item>
-                <Descriptions.Item label={<DollarOutlined />}>
-                  money
-                </Descriptions.Item>
-              </Descriptions>
               <Form
                 form={form}
                 name="basic"
