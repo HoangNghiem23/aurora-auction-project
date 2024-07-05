@@ -122,9 +122,11 @@ function LoginPopup() {
           >
             <Input />
           </Form.Item>
+          <div>
           <Form.Item
             name="password"
             label="Password"
+            style={{marginBottom:"10px"}}
             rules={[
               {
                 required: true,
@@ -132,7 +134,10 @@ function LoginPopup() {
             ]}
           >
             <Input.Password className="passwordcss" />
-            <div>
+           
+            
+          </Form.Item>
+          <div>
               <span
                 onClick={() => navigate("/forget-password")}
                 style={{ cursor: "pointer" }}
@@ -141,7 +146,8 @@ function LoginPopup() {
                 Forget your password?
               </span>
             </div>
-          </Form.Item>
+          </div>
+        
 
           <Form.Item>
             <Space>
