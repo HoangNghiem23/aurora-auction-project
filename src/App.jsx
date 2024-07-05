@@ -52,6 +52,7 @@ import useRealtime from "./assets/hook/useRealtime";
 import Historytransition from "./pages/history_transition";
 import Buyandsell from "./Howtobill-buy";
 import Supporttobid from "./Howtobill-buy/support";
+import Error404 from "./pages/error404/Error404";
 // import useRealtime from "./assets/hook/useRealtime";
 
 function App() {
@@ -131,6 +132,10 @@ function App() {
     {
       path: "sell",
       element: <SellPagse />,
+    },
+    {
+      path: "*",
+      element: <Error404 />,
     },
     {
       path: "/auction/:id",
