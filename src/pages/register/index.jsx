@@ -37,8 +37,14 @@ function RegisterPopup() {
             onFinish={onFinish}
             form={form}
             name="validateOnly"
-            layout="vertical"
             autoComplete="off"
+            labelCol={{
+              span: 6,
+            }}
+            wrapperCol={{
+              span: 18,
+            }}
+            labelAlign="left"
           >
             <h2>Register Page</h2>
             <Form.Item
@@ -52,31 +58,31 @@ function RegisterPopup() {
             >
               <Input />
             </Form.Item>
-            <div className="horizontalForm">
-              <Form.Item
-                name="firstName"
-                label="First Name"
-                rules={[
-                  {
-                    required: true,
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
 
-              <Form.Item
-                name="lastName"
-                label="Last Name"
-                rules={[
-                  {
-                    required: true,
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-            </div>
+            <Form.Item
+              name="firstName"
+              label="First Name"
+              rules={[
+                {
+                  required: true,
+                },
+              ]}
+            >
+              <Input />
+            </Form.Item>
+
+            <Form.Item
+              name="lastName"
+              label="Last Name"
+              rules={[
+                {
+                  required: true,
+                },
+              ]}
+            >
+              <Input />
+            </Form.Item>
+
             <Form.Item
               name="email"
               label="Email"
@@ -130,7 +136,7 @@ function RegisterPopup() {
             <Form.Item
               className="password_conform"
               name="confirmPassword"
-              label="Confirm Password"
+              label="Re-Password"
               rules={[
                 {
                   required: true,
@@ -162,15 +168,16 @@ function RegisterPopup() {
                   className="btnStyle"
                   form={form}
                   onClick={() => form.submit()}
+                  style={{ marginLeft: "70px" }}
                 >
                   Sign Up
                 </Button>
               </Space>
             </Form.Item>
 
-            <Form.Item>
+            <Form.Item style={{ marginLeft: "80px" }}>
               <p className="signin">
-                Already have an account? <Link to="/login">Signin</Link>
+                Already have an account? <Link to="/login">Sign in</Link>
               </p>
             </Form.Item>
           </Form>

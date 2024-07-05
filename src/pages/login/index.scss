@@ -32,6 +32,7 @@
       background: linear-gradient(
         142deg,
         rgb(115, 100, 100) 0%,
+    
         rgba(106, 192, 182, 0.96) 40%,
         rgba(0, 0, 0, 1) 62%,
         rgba(156, 129, 129, 0.95) 83%
@@ -94,6 +95,10 @@
   border: 1px solid rgba(0, 0, 0, 0.3);   
   border-radius: 20px;
 }
-.ant-input-password{
-  padding: 0px;
+.passwordcss{
+  input{
+    padding: 0px !important;
+    border: none !important;
+  }
+ 
 }
