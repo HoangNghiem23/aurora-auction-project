@@ -49,6 +49,8 @@ import Article from "./pages/article";
 import AboutUs from "./pages/aboutus";
 import Auction from "./pages/aution/Auction";
 import useRealtime from "./assets/hook/useRealtime";
+import Profile from "./pages/profile/Profile";
+import AuctionProfile from "./pages/profile/Auctions";
 import Historytransition from "./pages/history_transition";
 import Buyandsell from "./Howtobill-buy";
 import Supporttobid from "./Howtobill-buy/support";
@@ -124,8 +126,21 @@ function App() {
           element: <OrderReview />,
         },
         {
-          path: "/fillinfo",
+          path: "fillinfo",
           element: <FillInfo />,
+        },
+        {
+          path: "/my-account",
+          children: [
+            {
+              path: "/my-account/profile",
+              element: <Profile />,
+            },
+            {
+              path: "/my-account/auctions",
+              element: <AuctionProfile />,
+            },
+          ],
         },
       ],
     },
@@ -157,11 +172,12 @@ function App() {
       path: "/reset-password",
       element: <ResetPassword />,
     },
+
     {
       path: "/admin",
       children: [
         {
-          path: "/admin/dashboard",
+          path: "/admin",
           element: (
             <PrivateRoute role={"ADMIN"}>
               <Dashboard />

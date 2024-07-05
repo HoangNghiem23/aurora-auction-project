@@ -19,12 +19,19 @@ function LoginPopup() {
       const response = await api.post("/login", values);
       if (response && response.data) {
         const user = response.data;
+        console.log(user);
         dispatch(login(user));
         localStorage.setItem("token", user.token); // Save token to localStorage
         localStorage.setItem("role", user.roleEnum); // Save role to localStorage
         toast.success("Login success");
         if (user.roleEnum === "STAFF") {
           navigate("/staff");
+
+        } else if (user.roleEnum === "MANAGER") {
+          navigate("/manager");
+        } else if (user.roleEnum === "ADMIN") {
+          navigate("/admin");
+
         } else {
           navigate("/");
         }
