@@ -45,6 +45,7 @@ const Manager = () => {
       setItems([
         getItem("Auction Section", "auction", <ProfileOutlined />),
         getItem("Request Auction", "request-auction", <ProfileOutlined />),
+        getItem("Lịch sử giao dịch phiên", "request-auction", <ProfileOutlined />),
       ]);
     }
   }, []);

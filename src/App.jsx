@@ -49,6 +49,7 @@ import Article from "./pages/article";
 import AboutUs from "./pages/aboutus";
 import Auction from "./pages/aution/Auction";
 import useRealtime from "./assets/hook/useRealtime";
+import Historytransition from "./pages/history_transition";
 // import useRealtime from "./assets/hook/useRealtime";
 
 function App() {
@@ -67,6 +68,10 @@ function App() {
       path: "/",
       element: <Layout />,
       children: [
+        {
+          path: "/wallet",
+          element: <Historytransition />,
+        },
         {
           path: "/",
           element: <HomePage />,
@@ -214,12 +219,11 @@ function App() {
     //   element: <OrderManagement />,
     // },
   ]);
-  
 
-   useRealtime((data) => {
-     console.log(data);
-   });
-   
+  useRealtime((data) => {
+    console.log(data);
+  });
+
   return <RouterProvider router={router} />;
 }
 

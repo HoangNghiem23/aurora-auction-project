@@ -6,7 +6,6 @@ import { logout, selectUser } from "../../redux/features/counterSlice";
 import { Button, Input, InputNumber, Modal } from "antd";
 import api from "../../config/axios";
 
-
 const Header = () => {
   const [showProfileOptions, setShowProfileOptions] = useState(false);
   const [showAuctionsDropdown, setShowAuctionsDropdown] = useState(false);
@@ -35,7 +34,7 @@ const Header = () => {
     });
 
     console.log(response.data);
-    window.open(response.data)
+    window.open(response.data);
   };
   const handleCancel = () => {
     setIsModalOpen(false);
@@ -127,7 +126,7 @@ const Header = () => {
                       cursor: "pointer",
                     }}
                   >
-                    <Button type="primary" onClick={showModal}>
+                    <Button type="primary" onClick={() => navigate("/wallet")}>
                       Rechage
                     </Button>
                     <>
@@ -139,9 +138,13 @@ const Header = () => {
                       >
                         <InputNumber onChange={(e) => setNumber(e)} />
                       </Modal>
-                      <Button type="primary" onClick={showModal} style={{marginTop:30}}>
-                      Số dư 
-                    </Button>
+                      <Button
+                        type="primary"
+                        onClick={showModal}
+                        style={{ marginTop: 30 }}
+                      >
+                        Số dư
+                      </Button>
                     </>
                   </a>
 
