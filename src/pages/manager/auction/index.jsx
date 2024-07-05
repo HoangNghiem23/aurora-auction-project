@@ -8,6 +8,7 @@ import {
   Upload,
   Image,
   Select,
+  Switch,
 } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { PlusOutlined } from "@ant-design/icons";
@@ -153,6 +154,11 @@ function AuctionManager() {
     }
   };
 
+  const onChange = (values, checked) => {
+    console.log(values);
+    console.log(checked);
+  };
+
   const columns = [
     { title: "ID", dataIndex: "id", key: "id" },
     { title: "Name", dataIndex: "name", key: "name" },
@@ -206,6 +212,22 @@ function AuctionManager() {
           >
             <Button danger>Delete</Button>
           </Popconfirm>
+        </>
+      ),
+    },
+    {
+      title: "changeAution",
+      render: (values) => (
+        <>
+          <Switch
+            defaultChecked={
+              values.auctionsStatusEnum == "ISCLOSED" ? false : true
+            }
+            onChange={(checked) => {
+              onChange(values, checked);
+            }}
+          />
+          ;
         </>
       ),
     },
