@@ -79,6 +79,7 @@ function WalletPage() {
   };
 
   useEffect(() => {
+
     if (balance <= (wallet?.balance == 0 ? 0 : wallet?.balance) - 1) {
       const id = setInterval(() => {
         setBalance(balance + 1);
