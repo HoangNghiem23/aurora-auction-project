@@ -1,0 +1,24 @@
+.rounded-button {
+    height: fit-content;
+    padding: 1em 0;
+    margin: 1em 0;
+    width: 30%;
+    border-radius: 100px;
+    box-shadow: none;
+    font-family: "BookCereal";
+    span {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    img {
+      margin-right: 0.5em;
+      height: 1em;
+    }
+  }
+  
+  @media only screen and (max-width: 500px) {
+    .rounded-button {
+      width: 100%;
+    }
+  }

@@ -120,35 +120,31 @@ const Header = () => {
               ) : (
                 <>
                   <a
-                    style={{
-                      cursor: "pointer",
-                    }}
-                    onClick={() => {
-                      dispatch(logout());
-                      localStorage.clear();
-                      return navigate("/my-account/profile");
-                    }}
-                  >
-                    Profile
-                  </a>
-                  <a
                     onClick={handleRecharge}
                     style={{
+                      marginBottom: "20px",
                       cursor: "pointer",
                     }}
                   >
-                    <div type="primary" onClick={showModal}>
+                    <Button type="primary" onClick={() => navigate("/wallet")}>
                       Rechage
-                    </div>
+                    </Button>
                     <>
                       <Modal
-                        title="Enter the amount"
+                        title="Basic Modal"
                         open={isModalOpen}
                         onOk={handleOk}
                         onCancel={handleCancel}
                       >
-                        <Input />
+                        <InputNumber onChange={(e) => setNumber(e)} />
                       </Modal>
+                      <Button
+                        type="primary"
+                        onClick={showModal}
+                        style={{ marginTop: 30 }}
+                      >
+                        Số dư
+                      </Button>
                     </>
                   </a>
 

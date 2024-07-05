@@ -50,11 +50,9 @@ function LoginPopup() {
   const handleLoginGoogle = () => {
     signInWithPopup(auth, googleProvider)
       .then(async (result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-
+        const token = result.user.accessToken;
         try {
-          const response = await api.post("/api/loginGG", { token });
+          const response = await api.post("/api/loginGG", { token: token });
           if (response && response.data) {
             const user = response.data;
             dispatch(login(user));

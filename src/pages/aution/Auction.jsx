@@ -47,6 +47,9 @@ function Auction() {
       console.log(error);
     }
   };
+  useEffect(() => {
+    fetch();
+  }, []);
 
   const handleOnFinish = async (values) => {
     try {
@@ -63,10 +66,6 @@ function Auction() {
       toast.error(error.response.data);
     }
   };
-
-  useEffect(() => {
-    fetch();
-  }, []);
 
   useEffect(() => {
     if (lastItemRef.current) {
@@ -102,7 +101,7 @@ function Auction() {
                 src={data?.image}
               />
             </div>
-            <h4 className="img-name" style={{ fontWeight: "100"}}>
+            <h4 className="img-name" style={{ fontWeight: "100" }}>
               Tên món hàng: <strong>món hàng</strong>
             </h4>
           </Col>
@@ -111,9 +110,7 @@ function Auction() {
             <div
               style={{
                 marginBottom: "20px",
-                
               }}
-
             >
               <MoneyCurrent
                 currentMoney={data?.jewelry?.last_price}
@@ -150,13 +147,17 @@ function Auction() {
               >
                 <Form.Item
                   name="amountofadd"
-                  label="số tiền Cược"
+                  label="Bet Amount"
                   rules={[
                     { required: true, message: "Please input your bid!" },
                   ]}
                 >
                   {/* defaultValue = số tiền đặt cược cao nhất */}
-                  <InputNumber addonAfter={selectAfter} defaultValue={1000} />
+                  <InputNumber
+                    addonAfter={selectAfter}
+                    defaultValue={1000}
+                    style={{ width: "100%", paddingLeft: "20px" }}
+                  />
                 </Form.Item>
 
                 <Form.Item

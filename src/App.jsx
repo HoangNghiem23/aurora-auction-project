@@ -51,6 +51,9 @@ import Auction from "./pages/aution/Auction";
 import useRealtime from "./assets/hook/useRealtime";
 import Profile from "./pages/profile/Profile";
 import AuctionProfile from "./pages/profile/Auctions";
+import Historytransition from "./pages/history_transition";
+import Buyandsell from "./Howtobill-buy";
+import Supporttobid from "./Howtobill-buy/support";
 // import useRealtime from "./assets/hook/useRealtime";
 
 function App() {
@@ -69,6 +72,19 @@ function App() {
       path: "/",
       element: <Layout />,
       children: [
+       
+        {
+          path: "/supporttobid",
+          element: < Supporttobid />,
+        },
+        {
+          path: "/buy-sell",
+          element: <Buyandsell />,
+        },
+        {
+          path: "/wallet",
+          element: <Historytransition />,
+        },
         {
           path: "/",
           element: <HomePage />,
