@@ -25,8 +25,7 @@ function LoginPopup() {
         toast.success("Login success");
         if (user.roleEnum === "STAFF") {
           navigate("/staff");
-        }
-        else {
+        } else {
           navigate("/");
         }
       } else {
@@ -80,9 +79,9 @@ function LoginPopup() {
           alt=""
         />
       </div>
-      <div className="loginPage__right">
+      <div className="loginPage__right ">
         <Form
-           labelCol={{
+          labelCol={{
             span: 8,
           }}
           wrapperCol={{
@@ -90,6 +89,9 @@ function LoginPopup() {
           }}
           style={{
             maxWidth: 600,
+            display: "flex",
+            flexDirection: "column",
+            paddingLeft: "100px",
           }}
           onFinish={onFinish}
           form={form}
@@ -97,7 +99,11 @@ function LoginPopup() {
           layout="vertical"
           autoComplete="off"
         >
-          <h2>Login Page</h2>
+          <h2
+            style={{ textAlign: "start", fontSize: "40px", fontWeight: "1000" }}
+          >
+            Login Page
+          </h2>
           <Form.Item
             name="username"
             label="User name"
@@ -118,7 +124,7 @@ function LoginPopup() {
               },
             ]}
           >
-            <Input.Password  />
+            <Input.Password className="passwordcss" />
             <div>
               <span
                 onClick={() => navigate("/forget-password")}
@@ -129,7 +135,7 @@ function LoginPopup() {
               </span>
             </div>
           </Form.Item>
-        
+
           <Form.Item>
             <Space>
               <Button
