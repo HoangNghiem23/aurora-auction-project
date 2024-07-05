@@ -1,0 +1,102 @@
+.about-us {
+    // text-align: center;
+    padding-left: 200px;
+    margin: 40px 0px;
+    color: black;
+    border: 2px;
+   
+  
+    h2 {
+      font-size: 14px;
+      color: #6c757d; // Adjust color to match your design
+      margin-bottom: 10px;
+    }
+  
+    .about-link {
+      font-size: 32px;
+      color: #333;
+      text-decoration: none;
+      font-weight: bold;
+  
+      &:hover {
+        color: #000; // Change color on hover if desired
+        text-decoration: underline;
+      }
+    }
+    &__create{
+        margin-bottom: 20px;
+        margin-top: 80px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+    &__register{
+        color: black;
+        // font-size: 20px;
+        font-weight: bold;
+        
+    }
+    &__Registerforauction{
+        margin-bottom: 20px;
+        margin-top: 80px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+    &__PlaceyourBid{
+        margin-bottom: 20px;
+        margin-top: 80px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+    &__Payment{
+        margin-bottom: 20px;
+        margin-top: 80px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+    &__login{
+        color: black;
+        // font-size: 20px;
+        font-weight: bold;
+    }
+    &__support{
+        color: black;
+        // font-size: 20px;
+        font-weight: bold;
+    }
+  }
+  .live{
+    color: black;
+    // font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 30px;
+  }
+  .bid{
+    color: black;
+    // font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 30px;
+  }
+  .person{
+    color: black;
+    // font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  .online{
+    color: black;
+    // font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  .phone{
+    color: black;
+    // font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  .auctions{
+    color: black;
+    // font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
