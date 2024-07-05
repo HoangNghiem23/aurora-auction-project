@@ -1,32 +1,36 @@
+import React, { useEffect, useRef, useState } from "react";
 import {
   Button,
   Card,
   Col,
-  Descriptions,
   Form,
   Image,
   InputNumber,
+  Modal,
   Row,
   Select,
 } from "antd";
-import "./aution.scss";
-import { DollarOutlined, EyeOutlined } from "@ant-design/icons";
-import { useEffect, useRef, useState } from "react";
-import UserSection from "../../components/userSection";
-const { Option } = Select;
 import { useParams } from "react-router-dom";
-import api from "../../config/axios";
-
 import { useSelector } from "react-redux";
-import { selectUser } from "../../redux/features/counterSlice";
-import Header from "../../components/header";
 import { toast } from "react-toastify";
+import Header from "../../components/header";
 import MoneyCurrent from "../moneycurrent";
-import useRealtime from "../../assets/hook/useRealtime";
+import UserSection from "../../components/userSection";
 import { formatMoney } from "../../assets/hook/useFormat";
+import useRealtime from "../../assets/hook/useRealtime";
+import api from "../../config/axios";
+import { selectUser } from "../../redux/features/counterSlice";
+import TimeCountDown from "../../components/timeCountDown";
+import "./aution.scss";
+import { CgKey } from "react-icons/cg";
+import moment from "moment";
+import ShowFirework from "../../components/confetti";
+
+const { Option } = Select;
 
 function Auction() {
   const [balance, setBalance] = useState(0);
+  const [showModal, setShowMal] = useState(true);
   const [form] = Form.useForm();
   const { id } = useParams();
   const [data, setData] = useState([]);
@@ -39,10 +43,33 @@ function Auction() {
     }
   });
 
+  function getAccountsByHighestBid(highestBidValue) {
+    return data?.bid
+      .filter((bid) => bid.thisIsTheHighestBid === highestBidValue)
+      .map((bid) => bid.account);
+  }
+
+  // console.log(accountsWithZeroHighestBid[0]);
+
+  // console.log(accountsWithTwoHighestBid[0]);
+
+  // useEffect(() => {
+  //   console.log("hi"); //thisIsTheHighestBid == TWO
+  //   // tim ra th nao win ()
+  //   console.log(
+  //     data?.bid?.filter((item) => item.thisIsTheHighestBid === "TWO")
+  //   );
+
+  //   let ht = data?.bid?.filter((item) => item.thisIsTheHighestBid === "TWO");
+
+  //   // console.log(ht[0].account.id);
+  //   // call api
+
+  // }, [data?.thisIsTheHighestBid === "ISCLOSED"]);
+
   const fetch = async () => {
     try {
       const response = await api.get(`/auction/${id}`);
-      console.log(response.data);
       setData(response.data);
     } catch (error) {
       console.log(error);
@@ -57,6 +84,7 @@ function Auction() {
       console.log(error);
     }
   };
+
   useEffect(() => {
     fetch();
   }, []);
@@ -70,12 +98,8 @@ function Auction() {
       const response = await api.post(`/bid/addhigherBid/${id}`, {
         amountofmoney: values.amountofadd,
       });
-      console.log("Bid successfully placed: ", response.data);
-      // Re-fetch data to get the updated bid list
-
       toast.success("Bid successfully placed");
       form.resetFields();
-      // fetch();
     } catch (error) {
       toast.error(error.response.data);
     }
@@ -104,6 +128,10 @@ function Auction() {
   return (
     <div>
       <Header />
+      <ShowFirework />
+      <Modal className="animate__animated animate__flip" open={showModal}>
+        <div>You are a winner</div>
+      </Modal>
       <section className="auction-page">
         <Row className="auction-page__col">
           <Col span={10} className="auction-page__box-img">
@@ -111,16 +139,18 @@ function Auction() {
               <Image
                 className="auction-page__box-img--img"
                 width={450}
-                // src = img của sản phẩm cược
                 src={data?.image}
               />
             </div>
             <h4 className="img-name" style={{ fontWeight: "100" }}>
-              Tên món hàng: <strong>món hàng</strong>
+              Tên món hàng: <strong>{data?.title}</strong>
             </h4>
           </Col>
 
           <Col span={8}>
+            <h5 className="text-white">
+              <TimeCountDown endDate={data?.end_date} />
+            </h5>
             <div
               style={{
                 marginBottom: "20px",
@@ -132,7 +162,7 @@ function Auction() {
               />
             </div>
             <Card
-              title={`Số dư hiện tại  ${balance}$`}
+              title={`Số dư hiện tại: ${balance}`}
               className="bet-card"
               bordered={false}
               style={{ height: "fitContent" }}
@@ -147,6 +177,9 @@ function Auction() {
                   span: 12,
                 }}
                 onFinish={handleOnFinish}
+                initialValues={{
+                  amountofadd: data?.jewelry?.last_price,
+                }}
               >
                 <Form.Item
                   name="amountofadd"
@@ -155,11 +188,13 @@ function Auction() {
                     { required: true, message: "Please input your bid!" },
                   ]}
                 >
-                  {/* defaultValue = số tiền đặt cược cao nhất */}
                   <InputNumber
                     addonAfter={selectAfter}
-                    defaultValue={1000}
                     style={{ width: "100%", paddingLeft: "20px" }}
+                    formatter={(value) =>
+                      `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                    }
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
                   />
                 </Form.Item>
 
@@ -219,7 +254,7 @@ function Auction() {
                         <UserSection
                           isMe={user?.id === item?.account.id}
                           name={item?.account.lastname}
-                          money={item?.amountofmoney}
+                          money={formatMoney(item?.amountofmoney)}
                         />
                       </div>
                     ))}
