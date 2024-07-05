@@ -82,6 +82,15 @@ function LoginPopup() {
       </div>
       <div className="loginPage__right">
         <Form
+           labelCol={{
+            span: 8,
+          }}
+          wrapperCol={{
+            span: 16,
+          }}
+          style={{
+            maxWidth: 600,
+          }}
           onFinish={onFinish}
           form={form}
           name="validateOnly"
@@ -109,8 +118,8 @@ function LoginPopup() {
               },
             ]}
           >
+            <Input.Password  />
             <div>
-              <Input style={{ borderRadius: "20px" }} />
               <span
                 onClick={() => navigate("/forget-password")}
                 style={{ cursor: "pointer" }}
@@ -120,6 +129,7 @@ function LoginPopup() {
               </span>
             </div>
           </Form.Item>
+        
           <Form.Item>
             <Space>
               <Button
