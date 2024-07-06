@@ -33,6 +33,7 @@ function RequestAuctionManager() {
 
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
+
   const handlePreview = async (file) => {
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj);
@@ -40,7 +41,9 @@ function RequestAuctionManager() {
     setPreviewImage(file.url || file.preview);
     setPreviewOpen(true);
   };
+
   const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
+
   const uploadButton = (
     <button
       style={{
@@ -81,7 +84,7 @@ function RequestAuctionManager() {
       });
       setData(
         data.map((item) =>
-          item.id === values.id ? { ...item, finalStatus: "REJECTED" } : item
+          item?.id === values.id ? { ...item, finalStatus: "REJECTED" } : item
         )
       );
     } catch (error) {
@@ -97,7 +100,7 @@ function RequestAuctionManager() {
       });
       setData(
         data.map((item) =>
-          item.id === values.id ? { ...item, finalStatus: "ACCEPTED" } : item
+          item?.id === values.id ? { ...item, finalStatus: "ACCEPTED" } : item
         )
       );
     } catch (error) {
@@ -226,7 +229,7 @@ function RequestAuctionManager() {
       render: (values) =>
         values.finalStatus ? (
           <Button type="primary" disabled>
-            Đã Chấp Nhận
+            Accepted
           </Button>
         ) : (
           <>
@@ -235,7 +238,7 @@ function RequestAuctionManager() {
               style={{ marginRight: 8 }}
               onClick={() => handleAccept(values)}
             >
-              Chấp Nhận
+              Accept
             </Button>
             <Popconfirm
               title="Are you sure to reject this request?"
@@ -243,7 +246,7 @@ function RequestAuctionManager() {
               okText="Yes"
               cancelText="No"
             >
-              <Button danger>Không Chấp Nhận</Button>
+              <Button danger>Reject</Button>
             </Popconfirm>
           </>
         ),
@@ -344,7 +347,7 @@ function RequestAuctionManager() {
           </Form.Item>
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
             <Button type="primary" htmlType="submit">
-              Gửi Quản Lý
+              Submit
             </Button>
           </Form.Item>
         </Form>

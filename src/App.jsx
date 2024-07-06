@@ -61,7 +61,7 @@ function App() {
   const PrivateRoute = ({ children, role }) => {
     const navigate = useNavigate();
     const user = useSelector(selectUser);
-    if (user.roleEnum !== role) {
+    if (user?.roleEnum !== role) {
       toast.error("Unauthorized access");
       return <Navigate to="/" />;
     }
@@ -73,10 +73,9 @@ function App() {
       path: "/",
       element: <Layout />,
       children: [
-       
         {
           path: "/supporttobid",
-          element: < Supporttobid />,
+          element: <Supporttobid />,
         },
         {
           path: "/buy-sell",
