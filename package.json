@@ -20,6 +20,7 @@
     "antd": "^5.17.4",
     "axios": "^1.7.2",
     "bootstrap-icons": "^1.11.3",
+    "chart.js": "^4.4.3",
     "chroma-js": "^2.4.2",
     "dayjs": "^1.11.11",
     "firebase": "^10.12.1",
