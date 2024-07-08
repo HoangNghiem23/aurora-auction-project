@@ -24,7 +24,7 @@ import TimeCountDown from "../../components/timeCountDown";
 import "./aution.scss";
 import { CgKey } from "react-icons/cg";
 import moment from "moment";
-import ShowFirework from "../../components/confetti";
+// import ShowFirework from "../../components/confetti";
 
 
 const { Option } = Select;
@@ -129,7 +129,7 @@ function Auction() {
   return (
     <div>
       <Header />
-      <ShowFirework />
+      {/* <ShowFirework /> */}
       <Modal className="animate__animated animate__flip" open={showModal}>
         <div>You are a winner</div>
       </Modal>

@@ -55,7 +55,9 @@ import Historytransition from "./pages/history_transition";
 import Buyandsell from "./Howtobill-buy";
 import Supporttobid from "./Howtobill-buy/support";
 import Error404 from "./pages/error404/Error404";
+import SaleComparision from "./components/chart";
 // import useRealtime from "./assets/hook/useRealtime";
+import JewelryInAuctionList from "./pages/admin/jewelryinauction";
 
 function App() {
   const PrivateRoute = ({ children, role }) => {
@@ -195,6 +197,14 @@ function App() {
               path: "/admin/dashboard/jewelry",
               element: <JewelryManegement />,
             },
+            {
+              path: "/admin/dashboard/chart",
+              element: <SaleComparision />,
+            },
+            {
+              path: "/admin/dashboard/jewelryauction",
+              element: <JewelryInAuctionList />,
+            },
           ],
         },
       ],
@@ -245,6 +255,7 @@ function App() {
       path: "/auction",
       element: <Auction />,
     },
+
     // {
     //   path: "/test-chuc-nang",
     //   element: <OrderManagement />,
