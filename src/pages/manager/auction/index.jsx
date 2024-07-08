@@ -8,15 +8,19 @@ import {
   Upload,
   Image,
   Select,
+  Switch,
 } from "antd";
 import TextArea from "antd/es/input/TextArea";
-import { PlusOutlined } from "@ant-design/icons";
+import { LogoutOutlined, PlusOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import api from "../../../config/axios";
 import { useForm } from "antd/es/form/Form";
 import uploadFile from "../../../utils/upload";
 import moment from "moment";
 import { DatePicker } from "antd";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../../../redux/features/counterSlice";
 
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
@@ -36,6 +40,7 @@ function AuctionManager() {
   const [stafflist, setStaffList] = useState([]);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
+  const dispatch = useDispatch();
 
   const handlePreview = async (file) => {
     if (!file.url && !file.preview) {
@@ -49,7 +54,7 @@ function AuctionManager() {
     const response = await api.get("/staff");
     setStaffList(response.data);
   };
-
+  const navigate = useNavigate();
   useEffect(() => fetchStaffList(), []);
 
   const option = stafflist.map((staff) => {
@@ -153,6 +158,11 @@ function AuctionManager() {
     }
   };
 
+  const onChange = (values, checked) => {
+    console.log(values);
+    console.log(checked);
+  };
+
   const columns = [
     { title: "ID", dataIndex: "id", key: "id" },
     { title: "Name", dataIndex: "name", key: "name" },
@@ -209,13 +219,37 @@ function AuctionManager() {
         </>
       ),
     },
+    {
+      title: "changeAution",
+      render: (values) => (
+        <>
+          <Switch
+            defaultChecked={
+              values.auctionsStatusEnum == "ISCLOSED" ? false : true
+            }
+            onChange={(checked) => {
+              onChange(values, checked);
+            }}
+          />
+          ;
+        </>
+      ),
+    },
   ];
 
   return (
     <div>
-      <Button type="primary" onClick={handleOpenModal}>
-        Add new auction
-      </Button>
+      <div className="flex justify-between m-3">
+        <Button type="primary" onClick={handleOpenModal}>
+          Add new auction
+        </Button>
+        <LogoutOutlined
+          style={{ fontSize: "20px" }}
+          onClick={() => {
+            dispatch(logout());
+          }}
+        />
+      </div>
       <Table dataSource={data} columns={columns} rowKey="id" />
       <Modal
         footer={false}

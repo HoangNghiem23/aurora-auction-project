@@ -26,10 +26,12 @@ function LoginPopup() {
         toast.success("Login success");
         if (user.roleEnum === "STAFF") {
           navigate("/staff");
+
         } else if (user.roleEnum === "MANAGER") {
           navigate("/manager");
         } else if (user.roleEnum === "ADMIN") {
           navigate("/admin");
+
         } else {
           navigate("/");
         }
@@ -84,15 +86,31 @@ function LoginPopup() {
           alt=""
         />
       </div>
-      <div className="loginPage__right">
+      <div className="loginPage__right ">
         <Form
+          labelCol={{
+            span: 8,
+          }}
+          wrapperCol={{
+            span: 16,
+          }}
+          style={{
+            maxWidth: 600,
+            display: "flex",
+            flexDirection: "column",
+            paddingLeft: "100px",
+          }}
           onFinish={onFinish}
           form={form}
           name="validateOnly"
           layout="vertical"
           autoComplete="off"
         >
-          <h2>Login Page</h2>
+          <h2
+            style={{ textAlign: "start", fontSize: "40px", fontWeight: "1000" }}
+          >
+            Login Page
+          </h2>
           <Form.Item
             name="username"
             label="User name"
@@ -104,17 +122,22 @@ function LoginPopup() {
           >
             <Input />
           </Form.Item>
+          <div>
           <Form.Item
             name="password"
             label="Password"
+            style={{marginBottom:"10px"}}
             rules={[
               {
                 required: true,
               },
             ]}
           >
-            <div>
-              <Input style={{ borderRadius: "20px" }} />
+            <Input.Password className="passwordcss" />
+           
+            
+          </Form.Item>
+          <div>
               <span
                 onClick={() => navigate("/forget-password")}
                 style={{ cursor: "pointer" }}
@@ -123,7 +146,9 @@ function LoginPopup() {
                 Forget your password?
               </span>
             </div>
-          </Form.Item>
+          </div>
+        
+
           <Form.Item>
             <Space>
               <Button
