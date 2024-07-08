@@ -24,13 +24,17 @@ import TimeCountDown from "../../components/timeCountDown";
 import "./aution.scss";
 import { CgKey } from "react-icons/cg";
 import moment from "moment";
-// import ShowFirework from "../../components/confetti";
+import ShowFirework from "../../components/confetti";
 
 const { Option } = Select;
 
 function Auction() {
   const [balance, setBalance] = useState(0);
   const [showModal, setShowMal] = useState(true);
+  const [winner, setShowWinner] = useState(false);
+  const [nameWin, setNameWin] = useState("");
+
+  const [expired, setExpired] = useState(false);
   const [form] = Form.useForm();
   const { id } = useParams();
   const [data, setData] = useState([]);
@@ -67,9 +71,38 @@ function Auction() {
 
   // }, [data?.thisIsTheHighestBid === "ISCLOSED"]);
 
+  useEffect(() => {
+    const checkIfExpired = () => {
+      const endDate = moment(data.end_date); // Ensure end_date is parsed correctly
+      const currentTime = moment(); // Get the current time
+      const isExpired = currentTime.isAfter(endDate); // Check if current time is after end_date
+      setExpired(isExpired); // Update the state based on the comparison
+    };
+
+    checkIfExpired(); // Initial check
+    const intervalId = setInterval(checkIfExpired, 1000); // Check every second
+    return () => clearInterval(intervalId); // Cleanup the interval on component unmount
+  }, [data.end_date]);
+
+  useEffect(() => {
+    if (expired) {
+      data.bid.forEach((bid) => {
+        console.log("Account Information:", bid.account);
+        console.log(bid.thisIsTheHighestBid == "ONE");
+        if (bid.thisIsTheHighestBid === "ONE") {
+          setShowWinner(true);
+          if (bid.account.id === user.id) {
+            setNameWin(bid.account.username);
+          }
+        }
+      });
+    }
+  }, [expired]);
+
   const fetch = async () => {
     try {
       const response = await api.get(`/auction/${id}`);
+      console.log(response.data);
       setData(response.data);
     } catch (error) {
       console.log(error);
@@ -125,13 +158,25 @@ function Auction() {
     </Select>
   );
 
+  console.log(nameWin);
   return (
     <div>
       <Header />
-      <ShowFirework />
-      <Modal className="animate__animated animate__flip" open={showModal}>
-        <div>You are a winner</div>
-      </Modal>
+      {winner && (
+        <>
+          <ShowFirework />
+          <Modal
+            onCancel={() => {
+              setShowWinner(false);
+              setShowMal(false);
+            }}
+            className="animate__animated animate__flip"
+            open={showModal}
+          >
+            <div>{nameWin} a is a winner</div>
+          </Modal>
+        </>
+      )}
       <section className="auction-page">
         <Row className="auction-page__col">
           <Col span={10} className="auction-page__box-img">
@@ -149,7 +194,11 @@ function Auction() {
 
           <Col span={8}>
             <h5 className="text-white">
-              <TimeCountDown endDate={data?.end_date} />
+              {!expired ? (
+                <TimeCountDown endDate={data?.end_date} />
+              ) : (
+                `Phiên đã đóng, người chiến thắng là : ${nameWin}`
+              )}
             </h5>
             <div
               style={{
@@ -191,10 +240,6 @@ function Auction() {
                   <InputNumber
                     addonAfter={selectAfter}
                     style={{ width: "100%", paddingLeft: "20px" }}
-                    formatter={(value) =>
-                      `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                    }
-                    parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
                   />
                 </Form.Item>
 

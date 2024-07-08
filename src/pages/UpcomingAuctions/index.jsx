@@ -75,24 +75,8 @@ const UpcomingAuction = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const offset = currentPage * itemsPerPage;
-  let filteredProducts = data.filter(
-    (product) =>
-      product.price >= priceRange.from && product.price <= priceRange.to
-  );
-
-  if (sortBy === "$ - $$$") {
-    filteredProducts.sort((a, b) => a.price - b.price);
-  } else if (sortBy === "$$$ - $") {
-    filteredProducts.sort((a, b) => b.price - a.price);
-  }
-
-  const currentProducts = filteredProducts.slice(offset, offset + itemsPerPage);
-
   return (
     <>
-      
-
       <div className="jewelry-section">
         <div className="text-first">Upcoming Auctions</div>
         <div className="results-and-filters">
@@ -245,7 +229,7 @@ const UpcomingAuction = () => {
                 !filtersVisible ? "full-width" : ""
               } ${viewMode}`}
             >
-              {data.map((product) => (
+              {data?.map((product) => (
                 <div className="jewelry-product" key={product?.label}>
                   <Link to={`/auction/${product?.id}`}>
                     <img src={product?.image} alt={product?.description} />

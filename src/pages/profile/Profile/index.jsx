@@ -7,11 +7,11 @@ function Profile() {
   const user = useSelector(selectUser);
   console.log(user);
   return (
-    <>
+    <div className="profile-page">
       <div className="welcome">
         <div className="welcome__profile">
           <div className="welcome__profile__1">
-            <h3>Profile</h3>
+            <h1>Profile</h1>
           </div>
           <div className="welcome__profile__2">
             Have questions about your account? Visit our{" "}
@@ -27,50 +27,27 @@ function Profile() {
       </div>
       <div className="profile">
         <div className="profile__navbar">
-          <div
-            className="profile__navbar__1"
-            onClick={() => {
-              return Navigate("/my-account/profile");
-            }}
-          >
+          <Link to={"/my-account/profile"} className="profile__navbar__1">
             Profile
-          </div>
-          <div
-            className="profile__navbar__2"
-            onClick={() => {
-              return Navigate("/my-account/auctions");
-            }}
-          >
+          </Link>
+          <Link to={"/my-account/auctions"} className="profile__navbar__2">
             Auctions
-          </div>
-          <div
-            className="profile__navbar__3"
-            onClick={() => {
-              return Navigate("/my-account/bids");
-            }}
-          >
+          </Link>
+          <Link to={"#"} className="profile__navbar__3">
             Bids
-          </div>
-          <div
-            className="profile__navbar__4"
-            onClick={() => {
-              return Navigate("/my-account/purchases");
-            }}
-          >
+          </Link>
+          <Link to={"#"} className="profile__navbar__4">
             Purchases
-          </div>
+          </Link>
           <div className="profile__navbar__5">
             <hr />
           </div>
-          <div
-            className="profile__navbar__4"
-            onClick={() => {
-              return Navigate("/my-account/seller-portal");
-            }}
-          >
+          <Link to={"#"} className="profile__navbar__6">
             Seller Portal
-          </div>
-          <div className="profile__navbar__4">Metaverse</div>
+          </Link>
+          <Link to={"#"} className="profile__navbar__7">
+            Metaverse
+          </Link>
         </div>
         <div className="profile__info">
           <div className="profile__info__profile">
@@ -112,7 +89,7 @@ function Profile() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

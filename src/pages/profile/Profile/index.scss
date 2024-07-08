@@ -1,190 +1,195 @@
-.welcome {
-  display: flex;
-  justify-content: space-between;
-  background-color: #fff;
-  border-bottom: 5px solid #f3f3f3;
-  box-shadow: #f3f3f3 0px -5px 0;
-  padding: 20px 50px;
-  a {
-    text-decoration: none;
-  }
-  &__profile {
-    &__2 {
-      font-weight: 100;
-      font-size: 13px;
+.profile-page {
+  .welcome {
+    display: flex;
+    justify-content: space-between;
+    background-color: #fff;
+    border-bottom: 5px solid #f3f3f3;
+    box-shadow: #f3f3f3 0px -5px 0;
+    padding: 20px 50px;
+    a {
+      text-decoration: none;
     }
-  }
-  &__username {
-    &__2 {
-      font-weight: 200;
-      font-size: 15px;
-      padding-left: 35px;
-      color: #23448d;
-    }
-  }
-}
-
-.profile {
-  height: 130dvh;
-  display: flex;
-  padding-top: 50px;
-  background-color: #f3f3f3;
-
-  &__navbar {
-    width: 18%;
-    background-color: #f3f3f3;
-    padding-left: 50px;
-    padding-right: 70px;
-    font-weight: 300;
-    color: #6b6b6b;
-
-    &__1 {
-      margin-bottom: 30px;
-      color: #23448d;
-      font-weight: 600;
-    }
-    &__2 {
-      margin-bottom: 30px;
-    }
-    &__3 {
-      margin-bottom: 30px;
-    }
-    &__4 {
-      margin-bottom: 30px;
-    }
-    &__5 {
-      margin-bottom: 30px;
-    }
-    &__6 {
-      margin-bottom: 30px;
-    }
-    &__7 {
-      margin-bottom: 30px;
-    }
-  }
-  &__info {
-    width: 82%;
-    padding-right: 50px;
-
     &__profile {
-      height: 350px;
-      background-color: #fff;
-      margin-bottom: 25px;
-      padding: 30px;
-      .detail__1 {
-        font-size: 18px;
-      }
-      .detail__2 {
-        display: flex;
-        justify-content: space-between;
-        padding-top: 30px;
-        .name {
-          font-size: 17px;
-        }
-        .gmail {
-          font-weight: 300;
-          font-size: 17px;
-        }
-        .password {
-          font-weight: 300;
-          font-size: 17px;
-        }
-        .changepassword {
-          color: #23448d;
-          font-size: 12px;
-        }
-      }
-      .pass {
-        padding-left: 745px;
-        font-size: 23px;
+      &__2 {
         font-weight: 100;
+        font-size: 13px;
       }
-      .detail__3 {
-        color: grey;
-        margin-top: 25px;
+    }
+    &__username {
+      &__2 {
+        font-weight: 200;
+        font-size: 15px;
+        // padding-left: 35px;
+        color: #23448d;
       }
-      .detail__4 {
-        width: 212px;
-        height: 48px;
-        background-color: #00253e;
-        color: #fff;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: 25px;
+    }
+  }
 
-        &:hover {
-          background-color: #23448d;
+  .profile {
+    height: 130dvh;
+    display: flex;
+    padding-top: 50px;
+    background-color: #f3f3f3;
+
+    &__navbar {
+      width: 18%;
+      background-color: #f3f3f3;
+      padding-left: 50px;
+      padding-right: 70px;
+      font-weight: 300;
+      color: #6b6b6b;
+      a {
+        display: block;
+      }
+
+      &__1 {
+        margin-bottom: 30px;
+        color: #23448d;
+        font-weight: 600;
+      }
+      &__2 {
+        margin-bottom: 30px;
+      }
+      &__3 {
+        margin-bottom: 30px;
+      }
+      &__4 {
+        margin-bottom: 30px;
+      }
+      &__5 {
+        margin-bottom: 30px;
+      }
+      &__6 {
+        margin-bottom: 30px;
+      }
+      &__7 {
+        margin-bottom: 30px;
+      }
+    }
+    &__info {
+      width: 82%;
+      padding-right: 50px;
+
+      &__profile {
+        height: 350px;
+        background-color: #fff;
+        margin-bottom: 25px;
+        padding: 30px;
+        .detail__1 {
+          font-size: 18px;
         }
-      }
-    }
-    &__account {
-      height: 150px;
-      background-color: #fff;
-      margin-bottom: 25px;
-      padding: 30px;
-      .acount {
-        font-size: 18px;
-      }
-      .account__detail {
-        margin-top: 20px;
-        color: grey;
-      }
-    }
-    &__address {
-      height: 150px;
-      background-color: #fff;
-      margin-bottom: 25px;
-      padding: 30px;
-
-      .address {
-        font-size: 18px;
-        display: flex;
-        justify-content: space-between;
-        &__btn {
+        .detail__2 {
+          display: flex;
+          justify-content: space-between;
+          padding-top: 30px;
+          .name {
+            font-size: 17px;
+          }
+          .gmail {
+            font-weight: 300;
+            font-size: 17px;
+          }
+          .password {
+            font-weight: 300;
+            font-size: 17px;
+          }
+          .changepassword {
+            color: #23448d;
+            font-size: 12px;
+          }
+        }
+        .pass {
+          padding-left: 745px;
+          font-size: 23px;
+          font-weight: 100;
+        }
+        .detail__3 {
+          color: grey;
+          margin-top: 25px;
+        }
+        .detail__4 {
           width: 212px;
           height: 48px;
-          border: 0.5px solid grey;
+          background-color: #00253e;
+          color: #fff;
           display: flex;
           justify-content: center;
           align-items: center;
-          &:hover {
-            color: #23448d;
-            border: 1px solid #23448d;
-          }
-        }
-      }
-      .address__detail {
-        margin-top: 20px;
-        color: grey;
-      }
-    }
-    &__phone {
-      height: 150px;
-      background-color: #fff;
-      margin-bottom: 25px;
-      padding: 30px;
+          margin-top: 25px;
 
-      .phone {
-        font-size: 18px;
-        display: flex;
-        justify-content: space-between;
-        &__btn {
-          width: 257px;
-          height: 48px;
-          border: 0.5px solid grey;
-          display: flex;
-          justify-content: center;
-          align-items: center;
           &:hover {
-            color: #23448d;
-            border: 1px solid #23448d;
+            background-color: #23448d;
           }
         }
       }
-      .phone__detail {
-        margin-top: 20px;
-        color: grey;
+      &__account {
+        height: 150px;
+        background-color: #fff;
+        margin-bottom: 25px;
+        padding: 30px;
+        .acount {
+          font-size: 18px;
+        }
+        .account__detail {
+          margin-top: 20px;
+          color: grey;
+        }
+      }
+      &__address {
+        height: 150px;
+        background-color: #fff;
+        margin-bottom: 25px;
+        padding: 30px;
+
+        .address {
+          font-size: 18px;
+          display: flex;
+          justify-content: space-between;
+          &__btn {
+            width: 212px;
+            height: 48px;
+            border: 0.5px solid grey;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            &:hover {
+              color: #23448d;
+              border: 1px solid #23448d;
+            }
+          }
+        }
+        .address__detail {
+          margin-top: 20px;
+          color: grey;
+        }
+      }
+      &__phone {
+        height: 150px;
+        background-color: #fff;
+        margin-bottom: 25px;
+        padding: 30px;
+
+        .phone {
+          font-size: 18px;
+          display: flex;
+          justify-content: space-between;
+          &__btn {
+            width: 257px;
+            height: 48px;
+            border: 0.5px solid grey;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            &:hover {
+              color: #23448d;
+              border: 1px solid #23448d;
+            }
+          }
+        }
+        .phone__detail {
+          margin-top: 20px;
+          color: grey;
+        }
       }
     }
   }

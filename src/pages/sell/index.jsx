@@ -68,6 +68,7 @@ function SellPage() {
       // };
       // console.log(data);
       // await api.post(`/request-buy/${user.id}`, values);
+      await api.post("/request-buy", values);
       form.resetFields();
       setFileList([]);
       fetchData(); // Refresh the data after submitting a new request
@@ -252,7 +253,7 @@ function SellPage() {
               rules={[{ required: true, message: "Please select a category!" }]}
             >
               <Select>
-                <Select.Option value={1}>Category 1</Select.Option>
+                <Select.Option value={1}>Nhan</Select.Option>
                 <Select.Option value={2}>Category 2</Select.Option>
                 <Select.Option value={3}>Category 3</Select.Option>
                 {/* Add more categories as needed */}
