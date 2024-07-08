@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { DownOutlined, SearchOutlined, UpOutlined } from "@ant-design/icons";
 import "./index.scss";
 import Header from "../../components/header";
-import { Button } from "antd";
+import { Button, Modal } from "antd";
 import Footer from "../../components/footer";
 import api from "../../config/axios";
 import moment from "moment";
@@ -91,6 +91,8 @@ const UpcomingAuction = () => {
 
   return (
     <>
+      
+
       <div className="jewelry-section">
         <div className="text-first">Upcoming Auctions</div>
         <div className="results-and-filters">
