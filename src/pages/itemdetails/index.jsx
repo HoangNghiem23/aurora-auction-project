@@ -1,16 +1,12 @@
-import React, { useState } from 'react'; // Ensure useState is imported properly
-import Header from '../../components/header';
-import Footer from '../../components/footer';
-import './index.scss';
-import { FaMapMarkerAlt } from 'react-icons/fa'; // Import the location icon map
+import React, { useState } from "react";
+import Header from "../../components/header";
+import Footer from "../../components/footer";
+import "./index.scss";
 
 const ItemDetails = () => {
-  // Add state for toggling each section
   const [showDetails, setShowDetails] = useState(false);
   const [showTips, setShowTips] = useState(false);
-  const [showAvailability, setShowAvailability] = useState(false);
 
-  // Toggle functions for each section
   const toggleDetails = () => {
     setShowDetails(!showDetails);
   };
@@ -19,77 +15,78 @@ const ItemDetails = () => {
     setShowTips(!showTips);
   };
 
-  const toggleAvailability = () => {
-    setShowAvailability(!showAvailability);
-  };
-
-  const openGoogleMaps = () => {
-    window.open('https://www.google.com/maps/search/?api=1&query=your+location', '_blank');
-  };
-
   return (
     <div className="itemdetails-wrapper">
       <Header />
       <div className="itemdetails-container">
-        <main className="itemdetails-main-content">
-          <div className="itemdetails-detail">
-            <div className="itemdetails-image">
-              <img src="https://images5.alphacoders.com/135/1352225.jpeg" alt="Sample Item" />
+        <div className="itemdetails-content">
+          <div className="itemdetails-images">
+            <img
+              src="https://images5.alphacoders.com/135/1352225.jpeg"
+              alt="Sample Item"
+              className="main-image"
+            />
+            <div className="thumbnail-images">
+              <img
+                src="https://images5.alphacoders.com/135/1352225.jpeg"
+                alt="Sample Item"
+              />
+              <img
+                src="https://images5.alphacoders.com/135/1352225.jpeg"
+                alt="Sample Item"
+              />
+              <img
+                src="https://images5.alphacoders.com/135/1352225.jpeg"
+                alt="Sample Item"
+              />
             </div>
-            <div className="itemdetails-info">
-              <p className="back-to-selection">BACK TO SELECTION</p>
-              <h1 className="itemdetails-title">Sample Item</h1>
-              <p className="itemdetails-price">$1000.00</p>
-              <p className="itemdetails-description">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-              </p>
-              <button className="add-to-bag">REGISTER TO BILD</button>
-              <div className="product-details">
-                <p onClick={toggleDetails} className="details-toggle">DETAILS {showDetails ? '▲' : '▼'}</p>
-                {showDetails && (
-                  <div className="details-content">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat officiis ut soluta in laborum quis, optio enim aspernatur maxime asperiores, libero deserunt. Exercitationem, nihil ducimus. Iure iusto molestias sed modi.</p>
-                  </div>
-                )}
-                <p onClick={toggleTips} className="details-toggle">TIPS & WARNINGS {showTips ? '▲' : '▼'}</p>
-                {showTips && (
-                  <div className="details-content">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat pariatur necessitatibus, aut illo porro adipisci numquam, nisi, molestiae eligendi harum deserunt sapiente! Praesentium molestiae delectus, veniam consequatur possimus laudantium vitae.</p>
-                  </div>
-                )}
-                <p onClick={openGoogleMaps} className="location-link">
-                  LOCAL AVAILABILITY <FaMapMarkerAlt />
-                </p>
+          </div>
+          <div className="itemdetails-info">
+            <h1>Jayson Tatum Boston Celtics 2024 NBA Finals Game Worn Statement Edition Jersey | Game 2 | Double-Double</h1>
+            <div className="itemdetails-summary">
+              <div className="itemdetails-bid-info">
+                <p>Current Bid: $70,000 USD</p>
+                <p>25 Bids</p>
+                <p>Lot closes: July 10, 09:01 AM +07</p>
+                <button className="register-bid-button">Register to Bid</button>
               </div>
             </div>
           </div>
-          <div className="recommended-section">
-            <h2 className="recommended-title">Recommended for you</h2>
-            <p className="recommended-subtitle">Based on your history</p>
-            <div className="recommended-items">
-              <div className="recommended-item">
-                <img src="https://i.pinimg.com/originals/2c/cf/44/2ccf44ad05c0fe69fe1ccbb7ef9bbf61.jpg" alt="Heart Drop" />
-                <p>HEART DROP - $200.00</p>
-              </div>
-              <div className="recommended-item">
-                <img src="https://i.pinimg.com/originals/2c/cf/44/2ccf44ad05c0fe69fe1ccbb7ef9bbf61.jpg" alt="Heart Drop" />
-                <p>HEART DROP - $200.00</p>
-              </div>
-              <div className="recommended-item">
-                <img src="https://cdn.pixabay.com/photo/2016/02/02/15/54/jewellery-1175533_640.jpg" alt="Diamond Choker" />
-                <p>DIAMOND CHOKER - $300.00</p>
-              </div>
-              <div className="recommended-item">
-                <img src="https://cdn.pixabay.com/photo/2016/02/02/15/55/jewellery-1175535_640.jpg" alt="Leaf Pendant" />
-                <p>LEAF PENDANT - $150.00</p>
-              </div>
-              <div className="recommended-item">
-                <img src="https://img.freepik.com/free-photo/gold-necklace-earrings-are-displayed-red-velvet-surface_1340-42830.jpg" alt="Ruby Pendant" />
-                <p>RUBY PENDANT - $250.00</p>
-              </div>
-            </div>
+        </div>
+        <div className="lot-details">
+          <h2>Lot Details</h2>
+          <div className="lot-details-section">
+            <h3>Description</h3>
+            <p>NIKE, NIKE MESH JERSEY, SIZE 48 (+4 LENGTH)</p>
           </div>
-        </main>
+          <div className="lot-details-section">
+            <h3>Condition Report</h3>
+            <p>
+              This home ‘Statement Edition’ jersey was worn by Jayson Tatum on June 9, 2024 during Game 2 of the NBA Finals when the Boston Celtics played the Dallas Mavericks.
+            </p>
+          </div>
+          <div className="lot-details-section">
+            <h3>Catalogue Note</h3>
+            <p>
+              Tatum recorded a double-double, finishing with 18 points, dishing out a game-high 12 assists, grabbed 9 rebounds, and added 1 steal. He also played a game-high 45 minutes.
+            </p>
+            <p>
+              Tatum was key in the Celtics' 3rd Quarter run that eventually set them up to close out Game 2. He constantly fought off double teams to find open teammates or deftly weaved through the lane to score at the rim. In his second Finals appearance, Tatum established himself as one of the great players of his generation.
+            </p>
+          </div>
+          <div className="lot-details-section">
+            <h3>Going Deeper | Jayson Tatum</h3>
+            <p>
+              Tatum’s play since his entrance to the league has helped catapult the Celtics into the championship conversation each season. Boston has made the Playoffs each year since Tatum’s arrival in the 2017-2018 season, making the Eastern Conference Finals 4 times and the Finals twice.
+            </p>
+            <p>
+              In the 2023 NBA All-Star Game, Tatum set a new All-Star Game Record with 55 points, taking home the ‘The Kobe Bryant MVP Trophy’ in the process.
+            </p>
+            <p>
+              At the time of cataloging, Tatum has career averages of 23.1 points, 7.2 rebounds, and 3.5 assists per game. He is a 5-time NBA All-Star, a 3-time All-NBA 1st Team selection, 2021-2022 Eastern Conference Finals MVP, and 2017-2018 All-Rookie First Team selection. Tatum won his first NBA Championship with the Celtics in 2024.
+            </p>
+          </div>
+        </div>
       </div>
       <Footer />
     </div>
