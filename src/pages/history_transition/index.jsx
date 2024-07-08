@@ -15,18 +15,22 @@ import { LeftCircleTwoTone } from "@ant-design/icons";
 
 import { Card } from "antd";
 import api from "../../config/axios";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import { selectUser } from "../../redux/features/counterSlice";
 import RoundedBtn from "../../components/rounded-button";
 import ButtonPlan from "../../components/buttonPlan";
 import TransactionHistory from "../../components/transaction";
+import useGetParams from "../../assets/hook/useGetParams";
+import { toast } from "react-toastify";
+import { formatMoney } from "../../assets/hook/useFormat";
 
 function WalletPage() {
   const [open, setOpen] = useState(false);
   const [number, setNumber] = useState(1);
   const [number2, setNumber2] = useState(1);
+  const [balance, setBalance] = useState(0);
   const [check, setCheck] = useState(false);
   const [wallet, setWallet] = useState({});
   const [openForm, setOpenForm] = useState(false);
@@ -81,7 +85,10 @@ function WalletPage() {
   //       clearInterval(id);
   //     };
   //   }
-  // });
+  // });\
+  useEffect(() => {
+    getCurrentMoney();
+  }, []);
 
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -105,6 +112,34 @@ function WalletPage() {
   useEffect(() => {
     getWalletDetail();
   }, []);
+
+  const params = useGetParams();
+  const transactionId = params("vnp_TransactionStatus");
+  const vnPayId = params("id");
+  console.log(transactionId);
+  console.log(vnPayId);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (transactionId === "00") {
+      try {
+        const response = api.put(`/wallet/recharge-wallet/${vnPayId}`);
+        console.log(response.data);
+        toast.success("Nạp tiền thành công");
+        navigate("");
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }, []);
+
+  const getCurrentMoney = async () => {
+    try {
+      const response = await api.get(`/wallet/walletDetail/${user?.id}`);
+      setBalance(formatMoney(response.data.amount));
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const onFinish = async () => {
     setCheck(true);
@@ -179,7 +214,7 @@ function WalletPage() {
         <div className="wallet-section__right">
           <div className="wallet-section__right__top">
             <h2>Current Balance</h2>
-            <h3>{wallet.amount}$</h3>
+            <h3>{balance}$</h3>
           </div>
           <div
             className="wallet-section__right__bottom"

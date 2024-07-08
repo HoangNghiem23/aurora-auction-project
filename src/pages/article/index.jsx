@@ -6,7 +6,7 @@ import './index.scss';
 const Article = () => {
   return (
     <div className="article-container">
-      <Header />
+    
       <main className="article-main">
         <article className="article-content">
           <header className="article-header">
