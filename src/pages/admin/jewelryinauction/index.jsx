@@ -1,13 +1,21 @@
 import { Table } from "antd";
 import { useEffect, useState } from "react";
-import api from "../../../config/axios";
+import axios from "axios"; // Chắc chắn rằng bạn đã cài đặt axios
 
 function JewelryInAuctionList() {
   const [data, setData] = useState([]);
 
   const fetchData = async () => {
     try {
-      const response = await api.get("/auction/AllAuctionsReady");
+      const response = await axios.get(
+        "http://152.42.226.77:8080/api/auction/AllAuctionsReady",
+        {
+          headers: {
+            Authorization:
+              "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJzdHJpbmciLCJpYXQiOjE3MjAyNzI5NjksImV4cCI6MTcyMDM1OTM2OX0.dkWBi-LA2IdZs4zGUIVghPaOeP2VhXgGZjPca_EeXvaajVfjz4z7VbrpAnMIrFDN",
+          },
+        }
+      );
       const jewelryAuctions = response.data.filter(
         (auction) => auction.jewelry
       );
