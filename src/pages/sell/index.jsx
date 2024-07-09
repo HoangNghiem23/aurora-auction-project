@@ -7,9 +7,6 @@ import Header from "../../components/header";
 import Footer from "../../components/footer";
 import "./index.scss";
 import uploadFile from "../../utils/upload";
-import { useSelector } from "react-redux";
-import { selectUser } from "../../redux/features/counterSlice";
-import Item from "antd/es/list/Item";
 
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
@@ -69,20 +66,15 @@ function SellPage() {
     fetchData();
   }, []);
 
-  const user = useSelector(selectUser);
-
   const onFinish = async (values) => {
+    console.log(values);
     try {
       const url = fileList[0]?.originFileObj
         ? await uploadFile(fileList[0].originFileObj)
         : fileList[0].url;
       values.image_url = url;
-      // const data = {
-      //   ...values,
-      //   userid: user.id,
-      // };
-      // console.log(data);
-      // await api.post(`/request-buy/${user.id}`, values);
+
+      await api.post("/request-buy", values);
       form.resetFields();
       setFileList([]);
       fetchData(); // Refresh the data after submitting a new request
