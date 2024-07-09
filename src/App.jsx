@@ -45,17 +45,23 @@ import ItemDetails from "./pages/itemdetails";
 //about
 import Policy from "./pages/policy";
 import Article from "./pages/article";
+//profile
+import Profile from "./pages/profile/Profile";
+import AuctionsProfilePage from "./pages/profile/Auctions";
+import BidsProfilePage from "./pages/profile/Bids";
+//
 
 import AboutUs from "./pages/aboutus";
 import Auction from "./pages/aution/Auction";
 import useRealtime from "./assets/hook/useRealtime";
-import Profile from "./pages/profile/Profile";
-import AuctionProfile from "./pages/profile/Auctions";
+
 import Historytransition from "./pages/history_transition";
 import Buyandsell from "./Howtobill-buy";
 import Supporttobid from "./Howtobill-buy/support";
 import Error404 from "./pages/error404/Error404";
+import SaleComparision from "./components/chart";
 // import useRealtime from "./assets/hook/useRealtime";
+import JewelryInAuctionList from "./pages/admin/jewelryinauction";
 
 function App() {
   const PrivateRoute = ({ children, role }) => {
@@ -137,7 +143,11 @@ function App() {
             },
             {
               path: "/my-account/auctions",
-              element: <AuctionProfile />,
+              element: <AuctionsProfilePage />,
+            },
+            {
+              path: "/my-account/bids",
+              element: <BidsProfilePage />,
             },
           ],
         },
@@ -195,6 +205,14 @@ function App() {
               path: "/admin/dashboard/jewelry",
               element: <JewelryManegement />,
             },
+            {
+              path: "/admin/dashboard/chart",
+              element: <SaleComparision />,
+            },
+            {
+              path: "/admin/dashboard/jewelryauction",
+              element: <JewelryInAuctionList />,
+            },
           ],
         },
       ],
@@ -245,6 +263,7 @@ function App() {
       path: "/auction",
       element: <Auction />,
     },
+
     // {
     //   path: "/test-chuc-nang",
     //   element: <OrderManagement />,

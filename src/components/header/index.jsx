@@ -90,10 +90,11 @@ const Header = () => {
       <h1 className="logo">
         <Link to={"/"}>
           <img
-            src="https://firebasestorage.googleapis.com/v0/b/aurora-auction-e6371.appspot.com/o/4180764.png?alt=media&token=a64d3f14-8b7d-4f1d-ad11-2b46330d2464"
+            src="https://firebasestorage.googleapis.com/v0/b/aurora-auction-e6371.appspot.com/o/Aurora-auction%20shop.png?alt=media&token=53f6261f-1152-48e6-b146-7a443512b907"
             alt="Favorite"
-            width={90}
-         
+
+            width={150}
+
           />{" "}
         </Link>
       </h1>
