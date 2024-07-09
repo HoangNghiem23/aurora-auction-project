@@ -6,7 +6,7 @@ import Footer from '../../components/footer';
 function Policy() {
   return (
     <div className="App">
-      <Header />
+     
       <main>
         <section className="policy">
           <h1>CHÍNH SÁCH VÀ ĐIỀU KHOẢN MUA HÀNG</h1>

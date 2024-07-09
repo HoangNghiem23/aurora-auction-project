@@ -8,6 +8,7 @@ import {
   TeamOutlined,
   AppstoreAddOutlined,
   ProductOutlined,
+  DollarOutlined,
 } from "@ant-design/icons";
 import { Avatar, Breadcrumb, Layout, Menu, Space, theme } from "antd";
 import { Footer } from "antd/es/layout/layout";
@@ -97,6 +98,7 @@ const StaffPage = () => {
           getItem("Club 3", "stats-club-3"),
           getItem("All Clubs", "all-clubs"),
         ]),
+        getItem("Thông báo", "chart", <DollarOutlined />),
       ]);
     }
     if (role === "manager") {

@@ -117,7 +117,7 @@ const AuctioResults = () => {
 
   return (
     <>
-      <Header />
+     
       <div className="jewelry-section">
         <div className="text-first">Auction Results</div>
 

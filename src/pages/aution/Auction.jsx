@@ -26,6 +26,7 @@ import { CgKey } from "react-icons/cg";
 import moment from "moment";
 import ShowFirework from "../../components/confetti";
 
+
 const { Option } = Select;
 
 function Auction() {
@@ -160,6 +161,7 @@ function Auction() {
   return (
     <div>
       <Header />
+
       {winner && (
         <>
           <ShowFirework />
@@ -175,6 +177,7 @@ function Auction() {
           </Modal>
         </>
       )}
+
       <section className="auction-page">
         <Row className="auction-page__col">
           <Col span={10} className="auction-page__box-img">

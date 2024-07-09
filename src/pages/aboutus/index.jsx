@@ -34,7 +34,7 @@ const AboutUs = () => {
 
     return (
         <div className="about-us-container">
-            <Header />
+           
             <main className="about-us-main">
                 <section className="top-image-section">
                     <img src="https://i.pinimg.com/originals/ff/9c/20/ff9c204f62b65141a988cde3c7b1484f.jpg" alt="Top Image" className="top-image"/>

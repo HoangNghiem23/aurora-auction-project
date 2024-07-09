@@ -9,6 +9,7 @@ import "./index.scss";
 import uploadFile from "../../utils/upload";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/features/counterSlice";
+import Item from "antd/es/list/Item";
 
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
@@ -20,6 +21,7 @@ const getBase64 = (file) =>
 
 function SellPage() {
   const [fileList, setFileList] = useState([]);
+  const [cate, setCate] = useState([]);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [form] = Form.useForm();
@@ -41,6 +43,18 @@ function SellPage() {
       <div style={{ marginTop: 8 }}>Upload</div>
     </button>
   );
+  // const response = await api.get("/categoty")
+  const fetchCategory = async () => {
+    try {
+      const response = await api.get("/category");
+      setCate(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchCategory();
+  }, []);
 
   const fetchData = async () => {
     try {
@@ -54,6 +68,7 @@ function SellPage() {
   useEffect(() => {
     fetchData();
   }, []);
+
   const user = useSelector(selectUser);
 
   const onFinish = async (values) => {
@@ -248,16 +263,18 @@ function SellPage() {
               <Input />
             </Form.Item>
             <Form.Item
-              label="Category ID"
-              name="category_id"
+              label="CategoryName"
+              name="category_name"
               rules={[{ required: true, message: "Please select a category!" }]}
             >
-              <Select>
-                <Select.Option value={1}>Nhan</Select.Option>
-                <Select.Option value={2}>Category 2</Select.Option>
-                <Select.Option value={3}>Category 3</Select.Option>
-                {/* Add more categories as needed */}
-              </Select>
+
+              <Select
+                options={cate?.map((item) => ({
+                  label: item.category_name,
+                  value: item.id,
+                }))}
+              ></Select>
+
             </Form.Item>
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
               <Button type="primary" htmlType="submit">

@@ -66,19 +66,24 @@ const Header = () => {
             )}
           </li>
           <li>
-            <a href="/jewelry" className="nav-link">
+            <Link to ={"/jewelry"} className="nav-link">
               Jewelry
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="/sell" className="nav-link">
+            <Link to={"/sell"} className="nav-link">
               Sell
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="/contact" className="nav-link">
+            <Link to={"/contact"}  className="nav-link">
               Contact
-            </a>
+            </Link>
+          </li>
+          <li>
+            <Link to={"/buy-sell"} className="nav-link">
+              HOW TO BUY & SELL
+            </Link>
           </li>
         </ul>
       </div>
@@ -87,7 +92,9 @@ const Header = () => {
           <img
             src="https://firebasestorage.googleapis.com/v0/b/aurora-auction-e6371.appspot.com/o/Aurora-auction%20shop.png?alt=media&token=53f6261f-1152-48e6-b146-7a443512b907"
             alt="Favorite"
+
             width={150}
+
           />{" "}
         </Link>
       </h1>
