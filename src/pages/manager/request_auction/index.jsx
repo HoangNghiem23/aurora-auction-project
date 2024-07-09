@@ -31,6 +31,8 @@ function RequestAuctionManager() {
   const [currentRequest, setCurrentRequest] = useState(null);
   const [form] = useForm();
 
+  const [real, setReal] = useState(false);
+
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
 
@@ -66,7 +68,14 @@ function RequestAuctionManager() {
   const fetchData = async () => {
     try {
       const response = await api.get("/request-buy");
-      setData(response.data);
+      const res = response.data;
+      const filter = res.filter(
+        (item) =>
+          item.processes[item.processes.length - 1].requestBuyEnum ==
+          "WAITINGMANAGER"
+      );
+      // console.log(filter)
+      setData(filter);
     } catch (error) {
       console.log(error);
     }
@@ -74,7 +83,7 @@ function RequestAuctionManager() {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [real]);
 
   const handleReject = async (values) => {
     try {
@@ -87,6 +96,7 @@ function RequestAuctionManager() {
           item?.id === values.id ? { ...item, finalStatus: "REJECTED" } : item
         )
       );
+      setReal(true);
     } catch (error) {
       console.log(error);
     }
@@ -103,6 +113,7 @@ function RequestAuctionManager() {
           item?.id === values.id ? { ...item, finalStatus: "ACCEPTED" } : item
         )
       );
+      setReal(true);
     } catch (error) {
       console.log(error);
     }
@@ -233,6 +244,7 @@ function RequestAuctionManager() {
           </Button>
         ) : (
           <>
+            {/* {console.log(values.processes[values.processes.length-1])} */}
             <Button
               type="primary"
               style={{ marginRight: 8 }}
