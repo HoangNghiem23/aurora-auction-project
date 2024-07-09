@@ -83,6 +83,7 @@ function SellPage() {
       // };
       // console.log(data);
       // await api.post(`/request-buy/${user.id}`, values);
+      await api.post("/request-buy", values);
       form.resetFields();
       setFileList([]);
       fetchData(); // Refresh the data after submitting a new request
@@ -266,12 +267,14 @@ function SellPage() {
               name="category_name"
               rules={[{ required: true, message: "Please select a category!" }]}
             >
+
               <Select
                 options={cate?.map((item) => ({
                   label: item.category_name,
                   value: item.id,
                 }))}
               ></Select>
+
             </Form.Item>
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
               <Button type="primary" htmlType="submit">
