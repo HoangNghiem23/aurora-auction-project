@@ -8,18 +8,53 @@
     padding: 20px 50px;
     a {
       text-decoration: none;
+      color: #23448d;
     }
     &__profile {
+      font-size: 25px;
+
       &__2 {
         font-weight: 100;
         font-size: 13px;
       }
     }
     &__username {
+      font-size: 20px;
+      font-weight: 300;
+
       &__2 {
-        font-weight: 200;
         font-size: 15px;
-        // padding-left: 35px;
+        padding-left: 35px;
+        color: #23448d;
+      }
+    }
+  }
+  .welcome {
+    display: flex;
+    justify-content: space-between;
+    background-color: #fff;
+    border-bottom: 5px solid #f3f3f3;
+    box-shadow: #f3f3f3 0px -5px 0;
+    padding: 20px 50px;
+    a {
+      text-decoration: none;
+      color: #23448d;
+    }
+    &__profile {
+      font-size: 25px;
+
+      &__2 {
+        font-weight: 100;
+        font-size: 13px;
+      }
+    }
+    &__username {
+      font-size: 20px;
+      font-weight: 300;
+
+      &__2 {
+        font-size: 15px;
+        padding-left: 35px;
         color: #23448d;
       }
     }

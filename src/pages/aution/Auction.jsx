@@ -41,17 +41,17 @@ function Auction() {
   const user = useSelector(selectUser);
   const lastItemRef = useRef(null);
 
-  useRealtime(async (body) => {
-    if (body.body === "addBid") {
-      await fetch();
-    }
-  });
-
   function getAccountsByHighestBid(highestBidValue) {
     return data?.bid
       .filter((bid) => bid.thisIsTheHighestBid === highestBidValue)
       .map((bid) => bid.account);
   }
+
+  useRealtime(async (body) => {
+    if (body.body === "addBid") {
+      await fetch();
+    }
+  });
 
   // console.log(accountsWithZeroHighestBid[0]);
 
@@ -88,12 +88,10 @@ function Auction() {
     if (expired) {
       data.bid.forEach((bid) => {
         console.log("Account Information:", bid.account);
-        console.log(bid.thisIsTheHighestBid == "ONE");
-        if (bid.thisIsTheHighestBid === "ONE") {
+        console.log(bid.thisIsTheHighestBid == "TWO");
+        if (bid.thisIsTheHighestBid === "TWO" && bid.account.id === user.id) {
           setShowWinner(true);
-          if (bid.account.id === user.id) {
-            setNameWin(bid.account.username);
-          }
+          setNameWin(bid.account.username);
         }
       });
     }
@@ -211,7 +209,7 @@ function Auction() {
               />
             </div>
             <Card
-              title={`Số dư hiện tại: ${balance}`}
+              title={`Current Balance: ${balance}$`}
               className="bet-card"
               bordered={false}
               style={{ height: "fitContent" }}

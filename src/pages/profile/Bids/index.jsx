@@ -3,15 +3,15 @@ import "./index.scss";
 import { selectUser } from "../../../redux/features/counterSlice";
 import { useSelector } from "react-redux";
 
-function AuctionsProfilePage() {
+function BidsProfilePage() {
   const user = useSelector(selectUser);
   console.log(user);
   return (
-    <div className="auctions-page">
+    <div className="bids-page">
       <div className="welcome">
         <div className="welcome__profile">
           <div className="welcome__profile__1">
-            <h1>Auctions</h1>
+            <h1>Bids</h1>
           </div>
           <div className="welcome__profile__2">
             Have questions? Visit our <a href="#">FAQ page</a>.
@@ -32,7 +32,7 @@ function AuctionsProfilePage() {
           <Link to={"/my-account/auctions"} className="profile__navbar__2">
             Auctions
           </Link>
-          <Link to={"/my-account/bids"} className="profile__navbar__3">
+          <Link to={"#"} className="profile__navbar__3">
             Bids
           </Link>
           <Link to={"#"} className="profile__navbar__4">
@@ -92,4 +92,4 @@ function AuctionsProfilePage() {
   );
 }
 
-export default AuctionsProfilePage;
+export default BidsProfilePage;

@@ -1,4 +1,4 @@
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./index.scss";
 import { selectUser } from "../../../redux/features/counterSlice";
 import { useSelector } from "react-redux";
@@ -33,10 +33,10 @@ function Profile() {
           <Link to={"/my-account/auctions"} className="profile__navbar__2">
             Auctions
           </Link>
-          <Link to={"#"} className="profile__navbar__3">
+          <Link to={"/my-account/bids"} className="profile__navbar__3">
             Bids
           </Link>
-          <Link to={"#"} className="profile__navbar__4">
+          <Link to={"/my-account/purchases"} className="profile__navbar__4">
             Purchases
           </Link>
           <div className="profile__navbar__5">

@@ -8,6 +8,7 @@ import Footer from "../../components/footer";
 import api from "../../config/axios";
 import moment from "moment";
 import momentDurationFormatSetup from "moment-duration-format";
+import useRealtime from "../../assets/hook/useRealtime";
 
 momentDurationFormatSetup(moment);
 
@@ -22,7 +23,6 @@ const UpcomingAuction = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [data, setData] = useState([]);
   const itemsPerPage = 12;
-
   const handleSortChange = (value) => {
     setSortBy(value);
     setDropdownVisible(false);
@@ -40,7 +40,53 @@ const UpcomingAuction = () => {
     setPriceRange({ from: 0, to: Infinity });
     setFiltersVisible(false); // Tắt filter để dễ kiểm tra
   };
+  const checkIfExpired = () => {
+    // Loop through each auction item in the data array
+    data.forEach((auction) => {
+      const endDate = moment(auction.start_date); // Parse end_date using moment
+      const currentTime = moment(); // Get the current time
+      const isExpired = currentTime.isAfter(endDate); // Check if current time is after end_date
+      if (isExpired) {
+        setExpired(true); // Update the state if auction has expired
+      }
+    });
+  };
 
+  useRealtime(async (body) => {
+    console.log(body.body);
+    if (body.body === "time") {
+      await fetch();
+    }
+  });
+
+  // useEffect(() => {
+  //   const checkIfAnyExpired = () => {
+  //     let anyExpired = false;
+  //     // Loop through each auction item in the data array
+  //     data.forEach((auction) => {
+  //       const endDate = moment(auction.start_date); // Parse end_date using moment
+  //       const currentTime = moment(); // Get the current time
+  //       // Check if current time is after end_date
+  //       if (currentTime.isAfter(endDate)) {
+  //         anyExpired = true;
+  //       }
+  //     });
+
+  //     // Update state based on whether any auction is expired
+  //     setExpired(anyExpired);
+  //   };
+
+  //   checkIfAnyExpired(); // Initial check
+
+  //   const intervalId = setInterval(checkIfExpired, 1000); // Check every second
+  //   return () => clearInterval(intervalId); // Cleanup the interval on component unmount
+  // }, [data.start_date]);
+
+  // useEffect(() => {
+  //   if (expired) {
+  //     fetch();
+  //   }
+  // }, [expired]);
   const fetch = async () => {
     try {
       const response = await api.get("/auction/AllAuctionsReady");
@@ -239,12 +285,17 @@ const UpcomingAuction = () => {
                       </div>
                       <div className="product-name">{product?.label}</div>
                       <div className="product-time-location">
-                        {product?.countdown}
+                        {product.auctionsStatusEnum === "UPCOMING" &&
+                          product?.countdown}
                       </div>
                       <div className="product-price">
-                        {product?.jewelry?.low_estimated_price} USD -{" "}
+                        Estimate {product?.jewelry?.low_estimated_price} -{" "}
                         {product?.jewelry?.high_estimated_price} USD
                       </div>
+
+                      {product.auctionsStatusEnum === "ISOPENED" && (
+                        <div>Starting Bid : {product.minPriceBeforeStart}</div>
+                      )}
                       <Button className="product-bid">
                         <Link to={product?.link}>BID</Link>
                       </Button>
