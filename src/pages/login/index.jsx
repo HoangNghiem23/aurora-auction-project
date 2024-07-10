@@ -26,12 +26,10 @@ function LoginPopup() {
         toast.success("Login success");
         if (user.roleEnum === "STAFF") {
           navigate("/staff");
-
         } else if (user.roleEnum === "MANAGER") {
           navigate("/manager");
         } else if (user.roleEnum === "ADMIN") {
           navigate("/admin");
-
         } else {
           navigate("/");
         }
@@ -54,7 +52,7 @@ function LoginPopup() {
       .then(async (result) => {
         const token = result.user.accessToken;
         try {
-          const response = await api.post("/api/loginGG", { token: token });
+          const response = await api.post("/loginGG", { token: token });
           if (response && response.data) {
             const user = response.data;
             dispatch(login(user));
@@ -123,21 +121,19 @@ function LoginPopup() {
             <Input />
           </Form.Item>
           <div>
-          <Form.Item
-            name="password"
-            label="Password"
-            style={{marginBottom:"10px"}}
-            rules={[
-              {
-                required: true,
-              },
-            ]}
-          >
-            <Input.Password className="passwordcss" />
-           
-            
-          </Form.Item>
-          <div>
+            <Form.Item
+              name="password"
+              label="Password"
+              style={{ marginBottom: "10px" }}
+              rules={[
+                {
+                  required: true,
+                },
+              ]}
+            >
+              <Input.Password className="passwordcss" />
+            </Form.Item>
+            <div>
               <span
                 onClick={() => navigate("/forget-password")}
                 style={{ cursor: "pointer" }}
@@ -147,7 +143,6 @@ function LoginPopup() {
               </span>
             </div>
           </div>
-        
 
           <Form.Item>
             <Space>

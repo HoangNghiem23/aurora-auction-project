@@ -123,7 +123,9 @@ function WalletPage() {
   const handleRecharge = async () => {
     try {
       const response = await api.put(`/wallet/recharge-wallet/${vnPayId}`);
-      console.log(response);
+      console.log(response.data);
+      setBalance(formatMoney(response.data.amount));
+
       toast.success("Nạp tiền thành công");
       navigate("");
     } catch (error) {
