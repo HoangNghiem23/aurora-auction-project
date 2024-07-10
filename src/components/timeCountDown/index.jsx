@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import moment from "moment";
 
-function TimeCountDown({ endDate }) {
+function TimeCountDown({ endDate, status }) {
   const [countdown, setCountdown] = useState("");
 
   useEffect(() => {
@@ -21,7 +21,14 @@ function TimeCountDown({ endDate }) {
     return () => clearInterval(interval);
   }, [endDate]);
 
-  return <div>Time Remaining: {countdown}</div>;
+  return (
+    <div>
+      {status === "UPCOMING"
+        ? "Bắt đầu trong : "
+        : "Thời gian đấu giá còn lại : "}{" "}
+      {countdown}
+    </div>
+  );
 }
 
 export default TimeCountDown;

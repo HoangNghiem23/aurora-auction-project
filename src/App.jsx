@@ -188,9 +188,9 @@ function App() {
         {
           path: "/admin",
           element: (
-            <PrivateRoute role={"ADMIN"}>
-              <Dashboard />
-            </PrivateRoute>
+            // <PrivateRoute role={"ADMIN"}>
+            <Dashboard />
+            // </PrivateRoute>
           ),
           children: [
             {

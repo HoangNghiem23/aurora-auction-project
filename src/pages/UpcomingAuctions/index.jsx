@@ -54,7 +54,7 @@ const UpcomingAuction = () => {
 
   useRealtime(async (body) => {
     console.log(body.body);
-    if (body.body === "time") {
+    if (body.body === "time" || body.body == "UPCOMING") {
       await fetch();
     }
   });

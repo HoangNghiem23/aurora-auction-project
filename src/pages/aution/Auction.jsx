@@ -26,7 +26,6 @@ import { CgKey } from "react-icons/cg";
 import moment from "moment";
 import ShowFirework from "../../components/confetti";
 
-
 const { Option } = Select;
 
 function Auction() {
@@ -49,28 +48,29 @@ function Auction() {
   }
 
   useRealtime(async (body) => {
-    if (body.body === "addBid") {
+    console.log(body);
+    if (
+      body.body === "addBid" ||
+      body.body === "BidSuccessfully" ||
+      body.body === "time"
+    ) {
       await fetch();
+      if (body.body === "BidSuccessfully") {
+        try {
+          const response = await api.get(`/auction/${id}`);
+          const latestData = response.data;
+          latestData?.bid?.forEach((bid) => {
+            if (bid.thisIsTheHighestBid === "TWO") {
+              if (bid.account.id === user.id) setShowWinner(true);
+              setNameWin(bid.account.username);
+            }
+          });
+        } catch (error) {
+          console.error("Failed to fetch latest auction data", error);
+        }
+      }
     }
   });
-
-  // console.log(accountsWithZeroHighestBid[0]);
-
-  // console.log(accountsWithTwoHighestBid[0]);
-
-  // useEffect(() => {
-  //   console.log("hi"); //thisIsTheHighestBid == TWO
-  //   // tim ra th nao win ()
-  //   console.log(
-  //     data?.bid?.filter((item) => item.thisIsTheHighestBid === "TWO")
-  //   );
-
-  //   let ht = data?.bid?.filter((item) => item.thisIsTheHighestBid === "TWO");
-
-  //   // console.log(ht[0].account.id);
-  //   // call api
-
-  // }, [data?.thisIsTheHighestBid === "ISCLOSED"]);
 
   useEffect(() => {
     const checkIfExpired = () => {
@@ -85,18 +85,11 @@ function Auction() {
     return () => clearInterval(intervalId); // Cleanup the interval on component unmount
   }, [data.end_date]);
 
-  useEffect(() => {
-    if (expired) {
-      data.bid.forEach((bid) => {
-        console.log("Account Information:", bid.account);
-        console.log(bid.thisIsTheHighestBid == "TWO");
-        if (bid.thisIsTheHighestBid === "TWO" && bid.account.id === user.id) {
-          setShowWinner(true);
-          setNameWin(bid.account.username);
-        }
-      });
-    }
-  }, [expired]);
+  // useEffect(() => {
+  //   if (expired) {
+
+  //   }
+  // }, [expired]);
 
   const fetch = async () => {
     try {
@@ -195,10 +188,20 @@ function Auction() {
 
           <Col span={8}>
             <h5 className="text-white">
-              {!expired ? (
-                <TimeCountDown endDate={data?.end_date} />
-              ) : (
-                `Phiên đã đóng, người chiến thắng là : ${nameWin}`
+              {!expired
+                ? data?.auctionsStatusEnum === "ISOPENED" && (
+                    <TimeCountDown
+                      status={data?.auctionsStatusEnum}
+                      endDate={data?.end_date}
+                    />
+                  )
+                : `Phiên đã đóng, người chiến thắng là : ${nameWin}`}
+
+              {data.auctionsStatusEnum == "UPCOMING" && (
+                <TimeCountDown
+                  status={data?.auctionsStatusEnum}
+                  endDate={data?.start_date}
+                />
               )}
             </h5>
             <div
@@ -267,6 +270,8 @@ function Auction() {
               title=""
               style={{ height: "500px" }}
             >
+              <h3> Giá khởi điểm : {data?.minPriceBeforeStart}</h3>
+
               <h3
                 style={{
                   textAlign: "center",
@@ -278,6 +283,7 @@ function Auction() {
               >
                 Diễn biến cuộc đấu giá
               </h3>
+
               <div
                 style={{
                   display: "flex",
