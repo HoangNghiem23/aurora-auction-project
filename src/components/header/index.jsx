@@ -66,7 +66,7 @@ const Header = () => {
             )}
           </li>
           <li>
-            <Link to ={"/jewelry"} className="nav-link">
+            <Link to={"/jewelry"} className="nav-link">
               Jewelry
             </Link>
           </li>
@@ -76,7 +76,7 @@ const Header = () => {
             </Link>
           </li>
           <li>
-            <Link to={"/contact"}  className="nav-link">
+            <Link to={"/contact"} className="nav-link">
               Contact
             </Link>
           </li>
@@ -92,9 +92,7 @@ const Header = () => {
           <img
             src="https://firebasestorage.googleapis.com/v0/b/aurora-auction-e6371.appspot.com/o/Aurora-auction%20shop.png?alt=media&token=53f6261f-1152-48e6-b146-7a443512b907"
             alt="Favorite"
-
             width={150}
-
           />{" "}
         </Link>
       </h1>
@@ -155,13 +153,6 @@ const Header = () => {
                       >
                         <InputNumber onChange={(e) => setNumber(e)} />
                       </Modal>
-                      <Button
-                        type="primary"
-                        onClick={showModal}
-                        style={{ marginTop: 30 }}
-                      >
-                        Số dư
-                      </Button>
                     </>
                   </a>
 

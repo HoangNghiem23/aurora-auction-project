@@ -119,18 +119,23 @@ function WalletPage() {
   console.log(transactionId);
   console.log(vnPayId);
   const navigate = useNavigate();
-  useEffect(() => {
-    if (transactionId === "00") {
-      try {
-        const response = api.put(`/wallet/recharge-wallet/${vnPayId}`);
-        console.log(response.data);
-        toast.success("Nạp tiền thành công");
-        navigate("");
-      } catch (error) {
-        console.log(error);
-      }
+
+  const handleRecharge = async () => {
+    try {
+      const response = await api.put(`/wallet/recharge-wallet/${vnPayId}`);
+      console.log(response);
+      toast.success("Nạp tiền thành công");
+      navigate("");
+    } catch (error) {
+      // alert("cc");
+      console.log(error);
     }
-  }, []);
+  };
+  useEffect(() => {
+    if (transactionId == "00") {
+      handleRecharge();
+    }
+  }, [transactionId]);
 
   const getCurrentMoney = async () => {
     try {
@@ -220,7 +225,7 @@ function WalletPage() {
             className="wallet-section__right__bottom"
             onClick={() => setOpen(true)}
           >
-            <ButtonPlan content="Deposit more money with Paypal" />
+            <ButtonPlan content="Deposit more money with VNPAY" />
           </div>
           <div style={{ marginTop: "1em" }} onClick={() => setOpenForm(true)}>
             <ButtonPlan content="Withdraw" />
