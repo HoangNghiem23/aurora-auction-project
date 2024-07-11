@@ -42,6 +42,7 @@ function AuctionManager() {
   const [previewImage, setPreviewImage] = useState("");
   const [isOpenJewelry, setIsOpenJewelry] = useState(false);
   const [jewelryData, setJewelryData] = useState([]);
+ 
   const [selectionType, setSelectionType] = useState("radio");
   const [jewelry, setJewelry] = useState({});
   const dispatch = useDispatch();
@@ -66,6 +67,7 @@ function AuctionManager() {
   const fetchStaffJewelry = async () => {
     try {
       const response = await api.get("/jewelry");
+      console.log(response.data);
       setJewelryData(response.data);
     } catch (error) {
       console.log(error);
@@ -143,8 +145,6 @@ function AuctionManager() {
   };
 
   const onFinish = async (values) => {
-    // console.log(values);
-
     const newValue = { ...values, jewelry_id: jewelry.id };
     const startDate = moment(values.start_date.$d).format(
       "YYYY-MM-DDTHH:mm:ss"
@@ -153,10 +153,7 @@ function AuctionManager() {
 
     newValue.start_date = startDate;
     newValue.end_date = endDate;
-    // values.start_date = startDate;
-    // values.end_date = endDate;
-    console.log(values);
-    console.log(values.image.file)
+
     if (values.image.file != undefined) {
       const img = await uploadFile(values.image.file.originFileObj);
       newValue.image = img;
@@ -171,16 +168,19 @@ function AuctionManager() {
         ? values.start_date.toISOString()
         : null;
       values.end_date = values.end_date ? values.end_date.toISOString() : null;
+      let response;
       if (isUpdate && currentAuction) {
-        await api.put(`/auction/${currentAuction.id}`, values);
+        response = await api.put(`/auction/${currentAuction.id}`, values);
         const updatedAuctions = data.map((auction) =>
           auction.id === currentAuction.id ? { ...auction, ...values } : auction
         );
         setData(updatedAuctions);
       } else {
-        const response = await api.post("/auction", newValue);
+        response = await api.post("/auction", newValue);
         setData([...data, response.data]);
       }
+      // Gọi API để đổi trạng thái thành UPCOMING
+      await api.put(`/auction/UPCOMING/${response.data.id}`);
       handleCancel();
     } catch (error) {
       console.log(error);
@@ -188,14 +188,12 @@ function AuctionManager() {
   };
 
   const onChange = async (values, checked) => {
-    console.log(values);
-    console.log(checked);
-    if(checked){
-      const response = await api.put(`/auction/isOpened/${values.id}`)
-      console.log("open ", response.data)
-    }else{
-      const response = await api.put(`/auction/isClosed/${values.id}`)
-      console.log("close ", response.data)
+    if (checked) {
+      const response = await api.put(`/auction/isOpened/${values.id}`);
+      console.log("open ", response.data);
+    } else {
+      const response = await api.put(`/auction/isClosed/${values.id}`);
+      console.log("close ", response.data);
     }
   };
 
@@ -268,25 +266,19 @@ function AuctionManager() {
 
   const columnsJewelry = [
     {
-      title: "Category name",
+      title: "Jewelry name",
       dataIndex: "category",
       key: "category",
-      render: (e) => e.category_name,
+      render: (_,e) => e.name,
     },
   ];
 
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
-      console.log(
-        `selectedRowKeys: ${selectedRowKeys}`,
-        "selectedRows: ",
-        selectedRows
-      );
       setJewelry(selectedRows[0]);
     },
     getCheckboxProps: (record) => ({
       disabled: record.name === "Disabled User",
-      // Column configuration not to be checked
       name: record.name,
     }),
   };
@@ -418,7 +410,6 @@ function AuctionManager() {
           dataSource={jewelryData}
           rowKey="id"
         />
-        {/* <Table dataSource={jewelryData} columns={columnsJewelry} rowKey="id" /> */}
       </Modal>
     </div>
   );

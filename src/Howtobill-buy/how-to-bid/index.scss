@@ -1,0 +1,118 @@
+.how-to-bid-container {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .how-to-bid-content {
+    width: 70%;
+    padding: 40px;
+    font-family: Arial, sans-serif;
+    color: #333;
+  
+    h1 {
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+  
+    p {
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+  
+    .register-button {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-bottom: 20px;
+  
+      &:hover {
+        background-color: #0056b3;
+      }
+    }
+  
+    h2 {
+      font-size: 24px;
+      margin-bottom: 15px;
+      margin-top: 30px;
+    }
+  
+    .feedback-section {
+      margin-top: 40px;
+      p {
+        margin-bottom: 10px;
+      }
+      .feedback-button {
+        background-color: #f8f9fa;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        padding: 8px 16px;
+        margin-right: 10px;
+        cursor: pointer;
+        font-size: 16px;
+  
+        &:hover {
+          background-color: #e2e6ea;
+        }
+      }
+  
+      .feedback-message {
+        margin-top: 20px;
+        font-size: 16px;
+        color: #28a745;
+      }
+    }
+  
+    a {
+      color: #007bff;
+  
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+  
+  .how-to-bid-sidebar {
+    padding-left: 300px;
+    width: 25%;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    // background-color: #f8f9fa;
+    // border: 1px solid #ced4da;
+    border-radius: 5px;
+  
+    .sidebar-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+  
+      .anticon {
+        margin-right: 10px;
+      }
+    }
+  
+    ul {
+      list-style-type: none;
+      padding-left: 0;
+  
+      li {
+        margin-bottom: 10px;
+  
+        a {
+          color: #007bff;
+          text-decoration: none;
+  
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+  
