@@ -266,10 +266,39 @@ function AuctionManager() {
 
   const columnsJewelry = [
     {
-      title: "Jewelry name",
-      dataIndex: "category",
-      key: "category",
-      render: (_,e) => e.name,
+      title: "Jewelry Name",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "Last Price",
+      dataIndex: "last_price",
+      key: "last_price",
+    },
+    {
+      title: "Low Estimated Price",
+      dataIndex: "low_estimated_price",
+      key: "low_estimated_price",
+    },
+    {
+      title: "High Estimated Price",
+      dataIndex: "high_estimated_price",
+      key: "high_estimated_price",
+    },
+    {
+      title: "Weight",
+      dataIndex: "weight",
+      key: "weight",
+    },
+    {
+      title: "Description",
+      dataIndex: "description",
+      key: "description",
+    },
+    {
+      title: "Status",
+      dataIndex: "statusJewelryEnum",
+      key: "statusJewelryEnum",
     },
   ];
 
@@ -395,6 +424,7 @@ function AuctionManager() {
       )}
       <Modal
         open={isOpenJewelry}
+        width="50vw"
         onCancel={() => setIsOpenJewelry(false)}
         title="Select Jewelry"
         onOk={() => {
