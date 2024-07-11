@@ -8,19 +8,22 @@ function useRealtime(callback) {
   //   const WS_URL = "http://localhost:8080/websocket";
 
   // const WS_URL = "<https></https>://68.183.180.21:8080/websocket";
-  
+
   const socket = new SockJS(WS_URL);
   const stomp = Stomp.over(socket);
-//   const accountID = localStorage.getItem("accountId");
+  //   const accountID = localStorage.getItem("accountId");
   useEffect(() => {
-      const onConnected = () => {
-          stomp.subscribe(`/topic/sendBid`, (message) => {
-              console.log(message);
-              callback && callback(message);
-          });
-      }
-      stomp.connect({}, onConnected, null);
-    
+    const onConnected = () => {
+      stomp.subscribe(`/topic/sendBid`, (message) => {
+        console.log(message);
+        callback && callback(message);
+      });
+      stomp.subscribe(`/topic/time`, (message) => {
+        console.log(message);
+        callback && callback(message);
+      });
+    };
+    stomp.connect({}, onConnected, null);
   }, []);
   return <></>;
 }

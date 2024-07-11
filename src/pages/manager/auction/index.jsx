@@ -11,13 +11,16 @@ import {
   Switch,
 } from "antd";
 import TextArea from "antd/es/input/TextArea";
-import { PlusOutlined } from "@ant-design/icons";
+import { LogoutOutlined, PlusOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import api from "../../../config/axios";
 import { useForm } from "antd/es/form/Form";
 import uploadFile from "../../../utils/upload";
 import moment from "moment";
 import { DatePicker } from "antd";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../../../redux/features/counterSlice";
 
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
@@ -34,9 +37,14 @@ function AuctionManager() {
   const [isUpdate, setIsUpdate] = useState(false);
   const [currentAuction, setCurrentAuction] = useState(null);
   const [form] = useForm();
-  const [stafflist, setStaffList] = useState([]);
+  const [staffList, setStaffList] = useState([]);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
+  const [isOpenJewelry, setIsOpenJewelry] = useState(false);
+  const [jewelryData, setJewelryData] = useState([]);
+  const [selectionType, setSelectionType] = useState("radio");
+  const [jewelry, setJewelry] = useState({});
+  const dispatch = useDispatch();
 
   const handlePreview = async (file) => {
     if (!file.url && !file.preview) {
@@ -47,13 +55,30 @@ function AuctionManager() {
   };
 
   const fetchStaffList = async () => {
-    const response = await api.get("/staff");
-    setStaffList(response.data);
+    try {
+      const response = await api.get("/staff");
+      setStaffList(response.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  useEffect(() => fetchStaffList(), []);
+  const fetchStaffJewelry = async () => {
+    try {
+      const response = await api.get("/jewelry");
+      setJewelryData(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  const option = stafflist.map((staff) => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    fetchStaffList();
+    fetchStaffJewelry();
+  }, []);
+
+  const option = staffList.map((staff) => {
     return {
       value: staff?.id,
       label: staff?.firstname,
@@ -63,28 +88,18 @@ function AuctionManager() {
   const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
 
   const uploadButton = (
-    <button
-      style={{
-        border: 0,
-        background: "none",
-      }}
-      type="button"
-    >
+    <button style={{ border: 0, background: "none" }} type="button">
       <PlusOutlined />
-      <div
-        style={{
-          marginTop: 8,
-        }}
-      >
-        Upload
-      </div>
+      <div style={{ marginTop: 8 }}>Upload</div>
     </button>
   );
 
   const fetchData = async () => {
     try {
       const response = await api.get("/auction");
+      const responseJewelry = await api.get("/jewelry/getJewelryReady");
       setData(response.data);
+      setJewelryData(responseJewelry.data);
     } catch (error) {
       console.log(error);
     }
@@ -128,6 +143,25 @@ function AuctionManager() {
   };
 
   const onFinish = async (values) => {
+    // console.log(values);
+
+    const newValue = { ...values, jewelry_id: jewelry.id };
+    const startDate = moment(values.start_date.$d).format(
+      "YYYY-MM-DDTHH:mm:ss"
+    );
+    const endDate = moment(values.end_date.$d).format("YYYY-MM-DDTHH:mm:ss");
+
+    newValue.start_date = startDate;
+    newValue.end_date = endDate;
+    // values.start_date = startDate;
+    // values.end_date = endDate;
+    console.log(values);
+    console.log(values.image.file)
+    if (values.image.file != undefined) {
+      const img = await uploadFile(values.image.file.originFileObj);
+      newValue.image = img;
+    }
+
     try {
       const url = fileList[0]?.originFileObj
         ? await uploadFile(fileList[0].originFileObj)
@@ -137,7 +171,6 @@ function AuctionManager() {
         ? values.start_date.toISOString()
         : null;
       values.end_date = values.end_date ? values.end_date.toISOString() : null;
-
       if (isUpdate && currentAuction) {
         await api.put(`/auction/${currentAuction.id}`, values);
         const updatedAuctions = data.map((auction) =>
@@ -145,7 +178,7 @@ function AuctionManager() {
         );
         setData(updatedAuctions);
       } else {
-        const response = await api.post("/auction", values);
+        const response = await api.post("/auction", newValue);
         setData([...data, response.data]);
       }
       handleCancel();
@@ -154,9 +187,16 @@ function AuctionManager() {
     }
   };
 
-  const onChange = (values, checked) => {
+  const onChange = async (values, checked) => {
     console.log(values);
     console.log(checked);
+    if(checked){
+      const response = await api.put(`/auction/isOpened/${values.id}`)
+      console.log("open ", response.data)
+    }else{
+      const response = await api.put(`/auction/isClosed/${values.id}`)
+      console.log("close ", response.data)
+    }
   };
 
   const columns = [
@@ -216,28 +256,54 @@ function AuctionManager() {
       ),
     },
     {
-      title: "changeAution",
+      title: "Change Auction",
       render: (values) => (
-        <>
-          <Switch
-            defaultChecked={
-              values.auctionsStatusEnum == "ISCLOSED" ? false : true
-            }
-            onChange={(checked) => {
-              onChange(values, checked);
-            }}
-          />
-          ;
-        </>
+        <Switch
+          defaultChecked={values.auctionsStatusEnum !== "ISCLOSED"}
+          onChange={(checked) => onChange(values, checked)}
+        />
       ),
     },
   ];
 
+  const columnsJewelry = [
+    {
+      title: "Category name",
+      dataIndex: "category",
+      key: "category",
+      render: (e) => e.category_name,
+    },
+  ];
+
+  const rowSelection = {
+    onChange: (selectedRowKeys, selectedRows) => {
+      console.log(
+        `selectedRowKeys: ${selectedRowKeys}`,
+        "selectedRows: ",
+        selectedRows
+      );
+      setJewelry(selectedRows[0]);
+    },
+    getCheckboxProps: (record) => ({
+      disabled: record.name === "Disabled User",
+      // Column configuration not to be checked
+      name: record.name,
+    }),
+  };
+
   return (
     <div>
-      <Button type="primary" onClick={handleOpenModal}>
-        Add new auction
-      </Button>
+      <div className="flex justify-between m-3">
+        <Button type="primary" onClick={handleOpenModal}>
+          Add new auction
+        </Button>
+        <LogoutOutlined
+          style={{ fontSize: "20px" }}
+          onClick={() => {
+            dispatch(logout());
+          }}
+        />
+      </div>
       <Table dataSource={data} columns={columns} rowKey="id" />
       <Modal
         footer={false}
@@ -277,6 +343,11 @@ function AuctionManager() {
               onChange={(value) => console.log(value)}
               options={option}
             />
+          </Form.Item>
+          <Form.Item name="jewelry_id" label="Jewelry">
+            <Button onClick={() => setIsOpenJewelry(true)}>
+              {jewelry && jewelry.name ? jewelry.name : "Select Jewelry"}
+            </Button>
           </Form.Item>
           <Form.Item
             label="Start Date"
@@ -321,9 +392,7 @@ function AuctionManager() {
       </Modal>
       {previewImage && (
         <Image
-          wrapperStyle={{
-            display: "none",
-          }}
+          wrapperStyle={{ display: "none" }}
           preview={{
             visible: previewOpen,
             onVisibleChange: (visible) => setPreviewOpen(visible),
@@ -332,6 +401,25 @@ function AuctionManager() {
           src={previewImage}
         />
       )}
+      <Modal
+        open={isOpenJewelry}
+        onCancel={() => setIsOpenJewelry(false)}
+        title="Select Jewelry"
+        onOk={() => {
+          setIsOpenJewelry(false);
+        }}
+      >
+        <Table
+          rowSelection={{
+            type: selectionType,
+            ...rowSelection,
+          }}
+          columns={columnsJewelry}
+          dataSource={jewelryData}
+          rowKey="id"
+        />
+        {/* <Table dataSource={jewelryData} columns={columnsJewelry} rowKey="id" /> */}
+      </Modal>
     </div>
   );
 }

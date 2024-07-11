@@ -8,39 +8,36 @@ import {
   Statistic,
   Form,
   InputNumber,
+  Table,
 } from "antd";
 import "./index.scss";
-import {
-  EditOutlined,
-  EllipsisOutlined,
-  LeftCircleTwoTone,
-  SettingOutlined,
-} from "@ant-design/icons";
+import { LeftCircleTwoTone } from "@ant-design/icons";
 
-import { Avatar, Card } from "antd";
-import axios from "axios";
+import { Card } from "antd";
 import api from "../../config/axios";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+
 import { selectUser } from "../../redux/features/counterSlice";
 import RoundedBtn from "../../components/rounded-button";
 import ButtonPlan from "../../components/buttonPlan";
 import TransactionHistory from "../../components/transaction";
-const { Meta } = Card;
+import useGetParams from "../../assets/hook/useGetParams";
+import { toast } from "react-toastify";
+import { formatMoney } from "../../assets/hook/useFormat";
+
 function WalletPage() {
   const [open, setOpen] = useState(false);
-  const [open2, setOpen2] = useState(false);
   const [number, setNumber] = useState(1);
   const [number2, setNumber2] = useState(1);
+  const [balance, setBalance] = useState(0);
   const [check, setCheck] = useState(false);
   const [wallet, setWallet] = useState({});
-  const [balance, setBalance] = useState(0);
   const [openForm, setOpenForm] = useState(false);
   const [widthdrawForm, setWithdrawForm] = useState({});
   const [openCofirm, setOpenConfirm] = useState(false);
   const [form] = Form.useForm();
   const formRef = useRef();
-
   const widthdraw = (e) => {
     console.log(e);
     setWithdrawForm(e);
@@ -78,17 +75,20 @@ function WalletPage() {
     }
   };
 
+  // useEffect(() => {
+  //   if (balance <= (wallet?.amount == 0 ? 0 : wallet?.amount) - 1) {
+  //     const id = setInterval(() => {
+  //       setBalance(balance + 1000
+  //       );
+  //     }, 0.0005);
+  //     return () => {
+  //       clearInterval(id);
+  //     };
+  //   }
+  // });\
   useEffect(() => {
-
-    if (balance <= (wallet?.balance == 0 ? 0 : wallet?.balance) - 1) {
-      const id = setInterval(() => {
-        setBalance(balance + 1);
-      }, 0.5);
-      return () => {
-        clearInterval(id);
-      };
-    }
-  });
+    getCurrentMoney();
+  }, []);
 
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -112,6 +112,41 @@ function WalletPage() {
   useEffect(() => {
     getWalletDetail();
   }, []);
+
+  const params = useGetParams();
+  const transactionId = params("vnp_TransactionStatus");
+  const vnPayId = params("id");
+  console.log(transactionId);
+  console.log(vnPayId);
+  const navigate = useNavigate();
+
+  const handleRecharge = async () => {
+    try {
+      const response = await api.put(`/wallet/recharge-wallet/${vnPayId}`);
+      console.log(response.data);
+      setBalance(formatMoney(response.data.amount));
+
+      toast.success("Nạp tiền thành công");
+      navigate("");
+    } catch (error) {
+      // alert("cc");
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    if (transactionId == "00") {
+      handleRecharge();
+    }
+  }, [transactionId]);
+
+  const getCurrentMoney = async () => {
+    try {
+      const response = await api.get(`/wallet/walletDetail/${user?.id}`);
+      setBalance(formatMoney(response.data.amount));
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const onFinish = async () => {
     setCheck(true);
@@ -137,9 +172,11 @@ function WalletPage() {
   };
   const getWalletDetail = async () => {
     try {
-      const res = await api.get(`/walletDetail/${user?.id}`, {});
-      console.log(res.data.data);
-      setWallet(res.data.data);
+      const res = await api.get(
+        `http://152.42.226.77:8080/api/wallet/walletDetail/${user?.id}`
+      );
+      console.log(res.data);
+      setWallet(res.data);
     } catch (e) {
       console.log(e);
     }
@@ -190,14 +227,13 @@ function WalletPage() {
             className="wallet-section__right__bottom"
             onClick={() => setOpen(true)}
           >
-            <ButtonPlan content="Deposit more money with Paypal" />
+            <ButtonPlan content="Deposit more money with VNPAY" />
           </div>
           <div style={{ marginTop: "1em" }} onClick={() => setOpenForm(true)}>
             <ButtonPlan content="Withdraw" />
           </div>
         </div>
       </div>
-
       <TransactionHistory transaction="HistoryOfBid" />
       <Modal open={open} onCancel={handleCancel} footer={null}>
         <Form onFinish={onFinish}>

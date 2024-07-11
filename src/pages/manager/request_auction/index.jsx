@@ -31,8 +31,11 @@ function RequestAuctionManager() {
   const [currentRequest, setCurrentRequest] = useState(null);
   const [form] = useForm();
 
+  const [real, setReal] = useState(false);
+
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
+
   const handlePreview = async (file) => {
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj);
@@ -40,7 +43,9 @@ function RequestAuctionManager() {
     setPreviewImage(file.url || file.preview);
     setPreviewOpen(true);
   };
+
   const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
+
   const uploadButton = (
     <button
       style={{
@@ -63,7 +68,14 @@ function RequestAuctionManager() {
   const fetchData = async () => {
     try {
       const response = await api.get("/request-buy");
-      setData(response.data);
+      const res = response.data;
+      const filter = res.filter(
+        (item) =>
+          item.processes[item.processes.length - 1].requestBuyEnum ==
+          "WAITINGMANAGER"
+      );
+      // console.log(filter)
+      setData(filter);
     } catch (error) {
       console.log(error);
     }
@@ -71,7 +83,7 @@ function RequestAuctionManager() {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [real]);
 
   const handleReject = async (values) => {
     try {
@@ -81,9 +93,10 @@ function RequestAuctionManager() {
       });
       setData(
         data.map((item) =>
-          item.id === values.id ? { ...item, finalStatus: "REJECTED" } : item
+          item?.id === values.id ? { ...item, finalStatus: "REJECTED" } : item
         )
       );
+      setReal(true);
     } catch (error) {
       console.log(error);
     }
@@ -97,9 +110,10 @@ function RequestAuctionManager() {
       });
       setData(
         data.map((item) =>
-          item.id === values.id ? { ...item, finalStatus: "ACCEPTED" } : item
+          item?.id === values.id ? { ...item, finalStatus: "ACCEPTED" } : item
         )
       );
+      setReal(true);
     } catch (error) {
       console.log(error);
     }
@@ -226,16 +240,17 @@ function RequestAuctionManager() {
       render: (values) =>
         values.finalStatus ? (
           <Button type="primary" disabled>
-            Đã Chấp Nhận
+            Accepted
           </Button>
         ) : (
           <>
+            {/* {console.log(values.processes[values.processes.length-1])} */}
             <Button
               type="primary"
               style={{ marginRight: 8 }}
               onClick={() => handleAccept(values)}
             >
-              Chấp Nhận
+              Accept
             </Button>
             <Popconfirm
               title="Are you sure to reject this request?"
@@ -243,7 +258,7 @@ function RequestAuctionManager() {
               okText="Yes"
               cancelText="No"
             >
-              <Button danger>Không Chấp Nhận</Button>
+              <Button danger>Reject</Button>
             </Popconfirm>
           </>
         ),
@@ -344,7 +359,7 @@ function RequestAuctionManager() {
           </Form.Item>
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
             <Button type="primary" htmlType="submit">
-              Gửi Quản Lý
+              Submit
             </Button>
           </Form.Item>
         </Form>

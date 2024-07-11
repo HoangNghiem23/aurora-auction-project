@@ -1,15 +1,13 @@
 import { Table } from "antd";
 import { useEffect, useState } from "react";
-import api from "../../../config/axios";
+import axios from "axios"; // Chắc chắn rằng bạn đã cài đặt axios
 
 function JewelryInAuctionList() {
   const [data, setData] = useState([]);
 
   const fetchData = async () => {
     try {
-      const response = await api.get("/jewelry/getJewelryReady");
-      console.log(response.data);
-      setData(response.data);
+
     } catch (error) {
       console.error("Error fetching data:", error);
     }

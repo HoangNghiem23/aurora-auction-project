@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Header from '../../components/header'; // Adjust the import path according to your project structure
 import Footer from '../../components/footer';
 import './index.scss';
 
 const Article = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+}, []);
   return (
     <div className="article-container">
-      <Header />
+    
       <main className="article-main">
         <article className="article-content">
           <header className="article-header">
