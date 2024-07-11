@@ -101,9 +101,9 @@ const Dashboard = () => {
           getItem("All Staffs", "all-staffs"),
         ]),
         getItem("Thống kê", "statistics", <BarChartOutlined />, [
-          getItem("Biểu đồ", "chart"),
+          getItem("Profit", "chart"),
           getItem("Quản lý đấu giá", "jewelryauction"),
-          getItem("Club 3", "stats-club-3"),
+          getItem("jewelry", "chartJewelry"),
           getItem("All Clubs", "all-clubs"),
         ]),
       ]);

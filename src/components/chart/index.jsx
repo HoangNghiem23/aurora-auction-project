@@ -22,7 +22,6 @@ function SaleComparision() {
   }, []);
   console.log(data);
   useEffect(() => {
-    document.title = "So sánh giữa các năm";
     if (chartRef.current) {
       const ctx = chartRef.current.getContext("2d");
 

@@ -58,6 +58,8 @@ import Error404 from "./pages/error404/Error404";
 import SaleComparision from "./components/chart";
 // import useRealtime from "./assets/hook/useRealtime";
 import JewelryInAuctionList from "./pages/admin/jewelryinauction";
+import ChartUser from "./components/chartUser";
+import ChartJewelry from "./components/chartJewelry";
 
 function App() {
   const PrivateRoute = ({ children, role }) => {
@@ -201,9 +203,14 @@ function App() {
               path: "/admin/dashboard/chart",
               element: <SaleComparision />,
             },
+
             {
               path: "/admin/dashboard/jewelryauction",
               element: <JewelryInAuctionList />,
+            },
+            {
+              path: "/admin/dashboard/chartJewelry",
+              element: <ChartJewelry />,
             },
           ],
         },
@@ -255,11 +262,11 @@ function App() {
       path: "/auction",
       element: <Auction />,
     },
-
-    // {
-    //   path: "/test-chuc-nang",
-    //   element: <OrderManagement />,
-    // },
+    
+    {
+      path: "/chartUser",
+      element: <ChartUser />,
+    },
   ]);
 
   useRealtime((data) => {
