@@ -9,7 +9,7 @@ import {
   // AppstoreAddOutlined,
   // ProductOutlined,
 } from "@ant-design/icons";
-import { Avatar, Breadcrumb, Layout, Menu, Space, theme } from "antd";
+import {  Breadcrumb, Layout, Menu,  theme } from "antd";
 import { Footer } from "antd/es/layout/layout";
 import { Link, Outlet, useLocation } from "react-router-dom";
 
