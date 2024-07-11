@@ -102,7 +102,7 @@ const Dashboard = () => {
         ]),
         getItem("Thống kê", "statistics", <BarChartOutlined />, [
           getItem("Biểu đồ", "chart"),
-          getItem("Quản lý đấu giá", "jewelryauction"),
+          getItem("kim cương đấu giá", "jewelryauction"),
           getItem("Club 3", "stats-club-3"),
           getItem("All Clubs", "all-clubs"),
         ]),

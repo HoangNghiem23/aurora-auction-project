@@ -7,9 +7,15 @@ function Buyandsell() {
     <div className="about-us">
    
     <Link to="/AboutUs" className="about-link">
-    <h6>About Us</h6>
+    <h4>About Us</h4>
     </Link>
-    <h1> Buy & Sell at Sotheby's</h1>
+    <h1 className='abou'> Buy & Sell at Sotheby's</h1>
+    <nav className="nav-tabs">
+        <Link to="/bidding" className="nav-link active">BIDDING</Link>
+        <Link to="/selling" className="nav-link">SELLING</Link>
+        <Link to="/conditions-of-business" className="nav-link">CONDITIONS OF BUSINESS</Link>
+        <Link to="/glossary" className="nav-link">GLOSSARY</Link>
+      </nav>
     <div className='about-us__create'>1. Create your account</div>
     <p >In order to bid in an auction you’ll first need to <Link to="/register" className='about-us__register'> set up an account.</Link> Follow our step-by-step </p>
     <p>account creation guide to assist you in this process.</p>

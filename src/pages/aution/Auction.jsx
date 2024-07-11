@@ -24,24 +24,22 @@ import TimeCountDown from "../../components/timeCountDown";
 import "./aution.scss";
 import { CgKey } from "react-icons/cg";
 import moment from "moment";
-// import ShowFirework from "../../components/confetti";
+import ShowFirework from "../../components/confetti";
 
 const { Option } = Select;
 
 function Auction() {
   const [balance, setBalance] = useState(0);
   const [showModal, setShowMal] = useState(true);
+  const [winner, setShowWinner] = useState(false);
+  const [nameWin, setNameWin] = useState("");
+
+  const [expired, setExpired] = useState(false);
   const [form] = Form.useForm();
   const { id } = useParams();
   const [data, setData] = useState([]);
   const user = useSelector(selectUser);
   const lastItemRef = useRef(null);
-
-  useRealtime(async (body) => {
-    if (body.body === "addBid") {
-      await fetch();
-    }
-  });
 
   function getAccountsByHighestBid(highestBidValue) {
     return data?.bid
@@ -49,27 +47,54 @@ function Auction() {
       .map((bid) => bid.account);
   }
 
-  // console.log(accountsWithZeroHighestBid[0]);
+  useRealtime(async (body) => {
+    console.log(body);
+    if (
+      body.body === "addBid" ||
+      body.body === "BidSuccessfully" ||
+      body.body === "time"
+    ) {
+      await fetch();
+      if (body.body === "BidSuccessfully") {
+        try {
+          const response = await api.get(`/auction/${id}`);
+          const latestData = response.data;
+          latestData?.bid?.forEach((bid) => {
+            if (bid.thisIsTheHighestBid === "TWO") {
+              if (bid.account.id === user.id) setShowWinner(true);
+              setNameWin(bid.account.username);
+            }
+          });
+        } catch (error) {
+          console.error("Failed to fetch latest auction data", error);
+        }
+      }
+    }
+  });
 
-  // console.log(accountsWithTwoHighestBid[0]);
+  useEffect(() => {
+    const checkIfExpired = () => {
+      const endDate = moment(data.end_date); // Ensure end_date is parsed correctly
+      const currentTime = moment(); // Get the current time
+      const isExpired = currentTime.isAfter(endDate); // Check if current time is after end_date
+      setExpired(isExpired); // Update the state based on the comparison
+    };
+
+    checkIfExpired(); // Initial check
+    const intervalId = setInterval(checkIfExpired, 1000); // Check every second
+    return () => clearInterval(intervalId); // Cleanup the interval on component unmount
+  }, [data.end_date]);
 
   // useEffect(() => {
-  //   console.log("hi"); //thisIsTheHighestBid == TWO
-  //   // tim ra th nao win ()
-  //   console.log(
-  //     data?.bid?.filter((item) => item.thisIsTheHighestBid === "TWO")
-  //   );
+  //   if (expired) {
 
-  //   let ht = data?.bid?.filter((item) => item.thisIsTheHighestBid === "TWO");
-
-  //   // console.log(ht[0].account.id);
-  //   // call api
-
-  // }, [data?.thisIsTheHighestBid === "ISCLOSED"]);
+  //   }
+  // }, [expired]);
 
   const fetch = async () => {
     try {
       const response = await api.get(`/auction/${id}`);
+      console.log(response.data);
       setData(response.data);
     } catch (error) {
       console.log(error);
@@ -125,13 +150,27 @@ function Auction() {
     </Select>
   );
 
+  console.log(nameWin);
   return (
     <div>
       <Header />
-      {/* <ShowFirework /> */}
-      <Modal className="animate__animated animate__flip" open={showModal}>
-        <div>You are a winner</div>
-      </Modal>
+
+      {winner && (
+        <>
+          <ShowFirework />
+          <Modal
+            onCancel={() => {
+              setShowWinner(false);
+              setShowMal(false);
+            }}
+            className="animate__animated animate__flip"
+            open={showModal}
+          >
+            <div>{nameWin} a is a winner</div>
+          </Modal>
+        </>
+      )}
+
       <section className="auction-page">
         <Row className="auction-page__col">
           <Col span={10} className="auction-page__box-img">
@@ -149,7 +188,21 @@ function Auction() {
 
           <Col span={8}>
             <h5 className="text-white">
-              <TimeCountDown endDate={data?.end_date} />
+              {!expired
+                ? data?.auctionsStatusEnum === "ISOPENED" && (
+                    <TimeCountDown
+                      status={data?.auctionsStatusEnum}
+                      endDate={data?.end_date}
+                    />
+                  )
+                : `Phiên đã đóng, người chiến thắng là : ${nameWin}`}
+
+              {data.auctionsStatusEnum == "UPCOMING" && (
+                <TimeCountDown
+                  status={data?.auctionsStatusEnum}
+                  endDate={data?.start_date}
+                />
+              )}
             </h5>
             <div
               style={{
@@ -162,7 +215,7 @@ function Auction() {
               />
             </div>
             <Card
-              title={`Số dư hiện tại: ${balance}`}
+              title={`Current Balance: ${balance}$`}
               className="bet-card"
               bordered={false}
               style={{ height: "fitContent" }}
@@ -191,10 +244,6 @@ function Auction() {
                   <InputNumber
                     addonAfter={selectAfter}
                     style={{ width: "100%", paddingLeft: "20px" }}
-                    formatter={(value) =>
-                      `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                    }
-                    parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
                   />
                 </Form.Item>
 
@@ -221,6 +270,8 @@ function Auction() {
               title=""
               style={{ height: "500px" }}
             >
+              <h3> Giá khởi điểm : {data?.minPriceBeforeStart}</h3>
+
               <h3
                 style={{
                   textAlign: "center",
@@ -232,6 +283,7 @@ function Auction() {
               >
                 Diễn biến cuộc đấu giá
               </h3>
+
               <div
                 style={{
                   display: "flex",

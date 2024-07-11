@@ -96,7 +96,7 @@ const Jewelry = () => {
 
   return (
     <>
-      <Header />
+      
       <div className="jewelry-section">
         <div className="jewelry-content">
           <div className="jewelry-text">
