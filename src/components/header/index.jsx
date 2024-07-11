@@ -1,88 +1,104 @@
 import { useState } from "react";
 import "./index.scss";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, selectUser } from "../../redux/features/counterSlice";
-import { Button, Input, InputNumber, Modal } from "antd";
-import api from "../../config/axios";
+import { Dropdown, Select } from "antd";
+import {
+  SearchOutlined,
+  ShoppingOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
+import { toast } from "react-toastify";
+
+const OPTIONS = ["Apples", "Nails", "Bananas", "Helicopters"];
 
 const Header = () => {
-  const [showProfileOptions, setShowProfileOptions] = useState(false);
-  const [showAuctionsDropdown, setShowAuctionsDropdown] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [data, setData] = useState([]);
+  const [selectedItems, setSelectedItems] = useState([]);
   const user = useSelector(selectUser);
-  const toggleProfileOptions = () => {
-    setShowProfileOptions(!showProfileOptions);
-  };
-  const [number, setNumber] = useState(0);
 
-  const toggleAuctionsDropdown = () => {
-    setShowAuctionsDropdown(!showAuctionsDropdown);
-  };
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-  const handleOk = async () => {
-    // setIsModalOpen(false);
-    console.log(number);
+  const filteredOptions = OPTIONS.filter((o) => !selectedItems.includes(o));
 
-    const response = await api.post("/wallet/request-recharge-vnpay", {
-      amount: number,
-    });
-
-    console.log(response.data);
-    window.open(response.data);
+  const onClick = ({ key }) => {
+    navigate(`${key}`);
   };
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleRecharge = () => {};
-  return (
-    <header className="header">
-      <div className="header-location-nav">
-        <a href="https://maps.app.goo.gl/GS8h12gHueLTvLwv8">
-          <img
-            src="/assets/location.png"
-            alt="Location"
-            className="header-location"
-          />
+  const auction_items = [
+    {
+      key: "/upcoming-auctions",
+      label: "Upcoming Auctions",
+    },
+    {
+      key: "/auction-results",
+      label: "Auction Results",
+    },
+  ];
+  const login_items = [
+    {
+      key: "/login",
+      label: "Login",
+    },
+  ];
+  const affter_login_items = [
+    {
+      key: "/my-account/profile",
+      label: "Profile",
+    },
+    {
+      key: "/wallet",
+      label: "Recharge",
+    },
+    {
+      key: "/",
+      label: (
+        <a
+          style={{
+            cursor: "pointer",
+          }}
+          onClick={() => {
+            dispatch(logout());
+            localStorage.clear();
+            toast.success("Logouted");
+            return navigate("/login");
+          }}
+        >
+          Logout
         </a>
+      ),
+    },
+  ];
+
+  return (
+    <header className="header-page">
+      <div className="header-page__navbar">
         <ul className="nav-links">
-          <li
-            className="nav-link"
-            onMouseEnter={toggleAuctionsDropdown}
-            onMouseLeave={toggleAuctionsDropdown}
-          >
-            Auctions
-            {showAuctionsDropdown && (
-              <div className="dropdown-menu">
-                <Link to="/upcoming-auctions">Upcoming Auctions</Link>
-                <Link to="/auction-results">Auction Results</Link>
-              </div>
-            )}
+          <li className="nav-link">
+            <Dropdown
+              menu={{
+                items: auction_items,
+                onClick,
+              }}
+              placement="bottom"
+              arrow
+            >
+              <Link to="/">Auction</Link>
+            </Dropdown>
           </li>
-          <li>
-            <Link to={"/jewelry"} className="nav-link">
-              Jewelry
-            </Link>
-          </li>
+
           <li>
             <Link to={"/sell"} className="nav-link">
               Sell
             </Link>
           </li>
           <li>
-            <Link to={"/contact"} className="nav-link">
-              Contact
+            <Link to={"/buy-sell"} className="nav-link">
+              HOW TO BUY & SELL
             </Link>
           </li>
           <li>
-            <Link to={"/buy-sell"} className="nav-link">
-              HOW TO BUY & SELL
+            <Link to={"/contact"} className="nav-link">
+              Contact
             </Link>
           </li>
         </ul>
@@ -98,82 +114,40 @@ const Header = () => {
       </h1>
       <div className="search-and-icons">
         <div className="search">
-          <input type="text" placeholder="Search" className="search-input" />
-          <img src="/assets/search.png" alt="Search" className="search-icon" />
+          <Select
+            className="search-input"
+            mode="multiple"
+            placeholder="Search Aurora's Auction"
+            value={selectedItems}
+            onChange={setSelectedItems}
+            style={{
+              width: "300px",
+            }}
+            options={filteredOptions.map((item) => ({
+              value: item,
+              label: item,
+            }))}
+            suffixIcon={<SearchOutlined />}
+          />
         </div>
-        <a href="#">
-          <img
-            src="/assets/heart.png"
-            alt="Favorite"
-            className="favorite-icon"
-          />
-        </a>
-        <a href="#">
-          <img src="/assets/cart.png" alt="Cart" className="cart-icon" />
-        </a>
+
+        <Link to={"/order-review"} className="cart">
+          <ShoppingOutlined />
+        </Link>
+
         <div className="profile-container">
-          <img
-            src="/assets/user.png"
-            alt="Profile"
-            className="profile-icon"
-            onClick={toggleProfileOptions}
-          />
-          {showProfileOptions && (
-            <div className="profile-options">
-              {user == null ? (
-                <Link to="/login">Login</Link>
-              ) : (
-                <>
-                  <a
-                    style={{
-                      cursor: "pointer",
-                    }}
-                    onClick={() => {
-                      return navigate("/my-account/profile");
-                    }}
-                  >
-                    Profile
-                  </a>
-                  <a
-                    onClick={handleRecharge}
-                    style={{
-                      marginBottom: "20px",
-                      cursor: "pointer",
-                    }}
-                  >
-                    <Button type="primary" onClick={() => navigate("/wallet")}>
-                      Rechage
-                    </Button>
-                    <>
-                      <Modal
-                        title="Basic Modal"
-                        open={isModalOpen}
-                        onOk={handleOk}
-                        onCancel={handleCancel}
-                      >
-                        <InputNumber onChange={(e) => setNumber(e)} />
-                      </Modal>
-                    </>
-                  </a>
-
-                  <a
-                    style={{
-                      cursor: "pointer",
-                    }}
-                    onClick={() => {
-                      dispatch(logout());
-                      localStorage.clear();
-                      return navigate("/login");
-                    }}
-                  >
-                    Logout
-                  </a>
-                </>
-              )}
-
-              {/* <Link to="/register">Sign In</Link> */}
-            </div>
-          )}
+          <Dropdown
+            menu={{
+              items: user == null ? login_items : affter_login_items,
+              onClick,
+            }}
+            placement="bottom"
+            arrow
+          >
+            <Link className="user">
+              <UserOutlined />
+            </Link>
+          </Dropdown>
         </div>
       </div>
     </header>

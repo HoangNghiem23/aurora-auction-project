@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import { PlusOutlined } from "@ant-design/icons";
+import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import "./index.scss";
 
 const OrderReview = () => {
   const navigate = useNavigate();
 
   const handleFillOutOrderInfo = () => {
-    navigate("/test/fillinfo");
+    navigate("/fillinfo");
   };
 
   return (
@@ -24,7 +24,10 @@ const OrderReview = () => {
             <a href="/edit-order">EDIT ORDER</a>
           </div>
           <p className="item-price">
-            $100.00<button className="delete-item">🗑️</button>
+            $100.00
+            <button className="delete-item">
+              <DeleteOutlined />
+            </button>
           </p>
         </div>
         <h3>Add more to your bag</h3>

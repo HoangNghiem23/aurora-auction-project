@@ -1,9 +1,11 @@
 import { useState } from "react";
 import "./index.scss";
+import { useNavigate } from "react-router-dom";
 
 const FillInfo = () => {
   const [deliveryMethod, setDeliveryMethod] = useState("");
   const [purchaseCompleted, setPurchaseCompleted] = useState(false);
+  const navigate = useNavigate();
 
   const handleDeliveryChange = (method) => {
     setDeliveryMethod(method);
@@ -66,12 +68,12 @@ const FillInfo = () => {
               </div>
             </div>
           </div>
-          {/* {deliveryMethod === "shipment" ? (
-            <img src="path-to-shipment-image.png" alt="Shipment" />
-          ) : (
-            <img src="path-to-in-person-image.png" alt="In Person Pickup" />
-          )} */}
-          <button onClick={() => setPurchaseCompleted(false)}>
+
+          <button
+            onClick={() => {
+              return navigate("/");
+            }}
+          >
             BACK TO SHOPPING
           </button>
         </div>
@@ -82,7 +84,7 @@ const FillInfo = () => {
   return (
     <div className="fill-info">
       <div className="info-section">
-        <a href="/test/order-review" className="back-link">
+        <a href="/order-review" className="back-link">
           BACK TO ORDER REVIEW
         </a>
         <h2>My Information</h2>

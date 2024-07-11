@@ -74,13 +74,7 @@ function SellPage() {
         : fileList[0].url;
       values.image_url = url;
 
-      // const data = {
-      //   ...values,
-      //   userid: user.id,
-      // };
-      // console.log(data);
-      // await api.post(`/request-buy/${user.id}`, values);
-
+      console.log("Values with image URL: ", values); // Check values with image URL
       await api.post("/request-buy", values);
       form.resetFields();
       setFileList([]);
@@ -262,17 +256,15 @@ function SellPage() {
             </Form.Item>
             <Form.Item
               label="CategoryName"
-              name="category_name"
+              name="category_id"
               rules={[{ required: true, message: "Please select a category!" }]}
             >
-
               <Select
                 options={cate?.map((item) => ({
                   label: item.category_name,
                   value: item.id,
                 }))}
               ></Select>
-
             </Form.Item>
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
               <Button type="primary" htmlType="submit">

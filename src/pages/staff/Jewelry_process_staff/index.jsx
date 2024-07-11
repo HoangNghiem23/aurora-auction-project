@@ -7,9 +7,9 @@ import {
   Table,
   Upload,
   Image,
-  Space,
   ConfigProvider,
   Popconfirm,
+  Tabs,
 } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import api from "../../../config/axios";
@@ -366,83 +366,38 @@ function RequestSellInStaff() {
     tab3: columnsTab3,
   };
 
+  const tabItems = [
+    {
+      key: "tab1",
+      label: "Yêu cầu đấu giá",
+      children: <Table dataSource={Data} columns={columns.tab1} rowKey="id" />,
+    },
+    {
+      key: "tab2",
+      label: "Đã định giá sơ bộ",
+      children: (
+        <Table dataSource={pricedData} columns={columns.tab2} rowKey="id" />
+      ),
+    },
+    {
+      key: "tab3",
+      label: "Yêu cầu cho quản lý",
+      children: (
+        <Table dataSource={managerData} columns={columns.tab3} rowKey="id" />
+      ),
+    },
+  ];
+
   return (
     <div>
       <Button type="primary" onClick={handleOpenModal} className="add-request">
         Add new request
       </Button>
-      <Space>
-        <ConfigProvider
-          theme={{
-            components: {
-              Button: {
-                colorPrimary: `linear-gradient(135deg, ${colors1.join(", ")})`,
-                colorPrimaryHover: `linear-gradient(135deg, ${getHoverColors(
-                  colors1
-                ).join(", ")})`,
-                colorPrimaryActive: `linear-gradient(135deg, ${getActiveColors(
-                  colors1
-                ).join(", ")})`,
-                lineWidth: 0,
-              },
-            },
-          }}
-        >
-          <Button type="primary" onClick={() => setActiveTab("tab1")}>
-            Yêu cầu đấu giá
-          </Button>
-        </ConfigProvider>
-        <ConfigProvider
-          theme={{
-            components: {
-              Button: {
-                colorPrimary: `linear-gradient(90deg,  ${colors2.join(", ")})`,
-                colorPrimaryHover: `linear-gradient(90deg, ${getHoverColors(
-                  colors2
-                ).join(", ")})`,
-                colorPrimaryActive: `linear-gradient(90deg, ${getActiveColors(
-                  colors2
-                ).join(", ")})`,
-                lineWidth: 0,
-              },
-            },
-          }}
-        >
-          <Button type="primary" onClick={() => setActiveTab("tab2")}>
-            Đã định giá sơ bộ
-          </Button>
-        </ConfigProvider>
-        <ConfigProvider
-          theme={{
-            components: {
-              Button: {
-                colorPrimary: `linear-gradient(116deg,  ${colors3.join(", ")})`,
-                colorPrimaryHover: `linear-gradient(116deg, ${getHoverColors(
-                  colors3
-                ).join(", ")})`,
-                colorPrimaryActive: `linear-gradient(116deg, ${getActiveColors(
-                  colors3
-                ).join(", ")})`,
-                lineWidth: 0,
-              },
-            },
-          }}
-        >
-          <Button type="primary" onClick={() => setActiveTab("tab3")}>
-            Yêu cầu cho quản lý
-          </Button>
-        </ConfigProvider>
-      </Space>
-      <Table
-        dataSource={
-          activeTab === "tab1"
-            ? Data
-            : activeTab === "tab2"
-            ? pricedData
-            : managerData
-        }
-        columns={columns[activeTab]}
-        rowKey="id"
+      <Tabs
+        defaultActiveKey="tab1"
+        activeKey={activeTab}
+        onChange={setActiveTab}
+        items={tabItems}
       />
       <Modal
         footer={false}
