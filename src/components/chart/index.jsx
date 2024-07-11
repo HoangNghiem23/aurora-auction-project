@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import Chart from "chart.js/auto";
+// import Chart from "chart.js/auto";
 import api from "../../config/axios";
 
 function SaleComparision() {
   const [data, setdata] = useState();
   const chartRef = useRef(null);
   const chartInstance = useRef(null); // Ref to hold the Chart instance
-  // const [dataRevenue, setDataRevenue] = useState([]);
+  const [dataRevenue, setDataRevenue] = useState([]);
   const fetchData = async () => {
     try {
       const response = await api.get("admin/ProfitByMonth");

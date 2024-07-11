@@ -17,7 +17,7 @@ function Buyandsell() {
         <Link to="/glossary" className="nav-link">GLOSSARY</Link>
       </nav>
     <div className='about-us__create'>1. Create your account</div>
-    <p >In order to bid in an auction you’ll first need to <Link to="/register" className='about-us__register'> set up an account.</Link> Follow our step-by-step </p>
+    <p>In order to bid in an auction you’ll first need to <Link to="/register" className='about-us__register'> set up an account.</Link> Follow our step-by-step </p>
     <p>account creation guide to assist you in this process.</p>
     <p>If you already have an account, please <Link to="/login" className='about-us__login'>login</Link> and we will proceed with the auction</p>
     <p><Link to="/supporttobid" className='about-us__support'>What is needed to bid at auction?</Link></p>
@@ -29,6 +29,8 @@ function Buyandsell() {
     <p>auctions, additional financial verification is required at least 24 hours before the sale.</p>
     <p>For an online-only auction, there is no separate registration process. Placing a bid automatically </p>
     <p>registers you for that auction.</p>
+    <p><Link to="/how-to-bid" className='about-us__how-to-bid'>How can I bid in an auction?</Link></p>
+    <p><Link to="/see-work-in-person" className='about-us__see-work'>Can I see the work in person before a sale?</Link></p>
     <div className='about-us__PlaceyourBid' >3. Place your bids</div>
     <div className='live'>Live auctions</div>
     <div className='bid'>Bidding online</div>
@@ -57,8 +59,8 @@ function Buyandsell() {
     <p>local taxes. In certain locations, a re-sale royalty will be collected.</p>
     <p>If you are attending, the auction in person, you may pay for your items immediately following the</p>
     <p>auction. Otherwise, our Post-Sales Service team will send you an invoice and shipping quote.</p>
-  </div >
+  </div>
   )
 }
 
-export default Buyandsell
+export default Buyandsell;
