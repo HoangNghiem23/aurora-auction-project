@@ -7,28 +7,7 @@ function JewelryInAuctionList() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(
-        "http://152.42.226.77:8080/api/auction/AllAuctionsReady",
-        {
-          headers: {
-            Authorization:
-              "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJzdHJpbmciLCJpYXQiOjE3MjAyNzI5NjksImV4cCI6MTcyMDM1OTM2OX0.dkWBi-LA2IdZs4zGUIVghPaOeP2VhXgGZjPca_EeXvaajVfjz4z7VbrpAnMIrFDN",
-          },
-        }
-      );
-      const jewelryAuctions = response.data.filter(
-        (auction) => auction.jewelry
-      );
-      const formattedData = jewelryAuctions.map((auction) => ({
-        id: auction.id,
-        name: auction.name,
-        image: auction.image,
-        startTime: auction.start_date,
-        endTime: auction.end_date,
-        soldStatus: auction.auctionsStatusEnum === "ISOPEDED",
-        currentBidAmount: auction.jewelry.last_price,
-      }));
-      setData(formattedData);
+
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -56,14 +35,14 @@ function JewelryInAuctionList() {
       render: (text) => <img src={text} alt="product" width="50" />,
     },
     {
-      title: "Start Time",
-      dataIndex: "startTime",
-      key: "startTime",
+      title: "high_estimated_price",
+      dataIndex: "high_estimated_price",
+      key: "high_estimated_price",
     },
     {
-      title: "End Time",
-      dataIndex: "endTime",
-      key: "endTime",
+      title: "low_estimated_price",
+      dataIndex: "low_estimated_price",
+      key: "low_estimated_price",
     },
     {
       title: "Status",
