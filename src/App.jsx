@@ -65,6 +65,8 @@ import JewelryInAuctionList from "./pages/admin/jewelryinauction";
 import HowToBid from "./Howtobill-buy/how-to-bid";
 import Auctionclose from "./pages/manager/auction-close";
 import Historyauction from "./pages/manager/history";
+import SalePage from "./Howtobill-buy/sale";
+import SellingPage from "./Howtobill-buy/selling";
 
 function App() {
   const PrivateRoute = ({ children, role }) => {
@@ -91,8 +93,16 @@ function App() {
           element: <Buyandsell />,
         },
         {
+          path: "/selling",
+          element: <SellingPage />,
+        },
+        {
           path: "/how-to-bid",
           element: <HowToBid />,
+        },
+        {
+          path: "/how-to-sale",
+          element: <SalePage />,
         },
         {
           path: "/wallet",
