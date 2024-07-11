@@ -305,7 +305,7 @@ function Auction() {
                       >
                         <UserSection
                           isMe={user?.id === item?.account.id}
-                          name={item?.account.lastname}
+                          name={item?.account.username}
                           money={formatMoney(item?.amountofmoney)}
                         />
                       </div>

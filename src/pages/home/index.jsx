@@ -27,7 +27,7 @@ const HomePage = () => {
         <section className="hero-section">
           <ImageSlider />
           <div className="hero-text">
-            <h1 className="hero-title">the autumn equinox</h1>
+            <h1 className="hero-title">The autumn equinox</h1>
             <p className="hero-description">
               Fall has arrived.
               <br />

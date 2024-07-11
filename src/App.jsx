@@ -117,7 +117,7 @@ function App() {
           element: <UpcomingAuction />,
         },
         {
-          path: "auction-results",
+          path: "/auction-results",
           element: <AuctioResults />,
         },
 
