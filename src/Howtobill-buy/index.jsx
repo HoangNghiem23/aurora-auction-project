@@ -1,4 +1,4 @@
-import React from 'react'
+// import React from 'react'
 import { Link } from 'react-router-dom'
 import "./index.scss"
 
@@ -30,7 +30,7 @@ function Buyandsell() {
     <p>For an online-only auction, there is no separate registration process. Placing a bid automatically </p>
     <p>registers you for that auction.</p>
     <p><Link to="/how-to-bid" className='about-us__how-to-bid'>How can I bid in an auction?</Link></p>
-    <p><Link to="/see-work-in-person" className='about-us__see-work'>Can I see the work in person before a sale?</Link></p>
+    <p><Link to="/how-to-sale" className='about-us__see-work'>Can I see the work in person before a sale?</Link></p>
     <div className='about-us__PlaceyourBid' >3. Place your bids</div>
     <div className='live'>Live auctions</div>
     <div className='bid'>Bidding online</div>

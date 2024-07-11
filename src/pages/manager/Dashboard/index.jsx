@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { useEffect, useState } from "react";
 import {
   ProfileOutlined,
@@ -109,7 +110,7 @@ const Manager = () => {
           style={{ margin: "0 16px", display: "flex", flexDirection: "column" }}
         >
           <Breadcrumb>
-            {location.pathname.split("/").map((path, index, array) => (
+            {location.pathname.split("/").map((path, index) => (
               <Breadcrumb.Item key={path}>
                 {index === 0 ? path : <Link to={`/${path}`}>{path}</Link>}
               </Breadcrumb.Item>

@@ -44,6 +44,7 @@ import {
     const [selectionType, setSelectionType] = useState("radio");
     const [jewelry, setJewelry] = useState({});
     const [statusMessage, setStatusMessage] = useState("");
+    const [isReceived, setIsReceived] = useState(false);
     const navigate = useNavigate();
   
     const handlePreview = async (file) => {
@@ -123,8 +124,17 @@ import {
         const response = await api.get(`/bid/SuccessfulBidAccount/${auction.id}`);
         setCurrentAuctionDetails(response.data);
         setIsDetailModalOpen(true);
-        await api.put(`/jewelry/setSENDTOBUYER/${auction.id}`);
+        setIsReceived(false);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  
+    const handleStatusUpdate = async () => {
+      try {
+        await api.put(`/jewelry/setSENDTOBUYER/${currentAuction.id}`);
         setStatusMessage("Đã nhận");
+        setIsReceived(true);
       } catch (error) {
         console.log(error);
       }
@@ -390,11 +400,17 @@ import {
           <div>
             <p><strong>ID:</strong> {currentAuctionDetails.id}</p>
             <p><strong>Name:</strong> {currentAuctionDetails.username}</p>
-            <p><strong>Amountofmoney:</strong> {currentAuctionDetails.amountofmoney}</p>
-            <p><strong>Amountofadd:</strong> {currentAuctionDetails.amountofadd}</p>
-            <p><strong>Name:</strong> {currentAuctionDetails.account?.username}</p>
-
-            <p><strong>Status:</strong> {statusMessage}</p>
+            <p><strong>Amount of Money:</strong> {currentAuctionDetails.amountofmoney}</p>
+            <p><strong>Amount of Add:</strong> {currentAuctionDetails.amountofadd}</p>
+            <p><strong>Account Name:</strong> {currentAuctionDetails.account?.username}</p>
+  
+            {isReceived ? (
+              <p><strong>Status:</strong> {statusMessage}</p>
+            ) : (
+              <Button type="primary" onClick={handleStatusUpdate}>
+                Đã nhận hàng
+              </Button>
+            )}
           </div>
         </Modal>
       </div>

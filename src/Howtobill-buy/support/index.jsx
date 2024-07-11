@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import "./index.scss";
 import Search from "antd/es/input/Search";
 import { Link } from "react-router-dom";
