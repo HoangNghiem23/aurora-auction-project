@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Form, Input, Upload, Image, Table, Select } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import api from "../../config/axios";
@@ -7,6 +7,8 @@ import Header from "../../components/header";
 import Footer from "../../components/footer";
 import "./index.scss";
 import uploadFile from "../../utils/upload";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../redux/features/counterSlice";
 
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
@@ -23,7 +25,7 @@ function SellPage() {
   const [previewImage, setPreviewImage] = useState("");
   const [form] = Form.useForm();
   const [data, setData] = useState([]);
-
+  const user = useSelector(selectUser);
   const handlePreview = async (file) => {
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj);
@@ -55,7 +57,8 @@ function SellPage() {
 
   const fetchData = async () => {
     try {
-      const response = await api.get("/request-buy");
+      const response = await api.get("/request-buy/getRequestByAccountID");
+      console.log(response.data);
       setData(response.data);
     } catch (error) {
       console.log(error);
@@ -117,7 +120,7 @@ function SellPage() {
       case "PENDING":
         return (
           <Button type="default" disabled>
-            Đang xử lí
+            In Progress
           </Button>
         );
       case "PRELIMARY":
@@ -126,25 +129,25 @@ function SellPage() {
             type="primary"
             onClick={() => handleAcceptPreliminary(record.id)}
           >
-            Chấp Nhận Định Giá + Gửi Trang Sức
+            Accept Valuation + Send Jewelry to Company
           </Button>
         );
       case "WAITINGMANAGER":
         return (
           <Button type="default" disabled>
-            Đang xử lí
+            In Progress
           </Button>
         );
       case "FINALVALUATION":
         return (
           <Button type="primary" onClick={() => handleAcceptFinal(record.id)}>
-            Chấp Nhận
+            Accept
           </Button>
         );
       case "COMPLETED":
         return (
           <Button type="primary" disabled>
-            Hoàn Tất
+            Completed
           </Button>
         );
       default:

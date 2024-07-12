@@ -82,7 +82,7 @@ const Header = () => {
               placement="bottom"
               arrow
             >
-              <Link to="/">Auction</Link>
+              <Link to="/upcoming-auctions">Auction</Link>
             </Dropdown>
           </li>
 

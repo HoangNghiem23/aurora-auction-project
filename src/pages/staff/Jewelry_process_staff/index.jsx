@@ -272,10 +272,10 @@ function RequestSellInStaff() {
             style={{ marginRight: 8 }}
             onClick={() => handleOpenPriceModal(values)}
           >
-            Định giá
+            Price Estimate
           </Button>
           <Button type="primary" onClick={() => handleOpenManagerModal(values)}>
-            Gửi Quản Lý
+            Send to Manager
           </Button>
           <Popconfirm
             title="Delete the request"
@@ -323,7 +323,7 @@ function RequestSellInStaff() {
       title: "Action",
       render: (values) => (
         <Button type="primary" onClick={() => handleOpenManagerModal(values)}>
-          Gửi Quản Lý
+          Send to Manager
         </Button>
       ),
     },
@@ -354,7 +354,7 @@ function RequestSellInStaff() {
       key: "description",
     },
     {
-      title: "Giá sơ bộ",
+      title: "Price Estimate",
       render: (values) =>
         `${values.low_estimated_price} - ${values.high_estimated_price}`,
     },
@@ -369,19 +369,19 @@ function RequestSellInStaff() {
   const tabItems = [
     {
       key: "tab1",
-      label: "Yêu cầu đấu giá",
+      label: "Request Auction",
       children: <Table dataSource={Data} columns={columns.tab1} rowKey="id" />,
     },
     {
       key: "tab2",
-      label: "Đã định giá sơ bộ",
+      label: "Preliminary Valuation Done",
       children: (
         <Table dataSource={pricedData} columns={columns.tab2} rowKey="id" />
       ),
     },
     {
       key: "tab3",
-      label: "Yêu cầu cho quản lý",
+      label: "Send Request for Management",
       children: (
         <Table dataSource={managerData} columns={columns.tab3} rowKey="id" />
       ),
@@ -447,7 +447,7 @@ function RequestSellInStaff() {
         </Form>
       </Modal>
       <Modal
-        title="Định giá"
+        title="Price Estimate"
         open={isPriceModalOpen}
         onCancel={handleCancel}
         footer={null}
@@ -481,7 +481,7 @@ function RequestSellInStaff() {
         </Form>
       </Modal>
       <Modal
-        title="Gửi Quản Lý"
+        title="Send to Manager"
         open={isManagerModalOpen}
         onCancel={handleCancel}
         footer={null}
@@ -570,7 +570,7 @@ function RequestSellInStaff() {
           </Form.Item>
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
             <Button type="primary" htmlType="submit">
-              Gửi Quản Lý
+              Send to Manager
             </Button>
           </Form.Item>
         </Form>
