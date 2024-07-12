@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Button,
   Card,
@@ -30,16 +30,16 @@ const { Option } = Select;
 
 function Auction() {
   const [balance, setBalance] = useState(0);
-  const [showModal, setShowMal] = useState(true);
+  const [showModal, setShowModal] = useState(true);
   const [winner, setShowWinner] = useState(false);
   const [nameWin, setNameWin] = useState("");
-
   const [expired, setExpired] = useState(false);
   const [form] = Form.useForm();
   const { id } = useParams();
   const [data, setData] = useState([]);
   const user = useSelector(selectUser);
   const lastItemRef = useRef(null);
+  const audioRef = useRef(null);
 
   function getAccountsByHighestBid(highestBidValue) {
     return data?.bid
@@ -85,11 +85,19 @@ function Auction() {
     return () => clearInterval(intervalId); // Cleanup the interval on component unmount
   }, [data.end_date]);
 
-  // useEffect(() => {
-  //   if (expired) {
+  useEffect(() => {
+    const playSound = () => {
+      if (audioRef.current) {
+        audioRef.current.play().catch((error) => {
+          console.error("Error playing audio:", error);
+        });
+      }
+    };
 
-  //   }
-  // }, [expired]);
+    if (winner) {
+      playSound();
+    }
+  }, [winner]);
 
   const fetch = async () => {
     try {
@@ -161,13 +169,18 @@ function Auction() {
           <Modal
             onCancel={() => {
               setShowWinner(false);
-              setShowMal(false);
+              setShowModal(false);
             }}
             className="animate__animated animate__flip"
             open={showModal}
           >
-            <div>{nameWin} a is a winner</div>
+            <div>{nameWin} is a winner</div>
           </Modal>
+          <audio
+            ref={audioRef}
+            src="/sounds/mixkit-conference-audience-clapping-strongly-476.wav"
+            preload="auto"
+          ></audio>
         </>
       )}
 
@@ -182,7 +195,7 @@ function Auction() {
               />
             </div>
             <h4 className="img-name" style={{ fontWeight: "100" }}>
-              Tên món hàng: <strong>{data?.title}</strong>
+              Jewelry Name: <strong>{data?.title}</strong>
             </h4>
           </Col>
 
@@ -195,7 +208,7 @@ function Auction() {
                       endDate={data?.end_date}
                     />
                   )
-                : `Phiên đã đóng, người chiến thắng là : ${nameWin}`}
+                : `Auction Ended, the Winning Bidder is : ${nameWin}`}
 
               {data.auctionsStatusEnum == "UPCOMING" && (
                 <TimeCountDown
@@ -270,7 +283,7 @@ function Auction() {
               title=""
               style={{ height: "500px" }}
             >
-              <h3> Giá khởi điểm : {data?.minPriceBeforeStart}</h3>
+              <h3> Starting Price : {data?.minPriceBeforeStart}</h3>
 
               <h3
                 style={{
@@ -281,7 +294,7 @@ function Auction() {
                   margin: "5px",
                 }}
               >
-                Diễn biến cuộc đấu giá
+                Auction Progress
               </h3>
 
               <div

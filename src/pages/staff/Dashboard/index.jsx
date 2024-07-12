@@ -72,7 +72,7 @@ const StaffPage = () => {
         //   getItem("Court ID 1", "court-1"),
         //   getItem("Court ID 2", "court-2"),
         // ]),
-        getItem("Yêu Cầu Đấu Giá", "request", <AppstoreAddOutlined />),
+        getItem("Auctions Request", "request", <AppstoreAddOutlined />),
       ]);
     }
 
