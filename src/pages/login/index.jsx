@@ -110,6 +110,7 @@ function LoginPopup() {
             Login Page
           </h2>
           <Form.Item
+          style={{color: "red"}}
             name="username"
             label="User name"
             rules={[

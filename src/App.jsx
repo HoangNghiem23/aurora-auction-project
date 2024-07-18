@@ -67,6 +67,7 @@ import Auctionclose from "./pages/manager/auction-close";
 import Historyauction from "./pages/manager/history";
 import SalePage from "./Howtobill-buy/sale";
 import SellingPage from "./Howtobill-buy/selling";
+import Glossary from "./pages/glossary";
 
 function App() {
   const PrivateRoute = ({ children, role }) => {
@@ -111,6 +112,10 @@ function App() {
         {
           path: "/",
           element: <HomePage />,
+        },
+        {
+          path: "/glossary",
+          element: <Glossary />,
         },
 
         {

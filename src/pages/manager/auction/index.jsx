@@ -231,10 +231,15 @@ function AuctionManager() {
       ),
     },
     {
+      
       title: "Action",
+      align: "center",
+      
       render: (values) => (
         <>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
           <Button
+          // style={}
             type="primary"
             style={{ marginRight: 8 }}
             onClick={() => handleUpdateClick(values)}
@@ -250,6 +255,7 @@ function AuctionManager() {
           >
             <Button danger>Delete</Button>
           </Popconfirm>
+          </div>
         </>
       ),
     },
