@@ -67,7 +67,12 @@ import Historyauction from "./pages/manager/history";
 import SalePage from "./Howtobill-buy/sale";
 import SellingPage from "./Howtobill-buy/selling";
 
+import Glossary from "./pages/glossary";
+import Contact from "./pages/contact";
+
+
 import SellPage from "./pages/sell";
+
 
 
 function App() {
@@ -109,6 +114,10 @@ function App() {
         {
           path: "/wallet",
           element: <Historytransition />,
+        },
+        {
+          path: "/contact",
+          element: <Contact />,
         },
         {
           path: "/",
