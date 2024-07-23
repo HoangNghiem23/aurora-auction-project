@@ -9,10 +9,15 @@ import {
   AppstoreAddOutlined,
   ProductOutlined,
   DollarOutlined,
+  LogoutOutlined,
 } from "@ant-design/icons";
-import { Avatar, Breadcrumb, Layout, Menu, Space, theme } from "antd";
+import { Avatar, Breadcrumb, Layout, Menu, Space, Tag, theme } from "antd";
 import { Footer } from "antd/es/layout/layout";
 import { Link, Outlet, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logout, selectUser } from "../../../redux/features/counterSlice";
+import { FaRegUserCircle } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 const { Header, Content, Sider } = Layout;
 
@@ -26,6 +31,8 @@ function getItem(label, key, icon, children) {
 }
 
 const StaffPage = () => {
+  const user = useSelector(selectUser);
+  const dispatch = useDispatch();
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer, borderRadiusLG },
@@ -177,9 +184,39 @@ const StaffPage = () => {
           )}
         </Menu>
       </Sider>
+
       <Layout>
-        <Header style={{ padding: 0, background: colorBgContainer }}>
-          <header></header>
+        <Header
+          style={{
+            padding: "10px 60px",
+            background: colorBgContainer,
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Tag
+            icon={<FaRegUserCircle />}
+            color="processing"
+            style={{
+              width: "fit-content",
+              alignItems: "center",
+              gap: "10px",
+              display: "flex",
+              // marginLeft: "20px",
+              fontSize: "16px",
+            }}
+          >
+            {user?.roleEnum}
+          </Tag>
+
+          <LogoutOutlined
+            style={{ fontSize: "20px" }}
+            onClick={() => {
+              dispatch(logout());
+              toast.success("Logout Succesfully")
+            }}
+          />
         </Header>
         <Content
           style={{ margin: "0 16px", display: "flex", flexDirection: "column" }}

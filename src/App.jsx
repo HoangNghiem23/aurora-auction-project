@@ -70,10 +70,8 @@ import SellingPage from "./Howtobill-buy/selling";
 import Glossary from "./pages/glossary";
 import Contact from "./pages/contact";
 
-
 import SellPage from "./pages/sell";
-
-
+import AuctionItem from "./pages/detailPage";
 
 function App() {
   const PrivateRoute = ({ children, role }) => {
@@ -94,6 +92,10 @@ function App() {
         {
           path: "/supporttobid",
           element: <Supporttobid />,
+        },
+        {
+          path: "/auctionItem",
+          element: <AuctionItem />,
         },
         {
           path: "/buy-sell",
