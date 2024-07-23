@@ -3,6 +3,7 @@ import { Card, Image, Button, Row, Col, Typography, Collapse } from "antd";
 import "./index.scss";
 import { Link, useParams } from "react-router-dom";
 import api from "../../config/axios";
+import moment from "moment";
 
 const { Title, Text } = Typography;
 const { Panel } = Collapse;
@@ -10,7 +11,7 @@ const { Panel } = Collapse;
 const AuctionItem = () => {
   const { id } = useParams();
 
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({});
 
   const fetch = async () => {
     try {
@@ -24,7 +25,7 @@ const AuctionItem = () => {
 
   useEffect(() => {
     fetch();
-  }, []);
+  }, [id]);
 
   return (
     <div className="auction-item">
@@ -42,26 +43,12 @@ const AuctionItem = () => {
             <Title level={2}>Lot Details</Title>
             <Title level={3}>Description</Title>
             <Text>
-              <strong>Echézeaux 1997</strong>
+              <strong>{data?.jewelry?.name}</strong>
               <br />
-              Domaine de la Romanée-Conti
-              <br />
-              Côte de Nuits, Grand Cru
-              <br />
-              Banded prior to inspection, u. 1x4cm, in consecutive bottle
-              numbers, 1 very slightly scuffed label, slightly scuffed capsules,
-              1 slightly raised cork, Swiss import back labels
+              {data?.description}
               <br />
               <br />
-              Lovely, perfumed strawberry nose. Stashed with scented red fruit
-              on the palate. Lovely balancing acidity. Red cherries predominate.
-              It is actually ready to drink but, of course, will last. Serena
-              Sutcliffe, MW
-              <br />
-              <br />
-              香水般的草莓氣息，令人悠然神往。此酒帶有成熟芳香的紅肉水果味，特別是紅櫻桃味，還有一份優雅平衡的酸香。此酒現已適宜享用，但絕對可以繼續陳年。施慧娜（葡萄酒大師M.W.）
-              <br />
-              <br />6 bts (owc)
+              {data?.jewelry?.conditionReport}
             </Text>
             <Text italic>
               Please note that for Wine and Spirits Lots, the Buyer's Premium
@@ -74,23 +61,25 @@ const AuctionItem = () => {
         </Col>
         <Col xs={24} md={9}>
           <div className="details fixed-right">
-            <Title level={3}>
-              Jayson Tatum Boston Celtics 2023 NBA All-Star Game Worn ‘3-Point
-              Contest’ Statement Edition Jersey
-            </Title>
+            <Title level={3}>{data?.name}</Title>
             <div className="lot-info">
               <Text>Lot closes</Text>
-              <Text strong>July 30, 11:04:00 AM +07</Text>
+              <Text strong>
+                {moment(data?.end_date).format("MMMM DD, YYYY hh:mm A")}
+              </Text>
               <hr />
             </div>
             <div className="estimate">
               <Text>Estimate</Text>
-              <Text strong>95,000 - 130,000 HKD</Text>
+              <Text strong>
+                {data?.jewelry?.low_estimated_price} -{" "}
+                {data?.jewelry?.high_estimated_price} USD
+              </Text>
               <hr />
             </div>
             <div className="starting-bid">
               <Text>Starting Bid</Text>
-              <Text strong>80,000 HKD</Text>
+              <Text strong>{data?.minPriceBeforeStart} USD</Text>
             </div>
             <Link
               to={`/auction/${data?.id}`}

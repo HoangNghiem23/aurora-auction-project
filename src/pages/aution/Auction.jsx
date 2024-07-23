@@ -9,6 +9,7 @@ import {
   Modal,
   Row,
   Select,
+  Spin,
 } from "antd";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -37,12 +38,12 @@ function Auction() {
   const [form] = Form.useForm();
   const { id } = useParams();
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
   const user = useSelector(selectUser);
   const lastItemRef = useRef(null);
   const audioRef = useRef(null);
 
   useRealtime(async (body) => {
-    console.log(body);
     if (
       body.body === "addBid" ||
       body.body === "BidSuccessfully" ||
@@ -53,10 +54,12 @@ function Auction() {
         try {
           const response = await api.get(`/auction/${id}`);
           const latestData = response.data;
+          console.log(latestData);
           latestData?.bid?.forEach((bid) => {
-            if (bid.thisIsTheHighestBid === "TWO") {
+            if (bid?.thisIsTheHighestBid === "TWO") {
               if (bid.account.id === user.id) setShowWinner(true);
               setNameWin(bid.account.username);
+              playAudio();
             }
           });
         } catch (error) {
@@ -65,20 +68,56 @@ function Auction() {
       }
     }
   });
+  const playAudio = async () => {
+    if (audioRef.current) {
+      try {
+        // Attempt to play the audio
+        await audioRef.current.play();
+      } catch (audioError) {
+        console.error("Error playing audio:", audioError);
+      }
+    }
+  };
 
+  // Interval fetching logic
   useEffect(() => {
-    const playSound = () => {
-      if (audioRef.current) {
-        audioRef.current.play().catch((error) => {
-          console.error("Error playing audio:", error);
+    const fetchAuctionData = async () => {
+      try {
+        const response = await api.get(`/auction/${id}`);
+        const latestData = response.data;
+        setLoading(true); // Set loading to true before fetching data
+
+        setLoading(false); // Set loading to false after fetching data
+        latestData?.bid?.forEach((bid) => {
+          if (bid?.thisIsTheHighestBid === "TWO") {
+            if (bid.account.id === user.id) setShowWinner(true);
+            setNameWin(bid.account.username);
+            playAudio(); // Trigger audio playback
+          }
         });
+      } catch (error) {
+        console.error("Error fetching auction data:", error);
+        setLoading(false); // Ensure loading is set to false in case of error
       }
     };
 
-    if (winner) {
-      playSound();
-    }
-  }, [winner]);
+    const interval = setInterval(fetchAuctionData, 1000); // Run every 1 second
+
+    return () => clearInterval(interval); // Clear interval on component unmount
+  }, [id, user.id]);
+  // useEffect(() => {
+  //   const playSound = () => {
+  //     if (audioRef.current) {
+  //       audioRef.current.play().catch((error) => {
+  //         console.error("Error playing audio:", error);
+  //       });
+  //     }
+  //   };
+
+  //   if (winner) {
+  //     playSound();
+  //   }
+  // }, [winner]);
 
   const fetch = async () => {
     try {
@@ -140,6 +179,12 @@ function Auction() {
   // );
 
   console.log(nameWin);
+  if (loading)
+    return (
+      <div>
+        <Spin />
+      </div>
+    );
   return (
     <div>
       <Header />
