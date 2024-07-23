@@ -46,7 +46,13 @@ const UpcomingAuction = () => {
     try {
       const response = await api.get("/auction/AllAuctionsReady");
       console.log(response.data);
-      setData(response.data);
+      setData(
+        response.data.filter(
+          (item) =>
+            item.auctionsStatusEnum == "UPCOMING" ||
+            item.auctionsStatusEnum == "ISOPENED"
+        )
+      );
     } catch (error) {
       console.log(error);
     }

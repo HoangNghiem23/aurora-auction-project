@@ -42,7 +42,6 @@ function Auction() {
   const audioRef = useRef(null);
 
   useRealtime(async (body) => {
-    console.log(body);
     if (
       body.body === "addBid" ||
       body.body === "BidSuccessfully" ||
@@ -50,11 +49,13 @@ function Auction() {
     ) {
       await fetch();
       if (body.body === "BidSuccessfully") {
+        alert("len r nha");
         try {
           const response = await api.get(`/auction/${id}`);
           const latestData = response.data;
+          console.log(latestData);
           latestData?.bid?.forEach((bid) => {
-            if (bid.thisIsTheHighestBid === "TWO") {
+            if (bid?.thisIsTheHighestBid === "TWO") {
               if (bid.account.id === user.id) setShowWinner(true);
               setNameWin(bid.account.username);
             }
