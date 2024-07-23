@@ -14,6 +14,7 @@ import { PlusOutlined } from "@ant-design/icons";
 import { useForm } from "antd/es/form/Form";
 import api from "../../../config/axios";
 import uploadFile from "../../../utils/upload";
+import { toast } from "react-toastify";
 
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
@@ -108,6 +109,8 @@ function RequestAuctionManager() {
         ...values,
         finalStatus: "ACCEPTED",
       });
+
+      toast.success("Accept request successfully")
       setData(
         data.map((item) =>
           item?.id === values.id ? { ...item, finalStatus: "ACCEPTED" } : item
@@ -252,14 +255,6 @@ function RequestAuctionManager() {
             >
               Accept
             </Button>
-            <Popconfirm
-              title="Are you sure to reject this request?"
-              onConfirm={() => handleReject(values)}
-              okText="Yes"
-              cancelText="No"
-            >
-              <Button danger>Reject</Button>
-            </Popconfirm>
           </>
         ),
     },

@@ -10,20 +10,38 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { toast } from "react-toastify";
-
-const OPTIONS = ["Apples", "Nails", "Bananas", "Helicopters"];
+import axios from "axios";
+import api from "../../config/axios";
 
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [selectedItems, setSelectedItems] = useState([]);
+  const [options, setOptions] = useState([]);
   const user = useSelector(selectUser);
-
-  const filteredOptions = OPTIONS.filter((o) => !selectedItems.includes(o));
 
   const onClick = ({ key }) => {
     navigate(`${key}`);
   };
+
+  const handleSearch = async (value) => {
+    if (value) {
+      try {
+        const response = await api.get(`/jewelry/findJewelryByNameContaining`, {
+          params: { name: value },
+        });
+
+        setOptions(
+          response.data.map((item) => ({ value: item.name, label: item.name }))
+        );
+      } catch (error) {
+        console.error("Error fetching search results:", error);
+      }
+    } else {
+      setOptions([]);
+    }
+  };
+
   const auction_items = [
     {
       key: "/upcoming-auctions",
@@ -40,7 +58,7 @@ const Header = () => {
       label: "Login",
     },
   ];
-  const affter_login_items = [
+  const after_login_items = [
     {
       key: "/my-account/profile",
       label: "Profile",
@@ -53,13 +71,11 @@ const Header = () => {
       key: "/",
       label: (
         <a
-          style={{
-            cursor: "pointer",
-          }}
+          style={{ cursor: "pointer" }}
           onClick={() => {
             dispatch(logout());
             localStorage.clear();
-            toast.success("Logouted");
+            toast.success("Logged out");
             return navigate("/login");
           }}
         >
@@ -75,17 +91,13 @@ const Header = () => {
         <ul className="nav-links">
           <li className="nav-link">
             <Dropdown
-              menu={{
-                items: auction_items,
-                onClick,
-              }}
+              menu={{ items: auction_items, onClick }}
               placement="bottom"
               arrow
             >
               <Link to="/upcoming-auctions">Auction</Link>
             </Dropdown>
           </li>
-
           <li>
             <Link to={"/sell"} className="nav-link">
               Sell
@@ -116,29 +128,24 @@ const Header = () => {
         <div className="search">
           <Select
             className="search-input"
-            mode="multiple"
+            showSearch
             placeholder="Search Aurora's Auction"
             value={selectedItems}
             onChange={setSelectedItems}
-            style={{
-              width: "300px",
-            }}
-            options={filteredOptions.map((item) => ({
-              value: item,
-              label: item,
-            }))}
+            onSearch={handleSearch}
+            style={{ width: "300px" }}
+            options={options}
+            filterOption={false}
             suffixIcon={<SearchOutlined />}
           />
         </div>
-
         <Link to={"/order-review"} className="cart">
           <ShoppingOutlined />
         </Link>
-
         <div className="profile-container">
           <Dropdown
             menu={{
-              items: user == null ? login_items : affter_login_items,
+              items: user == null ? login_items : after_login_items,
               onClick,
             }}
             placement="bottom"

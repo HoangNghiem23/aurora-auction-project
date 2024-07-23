@@ -19,6 +19,7 @@ import { TinyColor } from "@ctrl/tinycolor";
 import uploadFile from "../../../utils/upload";
 import "./index.scss";
 import { render } from "react-dom";
+import { toast } from "react-toastify";
 
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
@@ -182,7 +183,7 @@ function RequestSellInStaff() {
 
       const dataToSend = {
         ...values,
-        image_url: [img_url],
+        image_url: img_url,
       };
 
       console.log("Submitting data to manager:", dataToSend);
@@ -191,7 +192,7 @@ function RequestSellInStaff() {
         `/request-buy/sendToManager/${currentRequest.id}`,
         dataToSend
       );
-
+      toast.success("Successfully");
       setPricedData(pricedData.filter((item) => item.id !== currentRequest.id));
       setManagerData([
         ...managerData,

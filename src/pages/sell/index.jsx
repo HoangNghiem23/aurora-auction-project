@@ -90,6 +90,7 @@ function SellPage() {
   const handleAcceptPreliminary = async (id) => {
     try {
       await api.put(`/request-buy/acpPrelimary/${id}`);
+      toast.success("Accept Prelimary successfully");
       fetchData(); // Refresh the data after accepting a request
     } catch (error) {
       console.log(error);
@@ -99,6 +100,8 @@ function SellPage() {
   const handleAcceptFinal = async (id) => {
     try {
       await api.put(`/request-buy/acceptToAuction/${id}`);
+      toast.success("Accept to auction successfully");
+
       fetchData(); // Refresh the data after accepting a request
     } catch (error) {
       console.log(error);
@@ -108,6 +111,7 @@ function SellPage() {
   const handleComplete = async (id) => {
     try {
       await api.put(`/request-buy/complete/${id}`);
+
       fetchData(); // Refresh the data after completing a request
     } catch (error) {
       console.log(error);
