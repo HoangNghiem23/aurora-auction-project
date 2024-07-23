@@ -2,9 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { DownOutlined, SearchOutlined, UpOutlined } from "@ant-design/icons";
 import "./index.scss";
-import Header from "../../components/header";
 import { Button, Modal } from "antd";
-import Footer from "../../components/footer";
 import api from "../../config/axios";
 import moment from "moment";
 import momentDurationFormatSetup from "moment-duration-format";
@@ -118,7 +116,8 @@ const UpcomingAuction = () => {
 
   useEffect(() => {
     const interval = setInterval(updateCountdowns, 1000);
-    return () => clearInterval(interval);
+
+    return () => clearInterval(interval); //clean-up
   }, []);
 
   return (
@@ -276,7 +275,7 @@ const UpcomingAuction = () => {
               } ${viewMode}`}
             >
               {data?.map((product) => (
-                <div className="jewelry-product" key={product?.label}>
+                <div className="jewelry-product" key={product.id}>
                   <Link to={`/auction/${product?.id}`}>
                     <img src={product?.image} alt={product?.description} />
                     <div className="product-details">
@@ -294,10 +293,12 @@ const UpcomingAuction = () => {
                       </div>
 
                       {product.auctionsStatusEnum === "ISOPENED" && (
-                        <div>Starting Bid : {product.minPriceBeforeStart}</div>
+                        <div className="start_bid">
+                          Starting Bid : {product.minPriceBeforeStart}
+                        </div>
                       )}
                       <Button className="product-bid">
-                        <Link to={product?.link}>BID</Link>
+                        <Link to={`/auction/${product?.id}`}>BID</Link>
                       </Button>
                     </div>
                   </Link>

@@ -34,7 +34,6 @@ import AuctionManager from "./pages/manager/auction";
 import StaffPage from "./pages/staff/Dashboard";
 import RequestSellInStaff from "./pages/staff/Jewelry_process_staff";
 //Sell
-import SellPagse from "./pages/sell";
 //auction
 import UpcomingAuction from "./pages/UpcomingAuctions";
 import AuctioResults from "./pages/AuctionResults";
@@ -67,8 +66,14 @@ import Auctionclose from "./pages/manager/auction-close";
 import Historyauction from "./pages/manager/history";
 import SalePage from "./Howtobill-buy/sale";
 import SellingPage from "./Howtobill-buy/selling";
+
 import Glossary from "./pages/glossary";
 import Contact from "./pages/contact";
+
+
+import SellPage from "./pages/sell";
+
+
 
 function App() {
   const PrivateRoute = ({ children, role }) => {
@@ -162,6 +167,10 @@ function App() {
           element: <FillInfo />,
         },
         {
+          path: "/sell",
+          element: <SellPage />,
+        },
+        {
           path: "/my-account",
           children: [
             {
@@ -180,10 +189,7 @@ function App() {
         },
       ],
     },
-    {
-      path: "sell",
-      element: <SellPagse />,
-    },
+
     {
       path: "*",
       element: <Error404 />,
@@ -215,9 +221,9 @@ function App() {
         {
           path: "/admin",
           element: (
-            // <PrivateRoute role={"ADMIN"}>
-            <Dashboard />
-            // </PrivateRoute>
+            <PrivateRoute role={"ADMIN"}>
+              <Dashboard />
+            </PrivateRoute>
           ),
           children: [
             {

@@ -3,12 +3,11 @@ import { Button, Form, Input, Upload, Image, Table, Select } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import api from "../../config/axios";
 
-import Header from "../../components/header";
-import Footer from "../../components/footer";
 import "./index.scss";
 import uploadFile from "../../utils/upload";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/features/counterSlice";
+import { toast } from "react-toastify";
 
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
@@ -25,7 +24,7 @@ function SellPage() {
   const [previewImage, setPreviewImage] = useState("");
   const [form] = Form.useForm();
   const [data, setData] = useState([]);
-  const user = useSelector(selectUser);
+  // const user = useSelector(selectUser);
   const handlePreview = async (file) => {
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj);
@@ -59,7 +58,7 @@ function SellPage() {
     try {
       const response = await api.get("/request-buy/getRequestByAccountID");
       console.log(response.data);
-      setData(response.data);
+      setData(response.data.sort((b, a) => a.id - b.id));
     } catch (error) {
       console.log(error);
     }
@@ -77,11 +76,12 @@ function SellPage() {
         : fileList[0].url;
       values.image_url = url;
 
-      console.log("Values with image URL: ", values); // Check values with image URL
+      console.log("Values with image URL: ", values);
       await api.post("/request-buy", values);
+      toast.success("Add new request sell succesfuly");
       form.resetFields();
       setFileList([]);
-      fetchData(); // Refresh the data after submitting a new request
+      fetchData();
     } catch (error) {
       console.log(error);
     }
@@ -170,8 +170,8 @@ function SellPage() {
       title: "Image",
       dataIndex: "image",
       key: "image",
-      render: (text) => (
-        <Image src={text} alt="photo" style={{ width: "100px" }} />
+      render: (abc) => (
+        <Image src={abc} alt="photo" style={{ width: "100px" }} />
       ),
     },
     {
@@ -210,18 +210,18 @@ function SellPage() {
       },
     },
   ];
+  //////
 
   return (
     <div>
-      <Header />
       <div className="form-request-sell">
         <div className="title-first">Tell us about your item</div>
         <div className="form-main">
           <Form
             form={form}
             name="basic"
-            labelCol={{ span: 8 }}
-            wrapperCol={{ span: 16 }}
+            labelCol={{ span: 24 }}
+            wrapperCol={{ span: 24 }}
             style={{ maxWidth: 600 }}
             initialValues={{ remember: true }}
             onFinish={onFinish}
@@ -260,6 +260,7 @@ function SellPage() {
             <Form.Item
               label="CategoryName"
               name="category_id"
+              style={{ width: 500 }}
               rules={[{ required: true, message: "Please select a category!" }]}
             >
               <Select
@@ -269,7 +270,7 @@ function SellPage() {
                 }))}
               ></Select>
             </Form.Item>
-            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+            <Form.Item wrapperCol={{ offset: 10, span: 16 }}>
               <Button type="primary" htmlType="submit">
                 Submit
               </Button>
@@ -283,7 +284,6 @@ function SellPage() {
           style={{ marginTop: 20 }}
         />
       </div>
-      <Footer />
       {previewImage && (
         <Image
           wrapperStyle={{ display: "none" }}

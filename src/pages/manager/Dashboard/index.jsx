@@ -1,16 +1,6 @@
-/* eslint-disable no-undef */
 import { useEffect, useState } from "react";
-import {
-  ProfileOutlined,
-  // HeartOutlined,
-  // UserOutlined,
-  // BarChartOutlined,
-  // CheckCircleOutlined,
-  // TeamOutlined,
-  // AppstoreAddOutlined,
-  // ProductOutlined,
-} from "@ant-design/icons";
-import {  Breadcrumb, Layout, Menu,  theme } from "antd";
+import { ProfileOutlined } from "@ant-design/icons";
+import { Breadcrumb, Layout, Menu, theme } from "antd";
 import { Footer } from "antd/es/layout/layout";
 import { Link, Outlet, useLocation } from "react-router-dom";
 

@@ -23,9 +23,7 @@ function TimeCountDown({ endDate, status }) {
 
   return (
     <div>
-      {status === "UPCOMING"
-        ? "Bắt đầu trong : "
-        : "Thời gian đấu giá còn lại : "}{" "}
+      {status === "UPCOMING" ? "Start in : " : "Auction time remaining : "}{" "}
       {countdown}
     </div>
   );
