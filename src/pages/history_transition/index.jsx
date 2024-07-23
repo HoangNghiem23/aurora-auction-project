@@ -75,6 +75,8 @@ function WalletPage() {
     }
   };
 
+  
+
   // useEffect(() => {
   //   if (balance <= (wallet?.amount == 0 ? 0 : wallet?.amount) - 1) {
   //     const id = setInterval(() => {
@@ -133,6 +135,7 @@ function WalletPage() {
       console.log(error);
     }
   };
+
   useEffect(() => {
     if (transactionId == "00") {
       handleRecharge();
