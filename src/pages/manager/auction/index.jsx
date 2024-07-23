@@ -231,6 +231,7 @@ function AuctionManager() {
       ),
     },
     {
+
       title: "Change Auction",
       render: (values) => (
         <Switch
