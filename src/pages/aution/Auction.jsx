@@ -41,12 +41,6 @@ function Auction() {
   const lastItemRef = useRef(null);
   const audioRef = useRef(null);
 
-  function getAccountsByHighestBid(highestBidValue) {
-    return data?.bid
-      .filter((bid) => bid.thisIsTheHighestBid === highestBidValue)
-      .map((bid) => bid.account);
-  }
-
   useRealtime(async (body) => {
     console.log(body);
     if (
@@ -71,19 +65,6 @@ function Auction() {
       }
     }
   });
-
-  useEffect(() => {
-    const checkIfExpired = () => {
-      const endDate = moment(data.end_date); // Ensure end_date is parsed correctly
-      const currentTime = moment(); // Get the current time
-      const isExpired = currentTime.isAfter(endDate); // Check if current time is after end_date
-      setExpired(isExpired); // Update the state based on the comparison
-    };
-
-    checkIfExpired(); // Initial check
-    const intervalId = setInterval(checkIfExpired, 1000); // Check every second
-    return () => clearInterval(intervalId); // Cleanup the interval on component unmount
-  }, [data.end_date]);
 
   useEffect(() => {
     const playSound = () => {
@@ -144,19 +125,19 @@ function Auction() {
     }
   }, [data?.bid]);
 
-  const selectAfter = (
-    <Select
-      defaultValue="USD"
-      style={{
-        width: 60,
-      }}
-    >
-      <Option value="USD">$</Option>
-      <Option value="EUR">€</Option>
-      <Option value="GBP">£</Option>
-      <Option value="CNY">¥</Option>
-    </Select>
-  );
+  // const selectAfter = (
+  //   <Select
+  //     defaultValue="USD"
+  //     style={{
+  //       width: 60,
+  //     }}
+  //   >
+  //     <Option value="USD">$</Option>
+  //     <Option value="EUR">€</Option>
+  //     <Option value="GBP">£</Option>
+  //     <Option value="CNY">¥</Option>
+  //   </Select>
+  // );
 
   console.log(nameWin);
   return (
@@ -254,10 +235,7 @@ function Auction() {
                     { required: true, message: "Please input your bid!" },
                   ]}
                 >
-                  <InputNumber
-                    addonAfter={selectAfter}
-                    style={{ width: "100%", paddingLeft: "20px" }}
-                  />
+                  <InputNumber style={{ width: "100%", paddingLeft: "20px" }} />
                 </Form.Item>
 
                 <Form.Item
@@ -277,7 +255,7 @@ function Auction() {
               </Form>
             </Card>
           </Col>
-          <Col span={5}>
+          <Col span={6}>
             <Card
               className="auction-page__realtime"
               title=""

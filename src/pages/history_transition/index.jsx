@@ -229,9 +229,9 @@ function WalletPage() {
           >
             <ButtonPlan content="Deposit more money with VNPAY" />
           </div>
-          <div style={{ marginTop: "1em" }} onClick={() => setOpenForm(true)}>
+          {/* <div style={{ marginTop: "1em" }} onClick={() => setOpenForm(true)}>
             <ButtonPlan content="Withdraw" />
-          </div>
+          </div> */}
         </div>
       </div>
       <TransactionHistory transaction="HistoryOfBid" />
