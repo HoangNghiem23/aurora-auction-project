@@ -94,7 +94,7 @@ function App() {
           element: <Supporttobid />,
         },
         {
-          path: "/auctionItem",
+          path: "/auctionItem/:id",
           element: <AuctionItem />,
         },
         {

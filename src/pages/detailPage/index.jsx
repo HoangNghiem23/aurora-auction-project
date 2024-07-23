@@ -1,11 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card, Image, Button, Row, Col, Typography, Collapse } from "antd";
 import "./index.scss";
+import { Link, useParams } from "react-router-dom";
+import api from "../../config/axios";
 
 const { Title, Text } = Typography;
 const { Panel } = Collapse;
 
 const AuctionItem = () => {
+  const { id } = useParams();
+
+  const [data, setData] = useState([]);
+
+  const fetch = async () => {
+    try {
+      const response = await api.get(`/auction/${id}`);
+      console.log(response.data);
+      setData(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetch();
+  }, []);
+
   return (
     <div className="auction-item">
       <Row gutter={[16, 16]}>
@@ -14,7 +34,7 @@ const AuctionItem = () => {
             <Image
               width="738px"
               height="653px"
-              src="https://firebasestorage.googleapis.com/v0/b/aurora-auction-e6371.appspot.com/o/lac_2.jpeg?alt=media&token=1f72bf3b-afea-4170-98ec-a7242fc8e1e6" // replace with your main image path
+              src={data?.image} // replace with your main image path
               preview={false}
             />
           </Card>
@@ -61,18 +81,25 @@ const AuctionItem = () => {
             <div className="lot-info">
               <Text>Lot closes</Text>
               <Text strong>July 30, 11:04:00 AM +07</Text>
+              <hr />
             </div>
             <div className="estimate">
               <Text>Estimate</Text>
               <Text strong>95,000 - 130,000 HKD</Text>
+              <hr />
             </div>
             <div className="starting-bid">
               <Text>Starting Bid</Text>
               <Text strong>80,000 HKD</Text>
             </div>
-            <Button type="primary" size="large" className="btn_register">
-              Register to Bid
-            </Button>
+            <Link
+              to={`/auction/${data?.id}`}
+              type="primary"
+              size="large"
+              className="btn_register"
+            >
+              Bid
+            </Link>
           </div>
         </Col>
       </Row>

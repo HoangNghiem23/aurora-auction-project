@@ -224,9 +224,6 @@ function Auction() {
                   span: 12,
                 }}
                 onFinish={handleOnFinish}
-                initialValues={{
-                  amountofadd: data?.jewelry?.last_price,
-                }}
               >
                 <Form.Item
                   name="amountofadd"
