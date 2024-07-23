@@ -42,7 +42,7 @@ function AuctionManager() {
   const [previewImage, setPreviewImage] = useState("");
   const [isOpenJewelry, setIsOpenJewelry] = useState(false);
   const [jewelryData, setJewelryData] = useState([]);
- 
+
   const [selectionType, setSelectionType] = useState("radio");
   const [jewelry, setJewelry] = useState({});
   const dispatch = useDispatch();
@@ -231,35 +231,7 @@ function AuctionManager() {
       ),
     },
     {
-      
-      title: "Action",
-      align: "center",
-      
-      render: (values) => (
-        <>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <Button
-          // style={}
-            type="primary"
-            style={{ marginRight: 8 }}
-            onClick={() => handleUpdateClick(values)}
-          >
-            Update
-          </Button>
-          <Popconfirm
-            title="Delete the auction"
-            description="Are you sure to delete this auction?"
-            onConfirm={() => handleDelete(values)}
-            okText="Yes"
-            cancelText="No"
-          >
-            <Button danger>Delete</Button>
-          </Popconfirm>
-          </div>
-        </>
-      ),
-    },
-    {
+
       title: "Change Auction",
       render: (values) => (
         <Switch
@@ -318,6 +290,11 @@ function AuctionManager() {
     }),
   };
 
+  console.log(jewelry);
+  useEffect(() => {
+    form.setFieldsValue(jewelry);
+  }, [jewelry]);
+
   return (
     <div>
       <div className="flex justify-between m-3">
@@ -346,6 +323,11 @@ function AuctionManager() {
           onFinish={onFinish}
           initialValues={{ remember: true }}
         >
+          <Form.Item name="jewelry_id" label="Jewelry">
+            <Button onClick={() => setIsOpenJewelry(true)}>
+              {jewelry && jewelry.name ? jewelry.name : "Select Jewelry"}
+            </Button>
+          </Form.Item>
           <Form.Item
             label="Name"
             name="name"
@@ -362,6 +344,13 @@ function AuctionManager() {
           >
             <TextArea rows={4} />
           </Form.Item>
+          <Form.Item
+            label="Title"
+            name="title"
+            rules={[{ required: true, message: "Please input the title!" }]}
+          >
+            <Input />
+          </Form.Item>
           <Form.Item label="Staff" name="staff_id">
             <Select
               showSearch
@@ -371,11 +360,7 @@ function AuctionManager() {
               options={option}
             />
           </Form.Item>
-          <Form.Item name="jewelry_id" label="Jewelry">
-            <Button onClick={() => setIsOpenJewelry(true)}>
-              {jewelry && jewelry.name ? jewelry.name : "Select Jewelry"}
-            </Button>
-          </Form.Item>
+
           <Form.Item
             label="Start Date"
             name="start_date"
@@ -392,13 +377,7 @@ function AuctionManager() {
           >
             <DatePicker showTime />
           </Form.Item>
-          <Form.Item
-            label="Title"
-            name="title"
-            rules={[{ required: true, message: "Please input the title!" }]}
-          >
-            <Input />
-          </Form.Item>
+
           <Form.Item label="Image" name="image">
             <Upload
               listType="picture-card"

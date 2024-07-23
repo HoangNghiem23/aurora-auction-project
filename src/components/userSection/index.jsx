@@ -1,7 +1,7 @@
 import { Avatar, Divider } from "antd";
 import React from "react";
 
-function UserSection({ isMe = false, img, name,money}) {
+function UserSection({ isMe = false, img, name, money }) {
   return (
     <>
       <Divider />
@@ -32,7 +32,7 @@ function UserSection({ isMe = false, img, name,money}) {
               color: "green",
             }}
           >
-            {money}$
+            {money}
           </h4>
         </div>
       </div>

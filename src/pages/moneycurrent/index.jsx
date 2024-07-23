@@ -2,11 +2,12 @@ import React from "react";
 import { UserOutlined } from "@ant-design/icons";
 import { Card, Col, Row, Statistic } from "antd";
 import { MdAttachMoney } from "react-icons/md";
+
 function MoneyCurrent({ currentMoney, totalUser }) {
   return (
     <Row gutter={16}>
       <Col span={12}>
-        <Card bordered={false}>
+        <Card>
           <Statistic
             title="Highest Money"
             value={currentMoney}
@@ -16,7 +17,7 @@ function MoneyCurrent({ currentMoney, totalUser }) {
         </Card>
       </Col>
       <Col span={12}>
-        <Card bordered={false}>
+        <Card>
           <Statistic
             title="Total User"
             value={totalUser}

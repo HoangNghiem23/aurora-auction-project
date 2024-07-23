@@ -18,6 +18,7 @@ import { useForm } from "antd/es/form/Form";
 import { TinyColor } from "@ctrl/tinycolor";
 import uploadFile from "../../../utils/upload";
 import "./index.scss";
+import { render } from "react-dom";
 
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
@@ -51,18 +52,39 @@ function RequestSellInStaff() {
   const [activeTab, setActiveTab] = useState("tab1");
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
-
+  const [dataManager, setDataManager] = useState([]);
   const fetchData = async () => {
     try {
       const response = await api.get("/request-buy");
       const priced = response.data.filter(
         (item) => item.minPrice && item.maxPrice
       );
-      const unpriced = response.data.filter(
-        (item) => !item.minPrice && !item.maxPrice
+      const unpriced = response.data
+        .sort((b, a) => a.id - b.id)
+        .filter((item) => !item.minPrice && !item.maxPrice);
+      console.log(
+        response.data.map((item) =>
+          item.processes.filter(
+            (process) => process.requestBuyEnum === "WAITINGMANAGER"
+          )
+        )
       );
+      const dataManager = response.data.map((item) =>
+        item.processes.filter(
+          (process) => process.requestBuyEnum === "WAITINGMANAGER"
+        )
+      );
+      const listManager = [];
+      console.log(
+        dataManager.map((item) => {
+          if (item.length > 0) {
+            listManager.push(item[0]);
+          }
+        })
+      );
+      setDataManager(listManager);
       const managerRequests = response.data.filter(
-        (item) => item.requestBuyEnum === "SENT_TO_MANAGER"
+        (item) => item.requestBuyEnum === "WAITINGMANAGER"
       );
       setData(unpriced);
       setPricedData(priced);
@@ -228,7 +250,7 @@ function RequestSellInStaff() {
       type="button"
     >
       <PlusOutlined />
-      <div style={{ marginTop: 8 }}>Upload</div>
+      <div style={{ marginTop: 8, width: 30 }}>Upload</div>
     </button>
   );
 
@@ -255,37 +277,53 @@ function RequestSellInStaff() {
       title: "Description",
       dataIndex: "description",
       key: "description",
+      // render: (hi) => (
+      //   <h1
+      //     style={{
+      //       color: "red",
+      //       width: "800px",
+      //     }}
+      //   >
+      //     {hi.description}
+      //   </h1>
+      // ),
     },
     {
       title: "Action",
       render: (values) => (
         <>
-          <Button
+          {/* <Button
             type="primary"
-            style={{ marginRight: 8 }}
+            style={{ marginRight: 8, width: 300 }}
             onClick={() => handleUpdateRequest(values)}
           >
             Update
-          </Button>
+          </Button> */}
           <Button
-            type="default"
-            style={{ marginRight: 8 }}
+            type="primary"
+            style={{ marginRight: 8, width: 300 }}
             onClick={() => handleOpenPriceModal(values)}
           >
             Price Estimate
           </Button>
-          <Button type="primary" onClick={() => handleOpenManagerModal(values)}>
+          {/* <Button
+            type="primary"
+            style={{ marginRight: 8, width: 300 }}
+            onClick={() => handleOpenManagerModal(values)}
+          >
             Send to Manager
-          </Button>
-          <Popconfirm
+          </Button> */}
+          {/* <Popconfirm
             title="Delete the request"
             description="Are you sure to delete this request?"
             onConfirm={() => handleDelete(values)}
             okText="Yes"
             cancelText="No"
           >
-            <Button danger>Delete</Button>
-          </Popconfirm>
+            <Button danger style={{ marginRight: 8, width: 300 }}>
+              Delete
+            </Button>
+          </Popconfirm> */}
         </>
       ),
     },
@@ -320,9 +358,24 @@ function RequestSellInStaff() {
       render: (values) => `${values.minPrice} - ${values.maxPrice}`,
     },
     {
+      title: "Status",
+      key: "status",
+      render: (text, record) => {
+        const latestProcess = record.processes[record.processes.length - 1];
+        return latestProcess.requestBuyEnum;
+      },
+    },
+    {
       title: "Action",
-      render: (values) => (
-        <Button type="primary" onClick={() => handleOpenManagerModal(values)}>
+      render: (values, record) => (
+        <Button
+          disabled={
+            record.processes[record.processes.length - 1].requestBuyEnum !==
+            "ACPBYUSER"
+          }
+          type="primary"
+          onClick={() => handleOpenManagerModal(values)}
+        >
           Send to Manager
         </Button>
       ),
@@ -358,6 +411,14 @@ function RequestSellInStaff() {
       render: (values) =>
         `${values.low_estimated_price} - ${values.high_estimated_price}`,
     },
+    {
+      title: "Status",
+      key: "status",
+      render: (text, record) => {
+        const latestProcess = record.processes[record.processes.length - 1];
+        return latestProcess.requestBuyEnum;
+      },
+    },
   ];
 
   const columns = {
@@ -370,22 +431,52 @@ function RequestSellInStaff() {
     {
       key: "tab1",
       label: "Request Auction",
-      children: <Table dataSource={Data} columns={columns.tab1} rowKey="id" />,
+      children: (
+        <Table
+          dataSource={Data}
+          columns={columns.tab1}
+          rowKey="id"
+          pagination={{
+            defaultPageSize: 5,
+
+            // showSizeChanger: true,
+            // pageSizeOptions: ["4", "8"],
+          }}
+        />
+      ),
     },
     {
       key: "tab2",
       label: "Preliminary Valuation Done",
       children: (
-        <Table dataSource={pricedData} columns={columns.tab2} rowKey="id" />
+        <Table
+          dataSource={pricedData}
+          columns={columns.tab2}
+          rowKey="id"
+          pagination={{
+            defaultPageSize: 5,
+            // showSizeChanger: true,
+            // pageSizeOptions: ["4", "8"],
+          }}
+        />
       ),
     },
-    {
-      key: "tab3",
-      label: "Send Request for Management",
-      children: (
-        <Table dataSource={managerData} columns={columns.tab3} rowKey="id" />
-      ),
-    },
+    // {
+    //   key: "tab3",
+    //   label: "Send Request for Management",
+    //   children: (
+    //     <Table
+    //       dataSource={managerData}
+    //       columns={columns.tab3}
+    //       rowKey="id"
+    //       pagination={{
+    //         defaultPageSize: 5,
+    //         // showSizeChanger: true,
+    //         // pageSizeOptions: ["4", "8"],
+    //       }}
+    //     />
+    //   ),
+    // },
   ];
 
   return (

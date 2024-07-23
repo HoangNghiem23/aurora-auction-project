@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { Button, Form, Input, Modal, Table, Upload, Image, Select } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { PlusOutlined } from "@ant-design/icons";
@@ -99,9 +98,7 @@ function HistoryAuction() {
 
   const handleViewHistory = async (auction) => {
     try {
-      const response = await api.get(
-        `/bid/HistoryOfBid?auctionId=${auction.id}`
-      );
+      const response = await api.get(`/bid/HistoryOfBid/${auction.id}`);
       setBidHistory(response.data);
       setIsBidHistoryModalOpen(true);
     } catch (error) {
@@ -226,36 +223,17 @@ function HistoryAuction() {
       key: "username",
     },
     {
-      title: "First name",
-      dataIndex: ["account", "firstname"],
-      key: "firstname",
-    },
-    {
-      title: "Last name",
-      dataIndex: ["account", "lastname"],
-      key: "lastname",
-    },
-    {
-      title: "Phone",
-      dataIndex: ["account", "phone"],
-      key: "phone",
-    },
-    {
-      title: "Amount of Money",
+      title: "Bid",
       dataIndex: "amountofmoney",
       key: "amountofmoney",
     },
     {
-      title: "Amount of Money",
-      dataIndex: "amountofmoney",
-      key: "amountofmoney",
+      title: "Time",
+      dataIndex: "createAt",
+      key: "createAt",
+      render: (text) =>
+        text ? moment(text).format("HH:mm:ss - DD/MM/YYYY") : "",
     },
-    {
-      title: "Amount of Money",
-      dataIndex: "amountofmoney",
-      key: "amountofmoney",
-    },
-    { title: "Amount of Add", dataIndex: "amountofadd", key: "amountofadd" },
   ];
 
   return (
@@ -338,7 +316,6 @@ function HistoryAuction() {
               {fileList.length >= 1 ? null : uploadButton}
             </Upload>
           </Form.Item>
-
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
             <Button type="primary" htmlType="submit">
               Submit
