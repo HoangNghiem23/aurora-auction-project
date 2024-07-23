@@ -21,6 +21,7 @@ import { DatePicker } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../../../redux/features/counterSlice";
+import { toast } from "react-toastify";
 
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
@@ -74,7 +75,6 @@ function AuctionManager() {
     }
   };
 
-  const navigate = useNavigate();
   useEffect(() => {
     fetchStaffList();
     fetchStaffJewelry();
@@ -177,10 +177,11 @@ function AuctionManager() {
         setData(updatedAuctions);
       } else {
         response = await api.post("/auction", newValue);
+        toast.success("New Auction Added Successfully");
         setData([...data, response.data]);
       }
       // Gọi API để đổi trạng thái thành UPCOMING
-      await api.put(`/auction/UPCOMING/${response.data.id}`);
+      //  await api.put(`/auction/UPCOMING/${response.data.id}`);
       handleCancel();
     } catch (error) {
       console.log(error);
@@ -231,7 +232,6 @@ function AuctionManager() {
       ),
     },
     {
-
       title: "Change Auction",
       render: (values) => (
         <Switch
@@ -301,12 +301,6 @@ function AuctionManager() {
         <Button type="primary" onClick={handleOpenModal}>
           Add new auction
         </Button>
-        <LogoutOutlined
-          style={{ fontSize: "20px" }}
-          onClick={() => {
-            dispatch(logout());
-          }}
-        />
       </div>
       <Table dataSource={data} columns={columns} rowKey="id" />
       <Modal
