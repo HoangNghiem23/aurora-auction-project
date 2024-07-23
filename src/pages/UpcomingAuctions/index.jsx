@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { DownOutlined, SearchOutlined, UpOutlined } from "@ant-design/icons";
+import { SearchOutlined } from "@ant-design/icons";
 import "./index.scss";
-import { Button, Modal } from "antd";
+import { Button, Select } from "antd";
 import api from "../../config/axios";
 import moment from "moment";
 import momentDurationFormatSetup from "moment-duration-format";
@@ -11,43 +11,28 @@ import useRealtime from "../../assets/hook/useRealtime";
 momentDurationFormatSetup(moment);
 
 const UpcomingAuction = () => {
-  const [sortBy, setSortBy] = useState("Relevance");
-  const [dropdownVisible, setDropdownVisible] = useState(false);
-  const [filtersVisible, setFiltersVisible] = useState(true);
-  const [viewMode, setViewMode] = useState("grid");
-  const [priceVisible, setPriceVisible] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
-  const [priceRange, setPriceRange] = useState({ from: 0, to: Infinity });
-  const [selectedCategory, setSelectedCategory] = useState("");
   const [data, setData] = useState([]);
+  const [selectedItems, setSelectedItems] = useState([]);
+  const [options, setOptions] = useState([]);
   const itemsPerPage = 12;
-  const handleSortChange = (value) => {
-    setSortBy(value);
-    setDropdownVisible(false);
-  };
 
-  const togglePriceFilter = () => {
-    setPriceVisible(!priceVisible);
-  };
+  const handleSearch = async (value) => {
+    if (value) {
+      try {
+        const response = await api.get(`/jewelry/findJewelryByNameContaining`, {
+          params: { name: value },
+        });
 
-  const applyPriceFilter = () => {
-    setFiltersVisible(false); // Tắt filter để dễ kiểm tra
-  };
-
-  const resetPriceFilter = () => {
-    setPriceRange({ from: 0, to: Infinity });
-    setFiltersVisible(false); // Tắt filter để dễ kiểm tra
-  };
-  const checkIfExpired = () => {
-    // Loop through each auction item in the data array
-    data.forEach((auction) => {
-      const endDate = moment(auction.start_date); // Parse end_date using moment
-      const currentTime = moment(); // Get the current time
-      const isExpired = currentTime.isAfter(endDate); // Check if current time is after end_date
-      if (isExpired) {
-        setExpired(true); // Update the state if auction has expired
+        setOptions(
+          response.data.map((item) => ({ value: item.name, label: item.name }))
+        );
+      } catch (error) {
+        console.error("Error fetching search results:", error);
       }
-    });
+    } else {
+      setOptions([]);
+    }
   };
 
   useRealtime(async (body) => {
@@ -57,34 +42,6 @@ const UpcomingAuction = () => {
     }
   });
 
-  // useEffect(() => {
-  //   const checkIfAnyExpired = () => {
-  //     let anyExpired = false;
-  //     // Loop through each auction item in the data array
-  //     data.forEach((auction) => {
-  //       const endDate = moment(auction.start_date); // Parse end_date using moment
-  //       const currentTime = moment(); // Get the current time
-  //       // Check if current time is after end_date
-  //       if (currentTime.isAfter(endDate)) {
-  //         anyExpired = true;
-  //       }
-  //     });
-
-  //     // Update state based on whether any auction is expired
-  //     setExpired(anyExpired);
-  //   };
-
-  //   checkIfAnyExpired(); // Initial check
-
-  //   const intervalId = setInterval(checkIfExpired, 1000); // Check every second
-  //   return () => clearInterval(intervalId); // Cleanup the interval on component unmount
-  // }, [data.start_date]);
-
-  // useEffect(() => {
-  //   if (expired) {
-  //     fetch();
-  //   }
-  // }, [expired]);
   const fetch = async () => {
     try {
       const response = await api.get("/auction/AllAuctionsReady");
@@ -120,172 +77,54 @@ const UpcomingAuction = () => {
     return () => clearInterval(interval); //clean-up
   }, []);
 
+  const formatDates = (startDate, endDate) => {
+    const start = moment(startDate).format("D MMMM");
+    const end = moment(endDate).format("D MMMM YYYY");
+    return `${start} - ${end}`;
+  };
+
   return (
     <>
       <div className="jewelry-section">
         <div className="text-first">Upcoming Auctions</div>
         <div className="results-and-filters">
-          <div className="result">SHOWING 114 RESULTS</div>
+          <div className="result">SHOWING {data.length} RESULTS</div>
           <div className="filters">
             <div className="search-btn">
-              <input type="text" placeholder="Search Jewelry" />
-              <SearchOutlined />
+              <Select
+                className="search-input"
+                showSearch
+                placeholder="Search Jewelry"
+                value={selectedItems}
+                onChange={setSelectedItems}
+                onSearch={handleSearch}
+                style={{ width: "300px" }}
+                options={options}
+                filterOption={false}
+                suffixIcon={<SearchOutlined />}
+              />
             </div>
-            <button
-              className="filter-btn-hide-filters"
-              onClick={() => setFiltersVisible(!filtersVisible)}
-            >
-              {filtersVisible ? "Hide Filters" : "Show Filters"}
-            </button>
-            <div className="sort-dropdown">
-              <button
-                className="sort-btn"
-                onClick={() => setDropdownVisible(!dropdownVisible)}
-              >
-                Sort By: {sortBy}
-              </button>
-              {dropdownVisible && (
-                <div className="dropdown-content">
-                  <div onClick={() => handleSortChange("Relevance")}>
-                    Relevance
-                  </div>
-                  <div onClick={() => handleSortChange("$ - $$$")}>$ - $$$</div>
-                  <div onClick={() => handleSortChange("$$$ - $")}>$$$ - $</div>
-                  <div onClick={() => handleSortChange("Newest")}>Newest</div>
-                </div>
-              )}
-            </div>
-            <button className="view-btn" onClick={() => setViewMode("grid")}>
-              Grid View
-            </button>
-            <button className="view-btn" onClick={() => setViewMode("list")}>
-              List View
-            </button>
           </div>
         </div>
         <div className="jewelry-products-section">
-          {filtersVisible && (
-            <div className="search-sidebar">
-              <div className="filter-section">
-                <h4 onClick={togglePriceFilter}>
-                  PRICE {priceVisible ? <UpOutlined /> : <DownOutlined />}
-                </h4>
-                {priceVisible && (
-                  <div className="price-filter">
-                    <label className="label">
-                      From
-                      <input
-                        type="number"
-                        placeholder="0"
-                        value={priceRange.from}
-                        onChange={(e) =>
-                          setPriceRange({
-                            ...priceRange,
-                            from: Number(e.target.value),
-                          })
-                        }
-                      />
-                      <p className="USA">USD</p>
-                    </label>
-                    <label className="label">
-                      To
-                      <input
-                        type="number"
-                        placeholder="0"
-                        value={priceRange.to === Infinity ? "" : priceRange.to}
-                        onChange={(e) =>
-                          setPriceRange({
-                            ...priceRange,
-                            to: e.target.value
-                              ? Number(e.target.value)
-                              : Infinity,
-                          })
-                        }
-                      />
-                      <p className="USA">USD</p>
-                    </label>
-                    <div className="filter-buttons">
-                      <div className="btn-reset" onClick={resetPriceFilter}>
-                        Reset
-                      </div>
-                      <div className="btn-apply" onClick={applyPriceFilter}>
-                        Apply
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-              <div className="filter-section category-filter">
-                <h4>CATEGORY</h4>
-                <div className="category-list">
-                  <div className="category-item">
-                    <input
-                      type="checkbox"
-                      name="category"
-                      value="Contemporary Art"
-                      onChange={(e) => setSelectedCategory(e.target.value)}
-                    />{" "}
-                    Contemporary Art
-                  </div>
-                  <div className="category-item">
-                    <input
-                      type="checkbox"
-                      name="category"
-                      value="Impressionist & Modern Art"
-                      onChange={(e) => setSelectedCategory(e.target.value)}
-                    />{" "}
-                    Impressionist & Modern Art
-                  </div>
-                  <div className="category-item">
-                    <input
-                      type="checkbox"
-                      name="category"
-                      value="Jewelry"
-                      onChange={(e) => setSelectedCategory(e.target.value)}
-                    />{" "}
-                    Jewelry
-                  </div>
-                  <div className="category-item">
-                    <input
-                      type="checkbox"
-                      name="category"
-                      value="Watches"
-                      onChange={(e) => setSelectedCategory(e.target.value)}
-                    />{" "}
-                    Watches
-                  </div>
-                  <div className="category-item">
-                    <input
-                      type="checkbox"
-                      name="category"
-                      value="Wine"
-                      onChange={(e) => setSelectedCategory(e.target.value)}
-                    />{" "}
-                    Wine
-                  </div>
-                  <div className="see-all">SEE ALL</div>
-                </div>
-              </div>
-            </div>
-          )}
           <div className="jewelry-products-container">
-            <div
-              className={`jewelry-products ${
-                !filtersVisible ? "full-width" : ""
-              } ${viewMode}`}
-            >
+            <div className="jewelry-products full-width">
               {data?.map((product) => (
                 <div className="jewelry-product" key={product.id}>
                   <Link to={`/auction/${product?.id}`}>
-                    <img src={product?.image} alt={product?.description} />
+                    <img src={product?.image} alt={product?.name} />
                     <div className="product-details">
                       <div className="product-status">
                         {product?.auctionsStatusEnum}
                       </div>
-                      <div className="product-name">{product?.label}</div>
-                      <div className="product-time-location">
+
+                      <div className="product-status">
                         {product.auctionsStatusEnum === "UPCOMING" &&
                           product?.countdown}
+                      </div>
+                      <div className="product-name">{product?.name}</div>
+                      <div className="product-time">
+                        {formatDates(product?.start_date, product?.end_date)}
                       </div>
                       <div className="product-price">
                         Estimate {product?.jewelry?.low_estimated_price} -{" "}
@@ -298,7 +137,9 @@ const UpcomingAuction = () => {
                         </div>
                       )}
                       <Button className="product-bid">
-                        <Link to={`/auction/${product?.id}`}>BID</Link>
+                        <Link to={`/auctionItem/${product?.id}`}>
+                          View Detail
+                        </Link>
                       </Button>
                     </div>
                   </Link>

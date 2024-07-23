@@ -53,6 +53,7 @@ function LoginPopup() {
         const token = result.user.accessToken;
         try {
           const response = await api.post("/loginGG", { token: token });
+          console.log(response.data)
           if (response && response.data) {
             const user = response.data;
             dispatch(login(user));

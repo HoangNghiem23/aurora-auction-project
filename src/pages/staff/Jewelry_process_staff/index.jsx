@@ -168,6 +168,7 @@ function RequestSellInStaff() {
   const handlePriceSubmit = async (values) => {
     try {
       await api.put(`/request-buy/prelimary/${currentRequest.id}`, values);
+      toast.success("Prelimary succesfullly")
       handleCancel();
       fetchData();
     } catch (error) {
