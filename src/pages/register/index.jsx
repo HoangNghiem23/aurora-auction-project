@@ -32,156 +32,165 @@ function RegisterPopup() {
         />
       </div>
       <div className="loginPage__right">
-        <>
-          <Form
-            onFinish={onFinish}
-            form={form}
-            name="validateOnly"
-            autoComplete="off"
-            labelCol={{
-              span: 6,
-            }}
-            wrapperCol={{
-              span: 18,
-            }}
-            labelAlign="left"
+        <Form
+          onFinish={onFinish}
+          form={form}
+          name="validateOnly"
+          layout="vertical"
+          autoComplete="off"
+          labelCol={{
+            span: 8,
+          }}
+          wrapperCol={{
+            span: 16,
+          }}
+          style={{
+            maxWidth: 600,
+            display: "flex",
+            flexDirection: "column",
+            paddingLeft: "100px",
+          }}
+        >
+          <h2
+            style={{ textAlign: "start", fontSize: "40px", fontWeight: "1000" }}
           >
-            <h2>Register Page</h2>
-            <Form.Item
-              name="username"
-              label="Username"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
+            Register Page
+          </h2>
+          <Form.Item
+            name="username"
+            label="Username"
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
 
-            <Form.Item
-              name="firstName"
-              label="First Name"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
+          <Form.Item
+            name="firstName"
+            label="First Name"
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
 
-            <Form.Item
-              name="lastName"
-              label="Last Name"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
+          <Form.Item
+            name="lastName"
+            label="Last Name"
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
 
-            <Form.Item
-              name="email"
-              label="Email"
-              rules={[
-                {
-                  required: true,
+          <Form.Item
+            name="email"
+            label="Email"
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="phone"
+            label="Phone"
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="address"
+            label="Address"
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            className="password_conform"
+            name="password"
+            label="Password"
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+          >
+            <Input.Password
+              className="passwordcss"
+              iconRender={(visible) =>
+                visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+              }
+              visibilityToggle={true}
+            />
+          </Form.Item>
+          <Form.Item
+            className="password_conform"
+            name="confirmPassword"
+            label="Re-Password"
+            rules={[
+              {
+                required: true,
+                message: "Please confirm your password!",
+              },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue("password") === value) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(
+                    new Error("The two passwords do not match!")
+                  );
                 },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item
-              name="phone"
-              label="Phone"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item
-              name="address"
-              label="Address"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item
-              className="password_conform"
-              name="password"
-              label="Password"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
-            >
-              <Input
-                iconRender={(visible) =>
-                  visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-                }
-                visibilityToggle={true}
-              />
-            </Form.Item>
-            <Form.Item
-              className="password_conform"
-              name="confirmPassword"
-              label="Re-Password"
-              rules={[
-                {
-                  required: true,
-                  message: "Please confirm your password!",
-                },
-                ({ getFieldValue }) => ({
-                  validator(_, value) {
-                    if (!value || getFieldValue("password") === value) {
-                      return Promise.resolve();
-                    }
-                    return Promise.reject(
-                      new Error("The two passwords do not match!")
-                    );
-                  },
-                }),
-              ]}
-            >
-              <Input
-                iconRender={(visible) =>
-                  visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-                }
-                visibilityToggle={true}
-              />
-            </Form.Item>
-            <Form.Item>
-              <Space>
-                <Button
-                  htmlType="submit"
-                  className="btnStyle"
-                  form={form}
-                  onClick={() => form.submit()}
-                  style={{ marginLeft: "70px" }}
-                >
-                  Sign Up
-                </Button>
-              </Space>
-            </Form.Item>
+              }),
+            ]}
+          >
+            <Input.Password
+              className="passwordcss"
+              iconRender={(visible) =>
+                visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+              }
+              visibilityToggle={true}
+            />
+          </Form.Item>
+          <Form.Item>
+            <Space>
+              <Button
+                htmlType="submit"
+                className="btnStyle"
+                form={form}
+                onClick={() => form.submit()}
+              >
+                Sign Up
+              </Button>
+            </Space>
+          </Form.Item>
 
-            <Form.Item style={{ marginLeft: "80px" }}>
-              <p className="signin">
-                Already have an account? <Link to="/login">Sign in</Link>
-              </p>
-            </Form.Item>
-          </Form>
-        </>
+          <Form.Item>
+            <p className="signin">
+              Already have an account? <Link to="/login">Sign in</Link>
+            </p>
+          </Form.Item>
+        </Form>
       </div>
     </div>
   );
