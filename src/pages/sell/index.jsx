@@ -8,6 +8,7 @@ import uploadFile from "../../utils/upload";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/features/counterSlice";
 import { toast } from "react-toastify";
+import TextArea from "antd/es/input/TextArea";
 
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
@@ -259,7 +260,7 @@ function SellPage() {
                 { required: true, message: "Please input your description!" },
               ]}
             >
-              <Input />
+              <TextArea />
             </Form.Item>
             <Form.Item
               label="CategoryName"
