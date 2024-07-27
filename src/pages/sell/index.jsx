@@ -25,7 +25,7 @@ function SellPage() {
   const [previewImage, setPreviewImage] = useState("");
   const [form] = Form.useForm();
   const [data, setData] = useState([]);
-  // const user = useSelector(selectUser);
+  
   const handlePreview = async (file) => {
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj);
@@ -42,7 +42,7 @@ function SellPage() {
       <div style={{ marginTop: 8 }}>Upload</div>
     </button>
   );
-  // const response = await api.get("/categoty")
+
   const fetchCategory = async () => {
     try {
       const response = await api.get("/category");
@@ -58,7 +58,6 @@ function SellPage() {
   const fetchData = async () => {
     try {
       const response = await api.get("/request-buy/getRequestByAccountID");
-      console.log(response.data);
       setData(response.data.sort((b, a) => a.id - b.id));
     } catch (error) {
       console.log(error);
@@ -70,16 +69,14 @@ function SellPage() {
   }, []);
 
   const onFinish = async (values) => {
-    console.log(values);
     try {
       const url = fileList[0]?.originFileObj
         ? await uploadFile(fileList[0].originFileObj)
         : fileList[0].url;
       values.image_url = url;
 
-      console.log("Values with image URL: ", values);
       await api.post("/request-buy", values);
-      toast.success("Add new request sell succesfuly");
+      toast.success("Add new request sell successfully");
       form.resetFields();
       setFileList([]);
       fetchData();
@@ -190,6 +187,21 @@ function SellPage() {
       key: "category_id",
     },
     {
+      title: "Weight",
+      dataIndex: "weight",
+      key: "weight",
+    },
+    {
+      title: "Material",
+      dataIndex: "material",
+      key: "material",
+    },
+    {
+      title: "Color",
+      dataIndex: "color",
+      key: "color",
+    },
+    {
       title: "Min Price",
       dataIndex: "minPrice",
       key: "minPrice",
@@ -215,7 +227,6 @@ function SellPage() {
       },
     },
   ];
-  //////
 
   return (
     <div>
@@ -239,20 +250,7 @@ function SellPage() {
             >
               <Input />
             </Form.Item>
-            <Form.Item
-              label="Photo"
-              name="image_url"
-              rules={[{ required: true, message: "Please upload a photo!" }]}
-            >
-              <Upload
-                listType="picture-card"
-                fileList={fileList}
-                onPreview={handlePreview}
-                onChange={handleChange}
-              >
-                {fileList.length >= 1 ? null : uploadButton}
-              </Upload>
-            </Form.Item>
+           
             <Form.Item
               label="Description"
               name="description"
@@ -274,6 +272,53 @@ function SellPage() {
                   value: item.id,
                 }))}
               ></Select>
+            </Form.Item>
+            <Form.Item
+              label="Weight"
+              name="weight"
+              rules={[
+                { required: true, message: "Please input the weight!" },
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    if (!value || value > 0) {
+                      return Promise.resolve();
+                    }
+                    return Promise.reject(
+                      new Error("Weight must be greater than 0")
+                    );
+                  },
+                }),
+              ]}
+            >
+              <Input type="number" />
+            </Form.Item>
+            <Form.Item
+              label="Material"
+              name="material"
+              rules={[{ required: true, message: "Please input the material!" }]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              label="Color"
+              name="color"
+              rules={[{ required: true, message: "Please input the color!" }]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              label="Photo"
+              name="image_url"
+              rules={[{ required: true, message: "Please upload a photo!" }]}
+            >
+              <Upload
+                listType="picture-card"
+                fileList={fileList}
+                onPreview={handlePreview}
+                onChange={handleChange}
+              >
+                {fileList.length >= 1 ? null : uploadButton}
+              </Upload>
             </Form.Item>
             <Form.Item wrapperCol={{ offset: 10, span: 16 }}>
               <Button type="primary" htmlType="submit">
