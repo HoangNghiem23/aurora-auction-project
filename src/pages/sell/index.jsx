@@ -25,7 +25,7 @@ function SellPage() {
   const [previewImage, setPreviewImage] = useState("");
   const [form] = Form.useForm();
   const [data, setData] = useState([]);
-  
+
   const handlePreview = async (file) => {
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj);
@@ -164,9 +164,9 @@ function SellPage() {
       key: "id",
     },
     {
-      title: "Title",
-      dataIndex: "title",
-      key: "title",
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
     },
     {
       title: "Image",
@@ -195,11 +195,6 @@ function SellPage() {
       title: "Material",
       dataIndex: "material",
       key: "material",
-    },
-    {
-      title: "Color",
-      dataIndex: "color",
-      key: "color",
     },
     {
       title: "Min Price",
@@ -244,13 +239,13 @@ function SellPage() {
             autoComplete="off"
           >
             <Form.Item
-              label="Title"
-              name="title"
+              label="Name"
+              name="name"
               rules={[{ required: true, message: "Please input your title!" }]}
             >
               <Input />
             </Form.Item>
-           
+
             <Form.Item
               label="Description"
               name="description"
@@ -295,17 +290,13 @@ function SellPage() {
             <Form.Item
               label="Material"
               name="material"
-              rules={[{ required: true, message: "Please input the material!" }]}
+              rules={[
+                { required: true, message: "Please input the material!" },
+              ]}
             >
               <Input />
             </Form.Item>
-            <Form.Item
-              label="Color"
-              name="color"
-              rules={[{ required: true, message: "Please input the color!" }]}
-            >
-              <Input />
-            </Form.Item>
+
             <Form.Item
               label="Photo"
               name="image_url"
