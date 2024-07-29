@@ -12,6 +12,7 @@ import {
 import { Avatar, Breadcrumb, Layout, Menu, Space, theme } from "antd";
 import { Footer } from "antd/es/layout/layout";
 import { Link, Outlet, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 const { Header, Content, Sider } = Layout;
 
@@ -25,6 +26,8 @@ function getItem(label, key, icon, children) {
 }
 
 const Dashboard = () => {
+  const user = useSelector(selectUser);
+  const dispatch = useDispatch();
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer, borderRadiusLG },
@@ -163,8 +166,36 @@ const Dashboard = () => {
         </Menu>
       </Sider>
       <Layout>
-        <Header style={{ padding: 0, background: colorBgContainer }}>
-          <header></header>
+        <Header
+          style={{
+            padding: "10px 60px",
+            background: colorBgContainer,
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Tag
+            icon={<FaRegUserCircle />}
+            color="processing"
+            style={{
+              width: "fit-content",
+              alignItems: "center",
+              gap: "10px",
+              display: "flex",
+              // marginLeft: "20px",
+              fontSize: "16px",
+            }}
+          >
+            {user?.roleEnum} | Name: {user.username}
+          </Tag>
+
+          <LogoutOutlined
+            style={{ fontSize: "20px" }}
+            onClick={() => {
+              dispatch(logout());
+            }}
+          />
         </Header>
         <Content
           style={{ margin: "0 16px", display: "flex", flexDirection: "column" }}

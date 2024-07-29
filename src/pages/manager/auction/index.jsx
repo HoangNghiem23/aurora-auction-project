@@ -101,7 +101,7 @@ function AuctionManager() {
       const response = await api.get("/auction");
       const responseJewelry = await api.get("/jewelry/getJewelryReady");
       setData(response.data);
-      setJewelryData(responseJewelry.data);
+      setJewelryData(responseJewelry.data.sort((a, b) => b.id - a.id));
     } catch (error) {
       console.log(error);
     }

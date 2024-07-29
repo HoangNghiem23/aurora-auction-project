@@ -207,14 +207,14 @@ const StaffPage = () => {
               fontSize: "16px",
             }}
           >
-            {user?.roleEnum}
+            {user?.roleEnum} | Name: {user.username}
           </Tag>
 
           <LogoutOutlined
             style={{ fontSize: "20px" }}
             onClick={() => {
               dispatch(logout());
-              toast.success("Logout Succesfully")
+              toast.success("Logout Succesfully");
             }}
           />
         </Header>

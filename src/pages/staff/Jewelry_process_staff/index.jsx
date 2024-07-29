@@ -10,6 +10,7 @@ import {
   ConfigProvider,
   Popconfirm,
   Tabs,
+  Select,
 } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import api from "../../../config/axios";
@@ -88,7 +89,7 @@ function RequestSellInStaff() {
         (item) => item.requestBuyEnum === "WAITINGMANAGER"
       );
       setData(unpriced);
-      setPricedData(priced);
+      setPricedData(priced.sort((a, b) => b.id - a.id));
       setManagerData(managerRequests);
     } catch (error) {
       console.log(error);
@@ -99,48 +100,24 @@ function RequestSellInStaff() {
     fetchData();
   }, []);
 
-  const handleDelete = async (values) => {
-    try {
-      await api.delete(`/request-buy/${values.id}`);
-      setData(Data.filter((data) => data.id !== values.id));
-      setPricedData(pricedData.filter((data) => data.id !== values.id));
-      setManagerData(managerData.filter((data) => data.id !== values.id));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleUpdateRequest = (request) => {
-    setIsUpdate(true);
-    setCurrentRequest(request);
-    setIsModalOpen(true);
-    form.setFieldsValue(request);
-    setFileList([
-      {
-        uid: "-1",
-        name: "image",
-        status: "done",
-        url: request.image,
-      },
-    ]);
-  };
-
   const handleOpenPriceModal = (request) => {
     setCurrentRequest(request);
     setIsPriceModalOpen(true);
   };
 
   const handleOpenManagerModal = (request) => {
+    console.log(request);
     setCurrentRequest(request);
     setIsManagerModalOpen(true);
     managerForm.setFieldsValue({
-      name: request.jewelry?.name || "",
+      name: request?.name || "",
       low_estimated_price: request.minPrice,
       high_estimated_price: request.maxPrice,
       weight: 0, // Default value, adjust if needed
       description: request.description,
       category_id: request.category_id,
       image_url: [request.image],
+      material: request.material,
       conditionReport: request.jewelry?.conditionReport || "", // Add default or existing value if available
     });
     setFileList([
@@ -168,7 +145,7 @@ function RequestSellInStaff() {
   const handlePriceSubmit = async (values) => {
     try {
       await api.put(`/request-buy/prelimary/${currentRequest.id}`, values);
-      toast.success("Prelimary succesfullly")
+      toast.success("Prelimary succesfullly");
       handleCancel();
       fetchData();
     } catch (error) {
@@ -279,28 +256,11 @@ function RequestSellInStaff() {
       title: "Description",
       dataIndex: "description",
       key: "description",
-      // render: (hi) => (
-      //   <h1
-      //     style={{
-      //       color: "red",
-      //       width: "800px",
-      //     }}
-      //   >
-      //     {hi.description}
-      //   </h1>
-      // ),
     },
     {
       title: "Action",
       render: (values) => (
         <>
-          {/* <Button
-            type="primary"
-            style={{ marginRight: 8, width: 300 }}
-            onClick={() => handleUpdateRequest(values)}
-          >
-            Update
-          </Button> */}
           <Button
             type="primary"
             style={{ marginRight: 8, width: 300 }}
@@ -308,24 +268,6 @@ function RequestSellInStaff() {
           >
             Price Estimate
           </Button>
-          {/* <Button
-            type="primary"
-            style={{ marginRight: 8, width: 300 }}
-            onClick={() => handleOpenManagerModal(values)}
-          >
-            Send to Manager
-          </Button> */}
-          {/* <Popconfirm
-            title="Delete the request"
-            description="Are you sure to delete this request?"
-            onConfirm={() => handleDelete(values)}
-            okText="Yes"
-            cancelText="No"
-          >
-            <Button danger style={{ marginRight: 8, width: 300 }}>
-              Delete
-            </Button>
-          </Popconfirm> */}
         </>
       ),
     },
@@ -356,7 +298,7 @@ function RequestSellInStaff() {
       key: "description",
     },
     {
-      title: "Giá sơ bộ",
+      title: "Preliminary",
       render: (values) => `${values.minPrice} - ${values.maxPrice}`,
     },
     {
@@ -440,9 +382,6 @@ function RequestSellInStaff() {
           rowKey="id"
           pagination={{
             defaultPageSize: 5,
-
-            // showSizeChanger: true,
-            // pageSizeOptions: ["4", "8"],
           }}
         />
       ),
@@ -457,29 +396,25 @@ function RequestSellInStaff() {
           rowKey="id"
           pagination={{
             defaultPageSize: 5,
-            // showSizeChanger: true,
-            // pageSizeOptions: ["4", "8"],
           }}
         />
       ),
     },
-    // {
-    //   key: "tab3",
-    //   label: "Send Request for Management",
-    //   children: (
-    //     <Table
-    //       dataSource={managerData}
-    //       columns={columns.tab3}
-    //       rowKey="id"
-    //       pagination={{
-    //         defaultPageSize: 5,
-    //         // showSizeChanger: true,
-    //         // pageSizeOptions: ["4", "8"],
-    //       }}
-    //     />
-    //   ),
-    // },
   ];
+
+  const [cate, setCate] = useState([]);
+
+  const fetchCategory = async () => {
+    try {
+      const response = await api.get("/category");
+      setCate(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchCategory();
+  }, []);
 
   return (
     <div>
@@ -634,23 +569,28 @@ function RequestSellInStaff() {
             <TextArea rows={4} />
           </Form.Item>
           <Form.Item
-            label="Category ID"
+            label="CategoryName"
             name="category_id"
+            rules={[{ required: true, message: "Please select a category!" }]}
+          >
+            <Select
+              placeholder="Please input name category jewelry"
+              options={cate?.map((item) => ({
+                label: item.category_name,
+                value: item.id,
+              }))}
+            ></Select>
+          </Form.Item>
+          <Form.Item
+            label="Material"
+            name="material"
             rules={[
               { required: true, message: "Please input the category ID!" },
             ]}
           >
-            <Input type="number" />
+            <Input />
           </Form.Item>
-          <Form.Item
-            label="Condition Report"
-            name="conditionReport"
-            rules={[
-              { required: true, message: "Please input the condition report!" },
-            ]}
-          >
-            <TextArea rows={4} />
-          </Form.Item>
+
           <Form.Item label="Image URL" name="image_url">
             <Upload
               listType="picture-card"

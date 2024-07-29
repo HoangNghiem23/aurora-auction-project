@@ -5,7 +5,18 @@ import { useSelector } from "react-redux";
 
 function Profile() {
   const user = useSelector(selectUser);
+  const {
+    username,
+    firstname,
+    lastname,
+    email,
+    address,
+    roleEnum,
+    phoneNumber,
+  } = user;
+
   console.log(user);
+
   return (
     <div className="profile-page">
       <div className="welcome">
@@ -20,9 +31,13 @@ function Profile() {
         </div>
         <div className="welcome__username">
           <div className="welcome__username__1">
-            <h5>Welcome {user?.firstname} </h5>
+
+            <h5>
+              Welcome {firstname} {lastname}
+            </h5>
           </div>
-          <div className="welcome__username__2">{user?.email}</div>
+          <div className="welcome__username__2">{email}</div>
+
         </div>
       </div>
       <div className="profile">
@@ -53,10 +68,14 @@ function Profile() {
           <div className="profile__info__profile">
             <div className="detail__1">Profile details</div>
             <div className="detail__2">
-              <div className="name"> {user.firstname} </div>{" "}
-              <div className="gmail">{user.email}</div>{" "}
-              <div className="password">Password:*********</div>
-              {/* <div className="changepassword">Change password</div> */}
+
+              <div className="name">
+                {firstname} {lastname}
+              </div>
+              <div className="gmail">{email}</div>
+              <div className="password">Password</div>
+              <div className="changepassword">Change password</div>
+
             </div>
             {/* <div className="pass">******</div> */}
             <hr />
@@ -78,14 +97,18 @@ function Profile() {
               <div className="address__title">Address book</div>
               <div className="address__btn">+ Add new address</div>
             </div>
-            <div className="address__detail">You have no addresses.</div>
+            <div className="address__detail">
+              {address ? address : "You have no addresses."}
+            </div>
           </div>
           <div className="profile__info__phone">
             <div className="phone">
               <div className="phone__title">Phone book</div>
               <div className="phone__btn">+ Add new phone number</div>
             </div>
-            <div className="phone__detail">You have no phone numbers.</div>
+            <div className="phone__detail">
+              {phoneNumber ? phoneNumber : "You have no phone numbers."}
+            </div>
           </div>
         </div>
       </div>
