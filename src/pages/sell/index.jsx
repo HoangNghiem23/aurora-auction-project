@@ -11,6 +11,8 @@ import {
   Alert,
   Steps,
   Tooltip,
+  Drawer,
+  Divider,
 } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import api from "../../config/axios";
@@ -313,6 +315,31 @@ function SellPage() {
         return getStatusAction(record);
       },
     },
+    {
+      title: "Detail",
+      key: "detail",
+      render: (text, record) => {
+        return (
+          <div
+            type="primary"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            style={{
+              color: isHovered ? "#0a678f" : "#00253e",
+              fontSize: "14px",
+              fontWeight: "600",
+              cursor: "pointer",
+            }}
+            onClick={() => {
+              setDrawerData(record);
+              setDrawerVisible(true);
+            }}
+          >
+            Details
+          </div>
+        );
+      },
+    },
   ];
 
   const [isHovered, setIsHovered] = useState(false);
@@ -456,6 +483,19 @@ function SellPage() {
 
   const description = "This is a description.";
 
+  const [open, setOpen] = useState(false);
+
+  const showDrawer = () => {
+    setOpen(true);
+  };
+
+  const onClose = () => {
+    setOpen(false);
+  };
+
+  const [drawerVisible, setDrawerVisible] = useState(false);
+  const [drawerData, setDrawerData] = useState({});
+
   return (
     <div>
       <div className="form-request-sell">
@@ -482,6 +522,52 @@ function SellPage() {
           src={previewImage}
         />
       )}
+      <Drawer
+        title="Details"
+        placement="right"
+        onClose={() => setDrawerVisible(false)}
+        visible={drawerVisible}
+        width={500}
+        style={{ textAlign: "center" }}
+      >
+        <Image src={drawerData.image} width={300} alt="photo" />
+        <Divider
+          plain
+          style={{
+            fontSize: "32px",
+            color: "grey",
+            fontWeight: "600",
+            fontFamily:
+              "Mercury Display A,Mercury Display B,MercuryDisplay-wb,Mercury Display,serif",
+          }}
+        >
+          {drawerData.name}
+        </Divider>
+
+        <p className="detail_popup_request_sell">
+          <strong>Description:</strong> {drawerData.description}
+        </p>
+        <p className="detail_popup_request_sell">
+          <strong>Weight:</strong> {drawerData.weight}
+        </p>
+        <p className="detail_popup_request_sell">
+          <strong>Material:</strong> {drawerData.material}
+        </p>
+        <p className="detail_popup_request_sell">
+          <strong>Min Price:</strong> {drawerData.minPrice}
+        </p>
+        <p className="detail_popup_request_sell">
+          <strong>Max Price:</strong> {drawerData.maxPrice}
+        </p>
+        <p className="detail_popup_request_sell">
+          <strong>Category:</strong>{" "}
+          {cate.find((item) => item.id === drawerData.category_id)
+            ?.category_name || "Unknown"}
+        </p>
+        <p className="detail_popup_request_sell">
+          <strong>Status:</strong> {drawerData.requestBuyEnum}
+        </p>
+      </Drawer>
     </div>
   );
 }

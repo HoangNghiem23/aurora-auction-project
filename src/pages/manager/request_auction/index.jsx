@@ -76,7 +76,7 @@ function RequestAuctionManager() {
           "WAITINGMANAGER"
       );
       // console.log(filter)
-      setData(filter);
+      setData(filter.sort((a, b) => b.id - a.id));
     } catch (error) {
       console.log(error);
     }
@@ -110,7 +110,7 @@ function RequestAuctionManager() {
         finalStatus: "ACCEPTED",
       });
 
-      toast.success("Accept request successfully")
+      toast.success("Accept request successfully");
       setData(
         data.map((item) =>
           item?.id === values.id ? { ...item, finalStatus: "ACCEPTED" } : item
@@ -215,21 +215,15 @@ function RequestAuctionManager() {
     },
     {
       title: "Weight",
-      dataIndex: "jewelry",
-      key: "jewelry",
-      render: (jewelry) => jewelry?.weight || 0,
+      dataIndex: "weight",
+      key: "weight",
     },
     {
       title: "Category ID",
       dataIndex: "category_id",
       key: "category_id",
     },
-    {
-      title: "Condition Report",
-      dataIndex: "jewelry",
-      key: "jewelry",
-      render: (jewelry) => jewelry?.conditionReport || "N/A",
-    },
+
     {
       title: "Image",
       dataIndex: "image",
@@ -262,7 +256,15 @@ function RequestAuctionManager() {
 
   return (
     <div>
-      <Table dataSource={data} columns={columns} rowKey="id" />
+      <Table
+        dataSource={data}
+        columns={columns}
+        rowKey="id"
+        pagination={{
+          defaultPageSize: 5,
+          position: ["bottomCenter"],
+        }}
+      />
       <Modal
         footer={false}
         title={isUpdate ? "Update Request" : "Add new Request"}

@@ -10,6 +10,7 @@ import {
   ConfigProvider,
   Popconfirm,
   Tabs,
+  Select,
 } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import api from "../../../config/axios";
@@ -88,7 +89,7 @@ function RequestSellInStaff() {
         (item) => item.requestBuyEnum === "WAITINGMANAGER"
       );
       setData(unpriced);
-      setPricedData(priced);
+      setPricedData(priced.sort((a, b) => b.id - a.id));
       setManagerData(managerRequests);
     } catch (error) {
       console.log(error);
@@ -105,16 +106,18 @@ function RequestSellInStaff() {
   };
 
   const handleOpenManagerModal = (request) => {
+    console.log(request);
     setCurrentRequest(request);
     setIsManagerModalOpen(true);
     managerForm.setFieldsValue({
-      name: request.jewelry?.name || "",
+      name: request?.name || "",
       low_estimated_price: request.minPrice,
       high_estimated_price: request.maxPrice,
       weight: 0, // Default value, adjust if needed
       description: request.description,
       category_id: request.category_id,
       image_url: [request.image],
+      material: request.material,
       conditionReport: request.jewelry?.conditionReport || "", // Add default or existing value if available
     });
     setFileList([
@@ -399,6 +402,20 @@ function RequestSellInStaff() {
     },
   ];
 
+  const [cate, setCate] = useState([]);
+
+  const fetchCategory = async () => {
+    try {
+      const response = await api.get("/category");
+      setCate(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchCategory();
+  }, []);
+
   return (
     <div>
       <Button type="primary" onClick={handleOpenModal} className="add-request">
@@ -552,23 +569,28 @@ function RequestSellInStaff() {
             <TextArea rows={4} />
           </Form.Item>
           <Form.Item
-            label="Category ID"
+            label="CategoryName"
             name="category_id"
+            rules={[{ required: true, message: "Please select a category!" }]}
+          >
+            <Select
+              placeholder="Please input name category jewelry"
+              options={cate?.map((item) => ({
+                label: item.category_name,
+                value: item.id,
+              }))}
+            ></Select>
+          </Form.Item>
+          <Form.Item
+            label="Material"
+            name="material"
             rules={[
               { required: true, message: "Please input the category ID!" },
             ]}
           >
-            <Input type="number" />
+            <Input />
           </Form.Item>
-          <Form.Item
-            label="Condition Report"
-            name="conditionReport"
-            rules={[
-              { required: true, message: "Please input the condition report!" },
-            ]}
-          >
-            <TextArea rows={4} />
-          </Form.Item>
+
           <Form.Item label="Image URL" name="image_url">
             <Upload
               listType="picture-card"
