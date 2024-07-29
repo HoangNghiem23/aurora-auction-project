@@ -72,6 +72,7 @@ import Contact from "./pages/contact";
 
 import SellPage from "./pages/sell";
 import AuctionItem from "./pages/detailPage";
+import Blog from "./blog/blog1";
 
 function App() {
   const PrivateRoute = ({ children, role }) => {
@@ -100,6 +101,10 @@ function App() {
         {
           path: "/buy-sell",
           element: <Buyandsell />,
+        },
+        {
+          path: "/blog",
+          element: <Blog/>,
         },
         {
           path: "/selling",
