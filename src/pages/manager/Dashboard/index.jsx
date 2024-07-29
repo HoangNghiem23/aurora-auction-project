@@ -118,7 +118,7 @@ const Manager = () => {
               fontSize: "16px",
             }}
           >
-            {user?.roleEnum}
+            {user?.roleEnum} | Name: {user.username}
           </Tag>
 
           <LogoutOutlined
