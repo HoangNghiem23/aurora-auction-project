@@ -12,12 +12,9 @@ import {
 } from "antd";
 import "./index.scss";
 import { LeftCircleTwoTone } from "@ant-design/icons";
-
-import { Card } from "antd";
 import api from "../../config/axios";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-
 import { selectUser } from "../../redux/features/counterSlice";
 import RoundedBtn from "../../components/rounded-button";
 import ButtonPlan from "../../components/buttonPlan";
@@ -25,6 +22,59 @@ import TransactionHistory from "../../components/transaction";
 import useGetParams from "../../assets/hook/useGetParams";
 import { toast } from "react-toastify";
 import { formatMoney } from "../../assets/hook/useFormat";
+import moment from "moment";
+
+const DepositHistory = () => {
+  const [depositData, setDepositData] = useState([]);
+
+  const fetchDepositHistory = async () => {
+    try {
+      const res = await api.get(`/transaction/getTransactionById`);
+      console.log(res.data)
+      setDepositData(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchDepositHistory();
+  }, []);
+
+  const columns = [
+    {
+      title: "Amount of Money",
+      dataIndex: "amount",
+      key: "amount",
+    },
+    {
+      title: "Type",
+      dataIndex: "transactionEnum",
+      key: "transactionEnum",
+    },
+    {
+      title: "Created",
+      dataIndex: "createdTransaction",
+      key: "createdTransaction",
+      render: (createdTransaction) =>
+        moment(createdTransaction, "YYYYMMDDHHmmss").format("DD/MM/YYYY"),
+    }
+    
+  ];
+
+  return (
+    // <Table dataSource={depositData} columns={columns} pagination={false} />
+    <div className="transaction-history">
+      <h1>Deposit History</h1>
+      <Table
+        style={{ fontFamily: "MediumCereal" }}
+        columns={columns}
+        dataSource={depositData}
+        pagination={false}
+      />
+    </div>
+  );
+};
 
 function WalletPage() {
   const [open, setOpen] = useState(false);
@@ -75,19 +125,6 @@ function WalletPage() {
     }
   };
 
-  
-
-  // useEffect(() => {
-  //   if (balance <= (wallet?.amount == 0 ? 0 : wallet?.amount) - 1) {
-  //     const id = setInterval(() => {
-  //       setBalance(balance + 1000
-  //       );
-  //     }, 0.0005);
-  //     return () => {
-  //       clearInterval(id);
-  //     };
-  //   }
-  // });\
   useEffect(() => {
     getCurrentMoney();
   }, []);
@@ -232,12 +269,12 @@ function WalletPage() {
           >
             <ButtonPlan content="Deposit more money with VNPAY" />
           </div>
-          {/* <div style={{ marginTop: "1em" }} onClick={() => setOpenForm(true)}>
-            <ButtonPlan content="Withdraw" />
-          </div> */}
         </div>
       </div>
       <TransactionHistory transaction="HistoryOfBid" />
+      <div>
+        <DepositHistory />
+      </div>
       <Modal open={open} onCancel={handleCancel} footer={null}>
         <Form onFinish={onFinish}>
           <div style={{ fontFamily: "MediumCereal", marginBottom: "-2em" }}>

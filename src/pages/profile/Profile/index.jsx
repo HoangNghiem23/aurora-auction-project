@@ -26,16 +26,18 @@ function Profile() {
           </div>
           <div className="welcome__profile__2">
             Have questions about your account? Visit our{" "}
-            <a href="#">FAQ page</a>.
+           
           </div>
         </div>
         <div className="welcome__username">
           <div className="welcome__username__1">
+
             <h5>
               Welcome {firstname} {lastname}
             </h5>
           </div>
           <div className="welcome__username__2">{email}</div>
+
         </div>
       </div>
       <div className="profile">
@@ -66,14 +68,16 @@ function Profile() {
           <div className="profile__info__profile">
             <div className="detail__1">Profile details</div>
             <div className="detail__2">
+
               <div className="name">
                 {firstname} {lastname}
               </div>
               <div className="gmail">{email}</div>
               <div className="password">Password</div>
               <div className="changepassword">Change password</div>
+
             </div>
-            <div className="pass">******</div>
+            {/* <div className="pass">******</div> */}
             <hr />
             <div className="detail__3">
               Your account currently enables you to get updates, save lots,

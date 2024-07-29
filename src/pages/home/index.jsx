@@ -1,7 +1,6 @@
 // export default HomePage;
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Form, Input, Checkbox, Button, Row, Col } from "antd";
 import "./index.scss";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
@@ -17,8 +16,13 @@ const HomePage = () => {
   const handlePolicyClick = () => {
     navigate("/policy");
   };
+  
   const handleArticleClick = () => {
     navigate("/article");
+  };
+
+  const handleBlogClick = () => {
+    navigate("/blog");
   };
 
   return (
@@ -188,6 +192,22 @@ const HomePage = () => {
               </p>
               <button className="section-btn" onClick={handlePolicyClick}>
                 READ MORE
+              </button>
+            </div>
+          </div>
+          <div className="section-item">
+            <img
+              src="https://cdn.pixabay.com/photo/2015/03/26/09/39/child-690402_1280.jpg"
+              alt="Blog Image"
+              className="section-image"
+            />
+            <div className="section-text">
+              <h3 className="section-title">Blog</h3>
+              <p className="section-description">
+                Discover the latest trends, tips, and stories in our blog. Stay updated with our latest articles and insights.
+              </p>
+              <button className="section-btn" onClick={handleBlogClick}>
+                Read More
               </button>
             </div>
           </div>

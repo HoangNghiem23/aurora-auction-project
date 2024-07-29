@@ -31,7 +31,7 @@ function TransactionHistory({ transaction }) {
 
   const columns = [
     {
-      title: "Amount of money",
+      title: "Amount of Money",
       dataIndex: "amountofmoney",
       key: "amountofmoney",
     },
