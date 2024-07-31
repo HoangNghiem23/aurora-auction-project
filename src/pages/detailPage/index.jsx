@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Card, Image, Button, Row, Col, Typography, Collapse } from "antd";
+import {
+  Card,
+  Image,
+  Button,
+  Row,
+  Col,
+  Typography,
+  Collapse,
+  Divider,
+} from "antd";
 import "./index.scss";
 import { Link, useParams } from "react-router-dom";
 import api from "../../config/axios";
@@ -92,6 +101,7 @@ const AuctionItem = () => {
           </div>
         </Col>
       </Row>
+      <Divider   />
     </div>
   );
 };

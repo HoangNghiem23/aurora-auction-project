@@ -2,7 +2,7 @@ import "./index.scss";
 
 function DiamondFactors() {
   return (
-    <section id="factors">
+    <section id="factors" className="diamondfactor">
       <h2>Diamond Pricing Factors</h2>
       <ul>
         <li>

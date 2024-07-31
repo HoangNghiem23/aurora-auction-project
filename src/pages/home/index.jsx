@@ -16,7 +16,7 @@ const HomePage = () => {
   const handlePolicyClick = () => {
     navigate("/policy");
   };
-  
+
   const handleArticleClick = () => {
     navigate("/article");
   };
@@ -26,12 +26,12 @@ const HomePage = () => {
   };
 
   return (
-    <div className="container">
+    <div className="homepage">
       <main className="main-content">
         <section className="hero-section">
           <ImageSlider />
           <div className="hero-text">
-            <h1 className="hero-title">The autumn equinox</h1>
+            <h1 className="hero-title">The Aurora Auction </h1>
             <p className="hero-description">
               Fall has arrived.
               <br />
@@ -147,10 +147,11 @@ const HomePage = () => {
             <div className="section-text">
               <h3 className="section-title">About us</h3>
               <p className="section-description">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.
+                At our jewelry auction site, we provide a trustworthy and
+                enjoyable experience. Each piece is vetted and verified for
+                authenticity. Our experts bring you unique and exquisite pieces
+                with the highest standards of integrity and transparency. Join
+                our community and discover the difference.
               </p>
               <button className="section-btn" onClick={handleAboutUsClick}>
                 About Us
@@ -161,10 +162,12 @@ const HomePage = () => {
             <div className="section-text">
               <h3 className="section-title">Article</h3>
               <p className="section-description">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.
+                Our articles section offers a wealth of information on various
+                topics related to jewelry. From the latest trends and designs to
+                in-depth guides on jewelry care and maintenance, we cover it
+                all. Each article is meticulously researched and written by
+                experts in the field, ensuring you get accurate and valuable
+                insights
               </p>
               <button className="section-btn" onClick={handleArticleClick}>
                 Read more
@@ -183,12 +186,14 @@ const HomePage = () => {
               className="section-image"
             />
             <div className="section-text">
-              <h3 className="section-title">Chính sách mua hàng Policy</h3>
+              <h3 className="section-title">Purchasing Policy</h3>
               <p className="section-description">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.
+                Our purchasing policy ensures a seamless and secure experience
+                for all our customers. We prioritize transparency, authenticity,
+                and customer satisfaction. Each item is thoroughly inspected and
+                verified before listing, and we offer comprehensive support
+                throughout the bidding and purchasing process. Trust us for a
+                reliable and exceptional jewelry auction experience
               </p>
               <button className="section-btn" onClick={handlePolicyClick}>
                 READ MORE
@@ -204,7 +209,8 @@ const HomePage = () => {
             <div className="section-text">
               <h3 className="section-title">Blog</h3>
               <p className="section-description">
-                Discover the latest trends, tips, and stories in our blog. Stay updated with our latest articles and insights.
+                Discover the latest trends, tips, and stories in our blog. Stay
+                updated with our latest articles and insights.
               </p>
               <button className="section-btn" onClick={handleBlogClick}>
                 Read More
@@ -213,6 +219,9 @@ const HomePage = () => {
           </div>
         </section>
       </main>
+      <div className="footer__follow">
+        <div className="footer__follow__content">Follow Us</div>
+      </div>
     </div>
   );
 };

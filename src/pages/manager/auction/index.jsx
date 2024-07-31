@@ -69,7 +69,7 @@ function AuctionManager() {
     try {
       const response = await api.get("/jewelry");
       console.log(response.data);
-      setJewelryData(response.data);
+      setJewelryData(response.data.sort((a, b) => b.id - a.id));
     } catch (error) {
       console.log(error);
     }
@@ -101,7 +101,7 @@ function AuctionManager() {
       const response = await api.get("/auction");
       const responseJewelry = await api.get("/jewelry/getJewelryReady");
       console.log(response.data);
-      setData(response.data);
+      setData(response.data.sort((a, b) => b.id - a.id));
       setJewelryData(responseJewelry.data.sort((a, b) => b.id - a.id));
     } catch (error) {
       console.log(error);
@@ -314,7 +314,15 @@ function AuctionManager() {
           Add new auction
         </Button>
       </div>
-      <Table dataSource={data} columns={columns} rowKey="id" />
+      <Table
+        dataSource={data}
+        columns={columns}
+        rowKey="id"
+        pagination={{
+          defaultPageSize: 5,
+          position: ["bottomCenter"],
+        }}
+      />
       <Modal
         footer={false}
         title={isUpdate ? "Update Auction" : "Add new Auction"}
@@ -424,6 +432,10 @@ function AuctionManager() {
           columns={columnsJewelry}
           dataSource={jewelryData}
           rowKey="id"
+          pagination={{
+            defaultPageSize: 5,
+            position: ["bottomCenter"],
+          }}
         />
       </Modal>
     </div>
