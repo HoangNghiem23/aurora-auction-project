@@ -72,6 +72,9 @@ import Contact from "./pages/contact";
 
 import SellPage from "./pages/sell";
 import AuctionItem from "./pages/detailPage";
+import Blog from "./blog/blog1";
+import DiamondFactors from "./Howtobill-buy/DiamondFactors";
+
 
 function App() {
   const PrivateRoute = ({ children, role }) => {
@@ -102,6 +105,15 @@ function App() {
           element: <Buyandsell />,
         },
         {
+          path: "/diamondfactors",
+          element: <DiamondFactors />,
+        },
+        
+        {
+          path: "/blog",
+          element: <Blog/>,
+        },
+        {
           path: "/selling",
           element: <SellingPage />,
         },
@@ -117,6 +129,7 @@ function App() {
           path: "/wallet",
           element: <Historytransition />,
         },
+        
         {
           path: "/contact",
           element: <Contact />,

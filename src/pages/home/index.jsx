@@ -197,7 +197,7 @@ const HomePage = () => {
           </div>
           <div className="section-item">
             <img
-              src="https://cdn.pixabay.com/photo/2015/03/26/09/39/child-690402_1280.jpg"
+              src="https://sothebys-com.brightspotcdn.com/dims4/default/fa7a823/2147483647/strip/true/crop/2912x1385+0+49/resize/1440x685!/format/webp/quality/90/?url=http%3A%2F%2Fsothebys-brightspot.s3.amazonaws.com%2Fdotcom%2Ff3%2Ff6%2Fe93d51de40a0a6da4e3c22ea3c15%2Fai-001.jpg"
               alt="Blog Image"
               className="section-image"
             />
