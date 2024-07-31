@@ -240,19 +240,20 @@ const AuctioResults = () => {
                   <Link to={`/auctionItem/${product.id}`}>
                     <img src={product.image} alt={product.name} />
                     <div className="product-details">
-                      <div className="product-name">
-                        {product.jewelry.high_estimated_price}
+                    <div className="product-name">
+                        Name: {product.jewelry.name}
                       </div>
                       <div className="product-name">
-                        {product.jewelry.weight}
+                        High-price:{product.jewelry.high_estimated_price}
                       </div>
                       <div className="product-name">
-                        {product.jewelry.high_estimated_price}
+                        Low-price:{product.jewelry.low_estimated_price}
                       </div>
-                      <div className="product-price">
-                        Estimate {product.low_estimated_price} -{" "}
-                        {product.high_estimated_price} USD
+                      <div className="product-name">
+                        Weight:{product.jewelry.weight}
                       </div>
+
+                    
                       <div className="product-status">SOLD</div>
                     </div>
                   </Link>

@@ -97,15 +97,21 @@ function AuctionClose() {
 
   const fetchData = async () => {
     try {
-      const response = await api.get("/auction/auctionIsClosed");
+      const response = await api.get("/auction/GetAuctionISSOLD");
+      console.log(response.data);
+      const filteredData = response.data.filter(
+        (auction) => auction.auctionsStatusEnum == "ISSOLD"
+      );
       const responseJewelry = await api.get("/jewelry/getJewelryReady");
-      setData(response.data);
+      setData(filteredData.bid);
+      console.log(filteredData.bid);  
+      console.log(filteredData);
       setJewelryData(responseJewelry.data);
     } catch (error) {
       console.log(error);
     }
   };
-
+  console.log(data);
   useEffect(() => {
     fetchData();
   }, []);
