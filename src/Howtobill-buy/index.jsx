@@ -20,6 +20,9 @@ function Buyandsell() {
         <Link to="/glossary" className="nav-link">
           GLOSSARY
         </Link>
+        <Link to="/diamondfactors" className="nav-link">
+        DiamondFactors
+        </Link>
       </nav>
       <div className="about-us__create">1. Create your account</div>
       <p>

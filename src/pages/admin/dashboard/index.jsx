@@ -8,11 +8,14 @@ import {
   TeamOutlined,
   AppstoreAddOutlined,
   DollarOutlined,
+  LogoutOutlined,
 } from "@ant-design/icons";
-import { Avatar, Breadcrumb, Layout, Menu, Space, theme } from "antd";
+import { Avatar, Breadcrumb, Layout, Menu, Space, Tag, theme } from "antd";
 import { Footer } from "antd/es/layout/layout";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { selectUser } from "../../../redux/features/counterSlice";
+import { FaRegUserCircle } from "react-icons/fa";
 
 const { Header, Content, Sider } = Layout;
 

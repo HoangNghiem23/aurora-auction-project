@@ -1,0 +1,129 @@
+.blog-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px;
+    background-color: #1a1a1a; // Dark background for a luxurious feel
+
+    &__content {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #f0f0f0; // Light text color for contrast
+
+        h1 {
+            font-family: "BoldCereal", sans-serif;
+            font-size: 3em;
+            line-height: 1.2em;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #ff8a00, #e52e71);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p {
+            font-family: "MediumCereal", sans-serif;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .blog-page__explore-btn {
+            font-family: "MediumCereal", sans-serif;
+            font-size: 1em;
+            color: #ffffff;
+            background-color: #e52e71;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+            &:hover {
+                background-color: #ff8a00;
+                transform: scale(1.05);
+            }
+        }
+    }
+
+    &__image {
+        margin-bottom: 20px;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+
+        img {
+            width: 1000px;
+            height: 500px;
+            object-fit: cover;
+        }
+    }
+}
+
+.artist-spotlight {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 50px;
+    padding: 50px;
+    background-color: #2a2a2a; // Darker background for contrast
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+
+    &__content {
+        flex: 1;
+        margin-right: 20px;
+        color: #f0f0f0; // Light text color for contrast
+
+        h2 {
+            font-family: "BoldCereal", sans-serif;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #ff8a00, #e52e71);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h3 {
+            font-family: "MediumCereal", sans-serif;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-family: "MediumCereal", sans-serif;
+            font-size: 1em;
+            margin-bottom: 20px;
+            line-height: 1.6em;
+        }
+
+        .artist-spotlight__explore-btn {
+            font-family: "MediumCereal", sans-serif;
+            font-size: 1em;
+            color: #ffffff;
+            background-color: #e52e71;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+            &:hover {
+                background-color: #ff8a00;
+                transform: scale(1.05);
+            }
+        }
+    }
+
+    &__image {
+        flex: 1;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+
+        img {
+            width: 100%;
+            height: 600px;
+            object-fit: cover;
+        }
+    }
+}
