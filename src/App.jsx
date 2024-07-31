@@ -73,6 +73,7 @@ import Contact from "./pages/contact";
 import SellPage from "./pages/sell";
 import AuctionItem from "./pages/detailPage";
 import Blog from "./blog/blog1";
+import DiamondFactors from "./Howtobill-buy/DiamondFactors";
 
 
 function App() {
@@ -103,6 +104,10 @@ function App() {
           path: "/buy-sell",
           element: <Buyandsell />,
         },
+        {
+          path: "/diamondfactors",
+          element: <DiamondFactors />,
+        },
         
         {
           path: "/blog",
@@ -124,6 +129,7 @@ function App() {
           path: "/wallet",
           element: <Historytransition />,
         },
+        
         {
           path: "/contact",
           element: <Contact />,
