@@ -44,7 +44,7 @@ const UpcomingAuction = () => {
 
   const fetch = async () => {
     try {
-      const response = await api.get("/auction/AllAuctionsReady");
+      const response = await api.get(`/auction/AllAuctionsReady`);
       console.log(response.data);
       setData(
         response.data.filter(
