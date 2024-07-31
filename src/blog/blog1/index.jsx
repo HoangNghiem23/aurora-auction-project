@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './index.scss';
 
 function Blog() {
+    useEffect(() => {
+        window.scrollTo(0, 0);
+      }, []);
   return (
     <div className="blog-page">
       <div className="blog-page__content">
