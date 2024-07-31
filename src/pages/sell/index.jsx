@@ -494,7 +494,7 @@ function SellPage() {
   };
 
   const [drawerVisible, setDrawerVisible] = useState(false);
-  const [drawerData, setDrawerData] = useState({});
+  const [drawerData, setDrawerData] = useState("");
 
   return (
     <div>
@@ -565,7 +565,10 @@ function SellPage() {
             ?.category_name || "Unknown"}
         </p>
         <p className="detail_popup_request_sell">
-          <strong>Status:</strong> {drawerData.requestBuyEnum}
+          <strong>Status:</strong>{" "}
+          {drawerData &&
+            drawerData?.processes[drawerData?.processes.length - 1]
+              .requestBuyEnum}
         </p>
       </Drawer>
     </div>

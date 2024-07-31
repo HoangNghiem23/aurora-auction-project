@@ -253,49 +253,53 @@ function Auction() {
                 totalUser={data?.totalUser}
               />
             </div>
-            <Card
-              title={`Current Balance: ${balance}$`}
-              className="bet-card"
-              bordered={false}
-              style={{ height: "fitContent" }}
-            >
-              <Form
-                form={form}
-                name="basic"
-                labelCol={{
-                  span: 5,
-                }}
-                wrapperCol={{
-                  span: 12,
-                }}
-                onFinish={handleOnFinish}
+            {user?.id != data?.jewelry?.account?.id && (
+              <Card
+                title={`Current Balance: ${balance}$`}
+                className="bet-card"
+                bordered={false}
+                style={{ height: "fitContent" }}
               >
-                <Form.Item
-                  name="amountofadd"
-                  label="Bet Amount"
-                  rules={[
-                    { required: true, message: "Please input your bid!" },
-                  ]}
-                >
-                  <InputNumber style={{ width: "100%", paddingLeft: "20px" }} />
-                </Form.Item>
-
-                <Form.Item
-                  wrapperCol={{
-                    offset: 8,
-                    span: 16,
+                <Form
+                  form={form}
+                  name="basic"
+                  labelCol={{
+                    span: 5,
                   }}
+                  wrapperCol={{
+                    span: 12,
+                  }}
+                  onFinish={handleOnFinish}
                 >
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    style={{ background: " rgb(37, 35, 44)" }}
+                  <Form.Item
+                    name="amountofadd"
+                    label="Bet Amount"
+                    rules={[
+                      { required: true, message: "Please input your bid!" },
+                    ]}
                   >
-                    Bid
-                  </Button>
-                </Form.Item>
-              </Form>
-            </Card>
+                    <InputNumber
+                      style={{ width: "100%", paddingLeft: "20px" }}
+                    />
+                  </Form.Item>
+
+                  <Form.Item
+                    wrapperCol={{
+                      offset: 8,
+                      span: 16,
+                    }}
+                  >
+                    <Button
+                      type="primary"
+                      htmlType="submit"
+                      style={{ background: " rgb(37, 35, 44)" }}
+                    >
+                      Bid
+                    </Button>
+                  </Form.Item>
+                </Form>
+              </Card>
+            )}
           </Col>
           <Col span={6}>
             <Card

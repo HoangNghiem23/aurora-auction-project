@@ -11,6 +11,9 @@ import {
   Popconfirm,
   Tabs,
   Select,
+  Layout,
+  Card,
+  Flex,
 } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import api from "../../../config/axios";
@@ -21,7 +24,13 @@ import uploadFile from "../../../utils/upload";
 import "./index.scss";
 import { render } from "react-dom";
 import { toast } from "react-toastify";
-
+import {
+  EditOutlined,
+  EllipsisOutlined,
+  SettingOutlined,
+} from "@ant-design/icons";
+import { Avatar } from "antd";
+const { Meta } = Card;
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -101,6 +110,7 @@ function RequestSellInStaff() {
   }, []);
 
   const handleOpenPriceModal = (request) => {
+    console.log(request);
     setCurrentRequest(request);
     setIsPriceModalOpen(true);
   };
@@ -113,7 +123,7 @@ function RequestSellInStaff() {
       name: request?.name || "",
       low_estimated_price: request.minPrice,
       high_estimated_price: request.maxPrice,
-      weight: 0, // Default value, adjust if needed
+      weight: request.weight, // Default value, adjust if needed
       description: request.description,
       category_id: request.category_id,
       image_url: [request.image],
@@ -475,18 +485,71 @@ function RequestSellInStaff() {
         </Form>
       </Modal>
       <Modal
-        title="Price Estimate"
+        width={"fit-content"}
+        style={{
+          padding: "20px",
+        }}
         open={isPriceModalOpen}
         onCancel={handleCancel}
         footer={null}
       >
+        <Flex
+          gap={20}
+          style={{
+            height: "fitContent",
+            width: "100%",
+            marginBottom: "20px",
+          }}
+        >
+          <Card
+            style={{
+              overflow: "hidden",
+              width: "300px",
+            }}
+            cover={<Image alt="example" src={currentRequest?.image} />}
+          >
+            <p>
+              {" "}
+              <strong>Name: </strong> {currentRequest?.name}
+            </p>
+            <p>
+              {" "}
+              <strong>Description: </strong> {currentRequest?.description}
+            </p>
+            <p>
+              {" "}
+              <strong>Weight: </strong> {currentRequest?.weight}
+            </p>
+            <p>
+              {" "}
+              <strong>Material: </strong> {currentRequest?.material}
+            </p>
+          </Card>
+          <Image
+            style={{
+              width: "400px",
+              height: "100%",
+            }}
+            src="https://firebasestorage.googleapis.com/v0/b/aurora-auction-e6371.appspot.com/o/A%CC%89nh%20ma%CC%80n%20hi%CC%80nh%202024-07-29%20lu%CC%81c%2017.07.04.png?alt=media&token=02399762-9795-42b2-8888-0f667d9fd8f2"
+          />
+        </Flex>
+
         <Form
           form={priceForm}
           name="priceForm"
-          labelCol={{ span: 8 }}
-          wrapperCol={{ span: 16 }}
+          // labelCol={{ span: 8 }}
+          // wrapperCol={{ span: 16 }}
           onFinish={handlePriceSubmit}
         >
+          <p
+            style={{
+              textAlign: "center",
+              fontWeight: "700",
+              marginBottom: "20px",
+            }}
+          >
+            Price Estimate
+          </p>
           <Form.Item
             label="Min Price"
             name="minPrice"

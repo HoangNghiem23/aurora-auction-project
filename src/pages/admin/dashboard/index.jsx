@@ -14,7 +14,7 @@ import { Avatar, Breadcrumb, Layout, Menu, Space, Tag, theme } from "antd";
 import { Footer } from "antd/es/layout/layout";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { selectUser } from "../../../redux/features/counterSlice";
+import { logout, selectUser } from "../../../redux/features/counterSlice";
 import { FaRegUserCircle } from "react-icons/fa";
 
 const { Header, Content, Sider } = Layout;
@@ -224,7 +224,7 @@ const Dashboard = () => {
           </div>
         </Content>
         <Footer style={{ textAlign: "center", backgroundColor: "#E3F2EE" }}>
-          DATSAN79 ©{new Date().getFullYear()} Created by DEMI
+        Jewery Auction
         </Footer>
       </Layout>
     </Layout>

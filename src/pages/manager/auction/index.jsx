@@ -100,6 +100,7 @@ function AuctionManager() {
     try {
       const response = await api.get("/auction");
       const responseJewelry = await api.get("/jewelry/getJewelryReady");
+      console.log(response.data);
       setData(response.data);
       setJewelryData(responseJewelry.data.sort((a, b) => b.id - a.id));
     } catch (error) {
@@ -122,6 +123,8 @@ function AuctionManager() {
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
+    setFileList([]);
+    setJewelry({});
   };
 
   const handleUpdateClick = (auction) => {
@@ -133,7 +136,7 @@ function AuctionManager() {
       start_date: auction.start_date ? moment(auction.start_date) : null,
       end_date: auction.end_date ? moment(auction.end_date) : null,
     });
-    setFileList([{ url: auction.image }]);
+    setFileList([{ url: auction.images }]);
   };
 
   const handleCancel = () => {
@@ -154,25 +157,27 @@ function AuctionManager() {
     newValue.start_date = startDate;
     newValue.end_date = endDate;
 
-    if (values.image.file != undefined) {
+    // Check if file is present before accessing it
+    if (values.image && values.image.file) {
       const img = await uploadFile(values.image.file.originFileObj);
       newValue.image = img;
-    }
-
-    try {
+    } else if (fileList.length > 0) {
       const url = fileList[0]?.originFileObj
         ? await uploadFile(fileList[0].originFileObj)
         : fileList[0].url;
-      values.image = url;
-      values.start_date = values.start_date
-        ? values.start_date.toISOString()
-        : null;
-      values.end_date = values.end_date ? values.end_date.toISOString() : null;
+      newValue.image = url;
+    } else {
+      newValue.image = null; // Or some default image URL if needed
+    }
+
+    try {
       let response;
       if (isUpdate && currentAuction) {
-        response = await api.put(`/auction/${currentAuction.id}`, values);
+        response = await api.put(`/auction/${currentAuction.id}`, newValue);
         const updatedAuctions = data.map((auction) =>
-          auction.id === currentAuction.id ? { ...auction, ...values } : auction
+          auction.id === currentAuction.id
+            ? { ...auction, ...newValue }
+            : auction
         );
         setData(updatedAuctions);
       } else {
@@ -222,7 +227,6 @@ function AuctionManager() {
       render: (text) =>
         text ? moment(text).format("YYYY-MM-DD HH:mm:ss") : "",
     },
-    { title: "Title", dataIndex: "title", key: "title" },
     {
       title: "Image",
       dataIndex: "image",
@@ -243,6 +247,12 @@ function AuctionManager() {
   ];
 
   const columnsJewelry = [
+    {
+      title: "Image",
+      dataIndex: "images",
+      key: "images",
+      render: (text) => <Image src={text} alt="auction" />,
+    },
     {
       title: "Jewelry Name",
       dataIndex: "name",
@@ -282,7 +292,9 @@ function AuctionManager() {
 
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
-      setJewelry(selectedRows[0]);
+      const selectedJewelry = selectedRows[0];
+      setJewelry(selectedJewelry);
+      setFileList([{ url: selectedJewelry.images }]); // Cập nhật fileList với URL của hình ảnh jewelry
     },
     getCheckboxProps: (record) => ({
       disabled: record.name === "Disabled User",
@@ -338,13 +350,7 @@ function AuctionManager() {
           >
             <TextArea rows={4} />
           </Form.Item>
-          <Form.Item
-            label="Title"
-            name="title"
-            rules={[{ required: true, message: "Please input the title!" }]}
-          >
-            <Input />
-          </Form.Item>
+
           <Form.Item label="Staff" name="staff_id">
             <Select
               showSearch
@@ -398,7 +404,7 @@ function AuctionManager() {
             onVisibleChange: (visible) => setPreviewOpen(visible),
             afterOpenChange: (visible) => !visible && setPreviewImage(""),
           }}
-          src={previewImage}
+          src={jewelry.images || previewImage}
         />
       )}
       <Modal
