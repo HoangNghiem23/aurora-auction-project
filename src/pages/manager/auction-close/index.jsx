@@ -18,6 +18,7 @@ import uploadFile from "../../../utils/upload";
 import moment from "moment";
 import { DatePicker } from "antd";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
@@ -103,8 +104,8 @@ function AuctionClose() {
         (auction) => auction.auctionsStatusEnum == "ISSOLD"
       );
       const responseJewelry = await api.get("/jewelry/getJewelryReady");
-      setData(filteredData.bid);
-      console.log(filteredData.bid);  
+      setData(response.data);
+      console.log(filteredData.bid);
       console.log(filteredData);
       setJewelryData(responseJewelry.data);
     } catch (error) {
@@ -238,24 +239,19 @@ function AuctionClose() {
     },
     {
       title: "Action",
-      render: (values) => (
+      dataIndex: "id",
+      key: "id",
+      render: (values, a) => (
         <>
           <Button
-            type="primary"
-            style={{ marginRight: 8 }}
-            onClick={() => handleUpdateClick(values)}
+            onClick={() => {
+              console.log(a);
+              setData(data.filter((item) => item.id != a.id));
+              toast.success("Da nhan hang");
+            }}
           >
-            View Detail
+            Da nhan hang
           </Button>
-          <Popconfirm
-            title="Delete the auction"
-            description="Are you sure to delete this auction?"
-            onConfirm={() => handleDelete(values)}
-            okText="Yes"
-            cancelText="No"
-          >
-            <Button danger>Delete</Button>
-          </Popconfirm>
         </>
       ),
     },
@@ -393,7 +389,7 @@ function AuctionClose() {
             ...rowSelection,
           }}
           columns={columnsJewelry}
-          dataSource={jewelryData}
+          dataSource={data}
           rowKey="id"
         />
       </Modal>
